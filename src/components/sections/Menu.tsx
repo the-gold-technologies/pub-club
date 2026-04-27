@@ -1,6 +1,6 @@
 'use client';
 
-import { ChefHat } from 'lucide-react';
+import { ChefHat, Beer } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,7 +13,13 @@ const menuCategories = [
     items: [
       { name: "Truffle Arancini", desc: "Wild mushroom, black truffle, aged parmesan, saffron aioli", price: "£14" },
       { name: "Seared Scallops", desc: "Pea purée, crispy pancetta, mint oil, lemon zest", price: "£18" },
-      { name: "Wagyu Beef Carpaccio", desc: "Caper berries, rocket, shaved truffle, olive oil", price: "£22" },
+    ]
+  },
+  {
+    title: "Pub Classics",
+    items: [
+      { name: "Classic Fish & Chips", desc: "Beer-battered haddock, triple-cooked chips, mushy peas", price: "£19" },
+      { name: "Seven Stars Cheeseburger", desc: "Dry-aged beef, cave-aged cheddar, brioche bun, fries", price: "£18" },
     ]
   },
   {
@@ -21,14 +27,28 @@ const menuCategories = [
     items: [
       { name: "Pan-Roasted Halibut", desc: "Samphire, crushed jersey royals, Champagne beurre blanc", price: "£36" },
       { name: "Dry-Aged Ribeye 10oz", desc: "Triple cooked chips, roasted vine tomatoes, peppercorn sauce", price: "£42" },
-      { name: "Wild Venison Loin", desc: "Fondant potato, blackberry jus, heritage carrots", price: "£38" },
+    ]
+  },
+  {
+    title: "Sunday Roast",
+    subtitle: "Served every Sunday 12:00 – 18:00",
+    items: [
+      { name: "Roast Sirloin of Beef", desc: "Duck fat roast potatoes, seasonal greens, Yorkshire pudding", price: "£28" },
+      { name: "Leg of Lamb", desc: "Mint sauce, honey-roasted parsnips, gravy", price: "£26" },
     ]
   },
   {
     title: "Desserts",
     items: [
-      { name: "Dark Chocolate Delice", desc: "Hazelnut praline, salted caramel ice cream, gold leaf", price: "£12" },
-      { name: "Vanilla Bean Panna Cotta", desc: "Rhubarb compote, ginger crumble", price: "£10" },
+      { name: "Orange & Cognac Crème Brulée", desc: "Homemade shortbread, fresh berries", price: "£12" },
+      { name: "Dark Chocolate Fondant", desc: "Salted caramel, vanilla bean ice cream", price: "£11" },
+    ]
+  },
+  {
+    title: "Drinks",
+    items: [
+      { name: "Local Ales · Lagers · Ciders", desc: "Supporting producers from across the region", price: "From £6" },
+      { name: "Wine · Soft Drinks", desc: "Carefully chosen range for every palate", price: "Various" },
     ]
   }
 ];
@@ -46,27 +66,11 @@ export default function Menu() {
         }
       );
 
-      // Menu cards: stagger slide up with slight rotation
+      // Menu cards
       gsap.fromTo('.menu-card',
-        { y: 60, opacity: 0, rotateX: 4 },
-        { y: 0, opacity: 1, rotateX: 0, duration: 0.85, stagger: 0.2, ease: 'power3.out',
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out',
           scrollTrigger: { trigger: '.menu-card', start: 'top 82%', toggleActions: 'play none none none' }
-        }
-      );
-
-      // Each menu item: subtle stagger within cards
-      gsap.fromTo('.menu-item',
-        { opacity: 0, x: -15 },
-        { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
-          scrollTrigger: { trigger: '.menu-card', start: 'top 70%', toggleActions: 'play none none none' }
-        }
-      );
-
-      // Download CTA
-      gsap.fromTo('.menu-download',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out',
-          scrollTrigger: { trigger: '.menu-download', start: 'top 90%', toggleActions: 'play none none none' }
         }
       );
     }, ref);
@@ -77,41 +81,43 @@ export default function Menu() {
   return (
     <section ref={ref} id="menu" className="py-24 bg-dark-950 border-t border-light/5 relative overflow-hidden">
       
-      {/* Decorative text */}
-      <div className="absolute top-16 -left-28 text-[15rem] font-serif text-dark-900/40 select-none z-0 rotate-[-90deg] hidden lg:block">
-        MENU
-      </div>
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        <div className="menu-header mb-16 flex items-end justify-between border-b border-dark-800/60 pb-8">
+        <div className="menu-header mb-16 flex flex-col gap-6 border-b border-dark-800/60 pb-12">
           <div className="flex flex-col gap-3">
             <span className="text-[10px] tracking-[0.4em] text-gold-600 uppercase font-medium flex items-center gap-3">
               <span className="font-serif text-2xl text-dark-700 leading-none">05</span>
               <span className="w-6 h-[1px] bg-gold-600/50"></span>
               Seasonal Selection
             </span>
-            <h3 className="text-4xl md:text-5xl font-serif text-white leading-tight tracking-tight">
+            <h3 className="text-4xl md:text-5xl font-serif text-white leading-tight tracking-tight mb-4">
               Our <em className="not-italic italic text-gold-500 font-light">Menu</em>
             </h3>
-          </div>
-          <div className="hidden md:flex items-center justify-center w-14 h-14 rounded-full border border-dark-700 text-gold-600/60">
-            <ChefHat size={24} strokeWidth={1.2} />
+            <p className="text-dark-200 leading-relaxed font-light text-lg max-w-3xl">
+              At The Seven Stars, our kitchen starts with fresh, quality ingredients and builds outward from there, honouring the classics while keeping things interesting with seasonal specials and the occasional inspired detour into South Asian and Mediterranean territory.
+            </p>
+            <p className="text-dark-300 leading-relaxed font-light text-base max-w-2xl mt-2 italic flex items-center gap-3">
+              <Beer size={18} className="text-gold-500/60" />
+              We take our drinks as seriously as our food. The Seven Stars stocks a carefully chosen range of local ales, lagers and ciders while supporting producers from across the region.
+            </p>
           </div>
         </div>
 
-        <div className="space-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {menuCategories.map((cat, i) => (
-            <div key={i} className="menu-card space-y-8 glass-card rounded-3xl p-8 md:p-12 relative">
-               <h4 className="text-2xl font-serif text-gold-400 mb-8 border-b border-dark-800 pb-4">{cat.title}</h4>
-               <div className="grid grid-cols-1 gap-8">
+            <div key={i} className="menu-card glass-card rounded-3xl p-8 md:p-10 hover:border-gold-500/30 transition-all duration-500 group">
+               <div className="flex justify-between items-end mb-8 border-b border-dark-800 pb-4">
+                 <h4 className="text-2xl font-serif text-gold-400 uppercase tracking-widest">{cat.title}</h4>
+                 {cat.subtitle && <span className="text-[10px] text-dark-400 uppercase tracking-widest mb-1">{cat.subtitle}</span>}
+               </div>
+               <div className="space-y-8">
                  {cat.items.map((item, j) => (
-                   <div key={j} className="menu-item group cursor-default">
+                   <div key={j} className="menu-item">
                      <div className="flex justify-between items-baseline mb-2">
-                       <h5 className="text-lg font-medium text-white uppercase tracking-wider group-hover:text-gold-400 transition-colors">{item.name}</h5>
-                       <span className="text-xl font-serif text-gold-500">{item.price}</span>
+                       <h5 className="text-base font-medium text-white uppercase tracking-wider group-hover:text-gold-500 transition-colors">{item.name}</h5>
+                       <span className="text-lg font-serif text-gold-500">{item.price}</span>
                      </div>
-                     <p className="text-dark-300 font-light text-sm italic">{item.desc}</p>
+                     <p className="text-dark-400 font-light text-xs italic">{item.desc}</p>
                    </div>
                  ))}
                </div>
@@ -119,12 +125,9 @@ export default function Menu() {
           ))}
         </div>
 
-        <div className="menu-download mt-16 text-center">
-          <a href="/Modern-Sample-Menu.pdf" download className="inline-flex items-center justify-center px-8 py-4 border border-gold-600 text-gold-400 hover:bg-gold-600 hover:text-dark-990 uppercase tracking-widest text-sm transition-all group rounded-full">
-            Download PDF Menu
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 transform group-hover:-translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
+        <div className="mt-16 text-center">
+          <a href="#contact" className="inline-flex items-center px-10 py-4 bg-dark-900 hover:bg-gold-600 border border-gold-600/30 text-white hover:text-dark-990 uppercase tracking-[0.2em] text-xs font-bold transition-all rounded-full">
+            Enquire For Private Dining
           </a>
         </div>
       </div>

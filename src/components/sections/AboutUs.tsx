@@ -72,16 +72,16 @@ export default function AboutUs() {
                 Our Story
               </span>
               <h3 className="text-4xl md:text-5xl font-serif text-white leading-tight tracking-tight">
-                A refined escape,<br />
-                <em className="not-italic italic text-gold-500 font-light">in the countryside</em>
+                Welcome to <br />
+                <em className="not-italic italic text-gold-500 font-light">The Seven Stars</em>
               </h3>
             </div>
 
             <p className="about-para text-dark-200 leading-relaxed font-light text-lg">
-              Seven Stars redefines the traditional pub experience. Born from a passion for exceptional hospitality, we merge the cozy familiarity of a countryside pub with the sophisticated culinary standards of a premium gastro club.
+              Tucked away in the beautiful village of Marsh Baldon, The Seven Stars is everything a great British pub should be. Community-owned and community-run, every pint poured and every plate served is a small act of keeping something genuinely valuable alive.
             </p>
             <p className="about-para text-dark-200 leading-relaxed font-light text-lg">
-              Whether you are joining us for a quiet dinner, an evening of fine wines, or a grand celebration, our opulent setting and warm atmosphere invite you to relax, indulge, and create lasting memories.
+              We believe that a great British pub should do three things well: serve excellent food, pour a proper drink, and make every single person who walks through the door feel welcome. Whether you're joining us for a relaxed Sunday evening or celebrating with friends, our warm atmosphere invites you to stay a while.
             </p>
 
             <div className="pt-2">

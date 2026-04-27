@@ -63,9 +63,9 @@ export default function Contact() {
                 <div>
                   <h4 className="text-white uppercase tracking-wider text-sm font-medium mb-2">Address</h4>
                   <p className="text-dark-300 font-light leading-relaxed">
-                    123 Countryside Lane, <br />
-                    Rolling Hills Estate, <br />
-                    Oxfordshire, OX1 2AB, UK
+                    The Seven Stars, <br />
+                    Marsh Baldon, <br />
+                    Oxford, OX44 9LP
                   </p>
                 </div>
               </div>
