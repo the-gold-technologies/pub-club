@@ -81,7 +81,7 @@ export default function AboutUs() {
               Tucked away in the beautiful village of Marsh Baldon, The Seven Stars is everything a great British pub should be. Community-owned and community-run, every pint poured and every plate served is a small act of keeping something genuinely valuable alive.
             </p>
             <p className="about-para text-dark-200 leading-relaxed font-light text-lg">
-              We believe that a great British pub should do three things well: serve excellent food, pour a proper drink, and make every single person who walks through the door feel welcome. Whether you're joining us for a relaxed Sunday evening or celebrating with friends, our warm atmosphere invites you to stay a while.
+              We believe that a great British pub should do three things well: serve excellent food, pour a proper drink, and make every single person who walks through the door feel welcome. Whether you&apos;re joining us for a relaxed Sunday evening or celebrating with friends, our warm atmosphere invites you to stay a while.
             </p>
 
             <div className="pt-2">

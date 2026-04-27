@@ -88,13 +88,13 @@ export default function Dining() {
           <div className="space-y-12">
             <div className="space-y-6">
               <p className="dining-text-item text-dark-200 leading-relaxed font-light text-lg italic border-l-2 border-gold-500/30 pl-6">
-                "Our kitchen works with fresh, carefully sourced ingredients to craft heartening dishes that become the season to bond together."
+                &quot;Our kitchen works with fresh, carefully sourced ingredients to craft heartening dishes that become the season to bond together.&quot;
               </p>
               <p className="dining-text-item text-dark-200 leading-relaxed font-light text-lg">
                 At their heart, our dishes are rooted in British pub tradition but we love to bring in Middle Eastern, European and South Asian influences that keep things interesting.
               </p>
               <p className="dining-text-item text-dark-200 leading-relaxed font-light text-lg">
-                There's always something to look forward to with scrumptious open sandwiches, wholesome cheese boards and mouthwatering orange and cognac crème brulée.
+                There&apos;s always something to look forward to with scrumptious open sandwiches, wholesome cheese boards and mouthwatering orange and cognac crème brulée.
               </p>
             </div>
 

@@ -123,7 +123,7 @@ export default function Hero() {
             {/* Right side: description */}
             <div className="hero-desc max-w-sm lg:ml-auto lg:self-end mt-8 lg:mt-0 text-left">
               <p className="text-lg md:text-xl text-dark-100 font-light leading-relaxed">
-                We’re your neighborhood pub situated in the heart of Oxfordshire
+                We&apos;re your neighborhood pub situated in the heart of Oxfordshire
                 serving mouth-watering food, real ales, and a warm welcome.
               </p>
             </div>
