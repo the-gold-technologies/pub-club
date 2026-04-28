@@ -11,38 +11,54 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        gold: {
-          50: '#fcfaf5',
-          100: '#f8f4e9',
-          200: '#efe5d0',
-          300: '#e3d0aa',
-          400: '#d5b67d',
-          500: '#ca9e5a',
-          600: '#bc864a',
-          700: '#9d693f',
-          800: '#815637',
-          900: '#69482f',
-          950: '#3a2618',
+        // Primary Blue Palette
+        primary: {
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#2563eb", // Royal Blue
+          600: "#1d4ed8",
+          700: "#1e40af",
+          800: "#1e3a8a",
+          900: "#172554",
+          950: "#1e3a8a",
         },
+        // Mapping GOLD to BLUE for transition
+        gold: {
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#3b82f6",
+          500: "#2563eb", // Primary Blue
+          600: "#1d4ed8",
+          700: "#1e40af",
+          800: "#1e3a8a",
+          900: "#172554",
+          950: "#000000",
+        },
+        // Mapping DARK to White/Black shades
         dark: {
-          50: '#f6f6f6',
-          100: '#e7e7e7',
-          200: '#d1d1d1',
-          300: '#b0b0b0',
-          400: '#888888',
-          500: '#6d6d6d',
-          600: '#5d5d5d',
-          700: '#4f4f4f',
-          800: '#454545',
-          900: '#3d3d3d',
-          950: '#141414',
-          990: '#0a0a0a',
-        }
+          50: "#ffffff", // Pure White
+          100: "#f8fafc",
+          200: "#f1f5f9",
+          300: "#e2e8f0",
+          400: "#cbd5e1",
+          500: "#94a3b8",
+          600: "#64748b",
+          700: "#475569",
+          800: "#334155",
+          900: "#1e293b",
+          950: "#0f172a",
+          990: "#000000", // Pure Black
+        },
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        serif: ['var(--font-playfair)'],
-      }
+        sans: ["var(--font-inter)"],
+        serif: ["var(--font-playfair)"],
+      },
     },
   },
   plugins: [],

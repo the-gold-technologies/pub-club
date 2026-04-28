@@ -11,7 +11,7 @@ import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-dark-990 font-sans selection:bg-gold-500 selection:text-dark-990 overflow-x-hidden">
+    <div className="min-h-screen bg-white font-sans selection:bg-primary-500 selection:text-white overflow-x-hidden">
       <Navbar />
       <Hero />
       <AboutUs />
