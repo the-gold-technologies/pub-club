@@ -72,7 +72,7 @@ export default function Contact() {
     <section
       ref={ref}
       id="contact"
-      className="py-16 bg-white relative border-t border-black/5"
+      className="py-12 bg-white relative border-t border-black/5"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -186,15 +186,15 @@ export default function Contact() {
             <h4 className="contact-field text-2xl font-serif text-black mb-8 border-b border-black/5 pb-4">
               Book a Table
             </h4>
-            <form className="space-y-6">
-              <div className="contact-field grid grid-cols-2 gap-6">
+            <form className="space-y-4">
+              <div className="contact-field grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs uppercase tracking-widest text-neutral-500 mb-2">
                     Name
                   </label>
                   <input
                     type="text"
-                    className="w-full bg-white border border-black/10 p-3 text-black focus:outline-none focus:border-primary-600 transition-colors rounded-xl shadow-sm"
+                    className="w-full bg-white border border-black/10 px-3 py-2.5 text-black focus:outline-none focus:border-primary-600 transition-colors rounded-xl shadow-sm"
                     placeholder="John Doe"
                   />
                 </div>
@@ -204,7 +204,7 @@ export default function Contact() {
                   </label>
                   <input
                     type="email"
-                    className="w-full bg-white border border-black/10 p-3 text-black focus:outline-none focus:border-primary-600 transition-colors rounded-xl shadow-sm"
+                    className="w-full bg-white border border-black/10 px-3 py-2.5 text-black focus:outline-none focus:border-primary-600 transition-colors rounded-xl shadow-sm"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -216,14 +216,14 @@ export default function Contact() {
                   </label>
                   <input
                     type="date"
-                    className="w-full bg-white border border-black/10 p-3 text-black focus:outline-none focus:border-primary-600 transition-colors rounded-xl shadow-sm"
+                    className="w-full bg-white border border-black/10 px-3 py-2.5 text-black focus:outline-none focus:border-primary-600 transition-colors rounded-xl shadow-sm"
                   />
                 </div>
                 <div>
                   <label className="block text-xs uppercase tracking-widest text-neutral-500 mb-2">
                     Guests
                   </label>
-                  <select className="w-full bg-white border border-black/10 p-3 text-black focus:outline-none focus:border-primary-600 transition-colors appearance-none rounded-xl shadow-sm">
+                  <select className="w-full bg-white border border-black/10 px-3 py-2.5 text-black focus:outline-none focus:border-primary-600 transition-colors appearance-none rounded-xl shadow-sm">
                     <option>2 People</option>
                     <option>3 People</option>
                     <option>4 People</option>
@@ -236,7 +236,7 @@ export default function Contact() {
                   Message (Optional)
                 </label>
                 <textarea
-                  rows={4}
+                  rows={3}
                   className="w-full bg-white border border-black/10 p-3 text-black focus:outline-none focus:border-primary-600 transition-colors rounded-xl shadow-sm"
                   placeholder="Special requirements..."
                 />
