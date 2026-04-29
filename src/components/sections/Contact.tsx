@@ -72,46 +72,51 @@ export default function Contact() {
     <section
       ref={ref}
       id="contact"
-      className="py-24 bg-white relative border-t border-black/5"
+      className="py-16 bg-white relative border-t border-black/5"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div className="contact-info space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="contact-info space-y-8">
             <div>
-              <h2 className="text-[#475DB1] tracking-[0.2em] uppercase text-sm font-semibold mb-2">
+              <h2 className="text-[#475DB1] tracking-[0.2em] uppercase text-[10px] font-bold mb-2">
                 Get in Touch
               </h2>
-              <h3 className="text-4xl md:text-5xl font-serif text-black">
+              <h3 className="text-3xl md:text-4xl font-serif text-black">
                 Visit <span className="italic">Us</span>
               </h3>
             </div>
 
-            <div className="space-y-8 glass-card rounded-3xl p-10 border border-black/5 shadow-sm">
+            <div className="space-y-6 bg-[#475DB1]/[0.03] backdrop-blur-sm rounded-3xl p-8 border border-[#475DB1]/10 shadow-sm relative overflow-hidden">
+              {/* Subtle Decorative Blue Glow */}
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#475DB1]/5 blur-3xl rounded-full" />
+
               <div className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-[#475DB1] mr-6 mt-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
+                <div className="w-10 h-10 rounded-full bg-[#475DB1]/10 flex items-center justify-center mr-5 shrink-0">
+                  <svg
+                    className="w-5 h-5 text-[#475DB1]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
                 <div>
-                  <h4 className="text-black uppercase tracking-wider text-sm font-medium mb-2">
+                  <h4 className="text-black uppercase tracking-wider text-[13px] font-bold mb-1">
                     Address
                   </h4>
-                  <p className="text-dark-900 font-light leading-relaxed">
+                  <p className="text-neutral-600 font-light leading-relaxed text-sm">
                     The Seven Stars, <br />
                     Marsh Baldon, <br />
                     Oxford, OX44 9LP
@@ -119,25 +124,27 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-start border-t border-black/5 pt-8">
-                <svg
-                  className="w-6 h-6 text-[#475DB1] mr-6 mt-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+              <div className="flex items-start border-t border-[#475DB1]/10 pt-6">
+                <div className="w-10 h-10 rounded-full bg-[#475DB1]/10 flex items-center justify-center mr-5 shrink-0">
+                  <svg
+                    className="w-5 h-5 text-[#475DB1]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
                 <div>
-                  <h4 className="text-black uppercase tracking-wider text-sm font-medium mb-2">
+                  <h4 className="text-black uppercase tracking-wider text-[13px] font-bold mb-1">
                     Opening Hours
                   </h4>
-                  <p className="text-neutral-600 font-light leading-relaxed">
+                  <p className="text-neutral-600 font-light leading-relaxed text-sm">
                     Mon - Thu: 12:00 PM - 11:00 PM <br />
                     Fri - Sat: 12:00 PM - 1:00 AM <br />
                     Sun: 12:00 PM - 10:00 PM
@@ -145,25 +152,27 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-start border-t border-black/5 pt-8">
-                <svg
-                  className="w-6 h-6 text-[#475DB1] mr-6 mt-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
+              <div className="flex items-start border-t border-[#475DB1]/10 pt-6">
+                <div className="w-10 h-10 rounded-full bg-[#475DB1]/10 flex items-center justify-center mr-5 shrink-0">
+                  <svg
+                    className="w-5 h-5 text-[#475DB1]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
                 <div>
-                  <h4 className="text-black uppercase tracking-wider text-sm font-medium mb-2">
+                  <h4 className="text-black uppercase tracking-wider text-[13px] font-bold mb-1">
                     Contact
                   </h4>
-                  <p className="text-neutral-600 font-light leading-relaxed">
+                  <p className="text-neutral-600 font-light leading-relaxed text-sm">
                     reservations@sevenstars.com <br />
                     +44 123 456 7890
                   </p>

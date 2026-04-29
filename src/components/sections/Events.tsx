@@ -120,7 +120,7 @@ export default function Events() {
             <div className="relative h-full w-full overflow-hidden rounded-2xl">
               <div className="absolute inset-0 bg-primary-900/20 group-hover:bg-transparent transition-colors z-10 duration-700" />
               <Image
-                src="/images/gallery/atmospheric-pub.jpg"
+                src="/images/gallery/gallery-events.jpg"
                 alt="Private event at Seven Stars"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80"

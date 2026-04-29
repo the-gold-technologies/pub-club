@@ -186,13 +186,13 @@ export default function Dining() {
 
             <div className="grid grid-cols-2 gap-8 pt-8 border-t border-black/5">
               <div className="dining-stat">
-                <p className="font-serif text-primary-500 text-3xl mb-1">76</p>
+                <p className="font-serif text-[#475DB1] text-3xl mb-1">76</p>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500">
                   Indoor Capacity
                 </p>
               </div>
               <div className="dining-stat">
-                <p className="font-serif text-primary-500 text-3xl mb-1">150</p>
+                <p className="font-serif text-[#475DB1] text-3xl mb-1">150</p>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500">
                   Garden Capacity
                 </p>

@@ -132,10 +132,10 @@ export default function Footer() {
       className="relative bg-[#0a192f] border-t border-white/5 overflow-hidden"
     >
       {/* Subtle Background Image Overlay */}
-      <div className="absolute inset-0 z-0 opacity-[0.03]">
+      <div className="absolute inset-0 z-0 opacity-[0.08]">
         <Image
-          src="/images/gallery/atmospheric-pub.jpg"
-          alt="Atmospheric Background"
+          src="/images/footer-bg.jpg"
+          alt="Atmospheric Footer Background"
           fill
           className="object-cover"
         />
@@ -143,7 +143,7 @@ export default function Footer() {
 
       {/* Large watermark word */}
       <div
-        className="footer-watermark absolute bottom-0 left-1/2 -translate-x-1/2 text-[15rem] md:text-[22rem] font-serif text-white/[0.02] select-none pointer-events-none leading-none tracking-tighter whitespace-nowrap z-0
+        className="footer-watermark absolute bottom-0 left-1/2 -translate-x-1/2 text-[15rem] md:text-[22rem] font-serif text-white/[0.03] select-none pointer-events-none leading-none tracking-tighter whitespace-nowrap z-0
        "
       >
         SEVEN STARS
@@ -165,7 +165,7 @@ export default function Footer() {
 
           <Link
             href="#contact"
-            className="footer-cta self-start md:self-end flex items-center justify-center px-8 py-4 bg-primary-600 hover:bg-primary-500 text-white uppercase tracking-widest text-[12px] font-bold transition-all rounded-full group shadow-lg hover:shadow-primary-600/20"
+            className="footer-cta self-start md:self-end flex items-center justify-center px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-widest text-[12px] font-bold transition-all rounded-full group shadow-lg hover:shadow-primary-600/20"
           >
             <span>BOOK A TABLE</span>
           </Link>

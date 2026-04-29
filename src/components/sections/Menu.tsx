@@ -54,6 +54,10 @@ const menuSections: MenuSection[] = [
               },
             ],
           },
+        ],
+      },
+      {
+        categories: [
           {
             name: "To Start",
             items: [
@@ -108,6 +112,10 @@ const menuSections: MenuSection[] = [
               },
             ],
           },
+        ],
+      },
+      {
+        categories: [
           {
             name: "Mains",
             items: [
@@ -121,6 +129,11 @@ const menuSections: MenuSection[] = [
                 desc: "Mushy Peas, Tartar Sauce, Grilled Lemon (GF)",
                 price: "£19.50",
               },
+              {
+                name: "Cotswold Lamb Chips",
+                desc: "Chermoula, Sweet Potato Mash, Grilled Asparagus, Vine Cherry Tomato & Lamb Gastrique (GF)",
+                price: "£26.95",
+              },
             ],
           },
         ],
@@ -130,11 +143,6 @@ const menuSections: MenuSection[] = [
           {
             name: "Mains (Cont.)",
             items: [
-              {
-                name: "Cotswold Lamb Chips",
-                desc: "Chermoula, Sweet Potato Mash, Grilled Asparagus, Vine Cherry Tomato & Lamb Gastrique (GF)",
-                price: "£26.95",
-              },
               {
                 name: "Pan Fried Duck Breast",
                 desc: "Dauphinoise Potatoes, Garlic Kale, Cherry Tomatoes, Red Wine Jus",
@@ -450,7 +458,7 @@ export default function Menu() {
 
         {/* 3D Menu Book with Realistic Physics */}
         <div className="relative w-full max-w-6xl perspective-3000">
-          <div className="menu-book relative flex h-[700px] md:h-[780px] bg-[#DED7CF] shadow-[0_60px_120px_rgba(0,0,0,0.18)] rounded-r-lg rounded-l-md overflow-hidden border-l-[15px] border-[#475DB1]">
+          <div className="menu-book relative flex h-[750px] md:h-[850px] bg-[#DED7CF] shadow-[0_60px_120px_rgba(0,0,0,0.18)] rounded-r-lg rounded-l-md overflow-hidden border-l-[15px] border-[#475DB1]">
             {/* Folder Texture Overlay */}
             <div className="absolute inset-0 opacity-[0.12] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/leather.png')]" />
 
@@ -517,8 +525,8 @@ export default function Menu() {
               </div>
 
               {/* CONTENT CONTAINER */}
-              <div className="active-page-content p-10 md:p-16 lg:p-20 h-full flex flex-col relative z-10">
-                <div className="flex-grow overflow-y-auto no-scrollbar">
+              <div className="active-page-content p-8 md:p-12 lg:p-14 h-full flex flex-col relative z-10">
+                <div className="flex-grow overflow-y-auto no-scrollbar pb-10">
                   <div className="flex flex-col items-center text-center mb-10 border-b border-black/5 pb-6">
                     <h4 className="text-[20px] font-bold text-black uppercase tracking-[0.4em] mb-4">
                       {activeSection.title}
@@ -528,30 +536,30 @@ export default function Menu() {
                     </span>
                   </div>
 
-                  <div className="space-y-16">
+                  <div className="space-y-10">
                     {activePage.categories.map((cat, cIdx) => (
                       <div key={cIdx}>
-                        <h5 className="text-[#475DB1] text-[12px] font-bold uppercase tracking-[0.4em] mb-12 text-center flex items-center gap-8 justify-center">
+                        <h5 className="text-[#475DB1] text-[12px] font-bold uppercase tracking-[0.4em] mb-8 text-center flex items-center gap-8 justify-center">
                           <span className="w-8 h-[1px] bg-[#475DB1]/30"></span>
                           {cat.name}
                           <span className="w-8 h-[1px] bg-[#475DB1]/30"></span>
                         </h5>
 
-                        <div className="space-y-12">
+                        <div className="space-y-8">
                           {cat.items.map((item, iIdx) => (
                             <div key={iIdx}>
-                              <div className="flex justify-between items-start gap-10 mb-2">
+                              <div className="flex justify-between items-start gap-8 mb-1">
                                 <div className="flex-grow">
-                                  <h6 className="text-[15px] font-bold text-black uppercase tracking-[0.15em] mb-2 leading-tight">
+                                  <h6 className="text-[15px] font-bold text-black uppercase tracking-[0.15em] mb-1 leading-tight">
                                     {item.name}
                                   </h6>
                                   {item?.desc && (
-                                    <p className="text-[12px] text-neutral-500 italic font-light lowercase leading-relaxed max-w-[90%]">
+                                    <p className="text-[12px] text-neutral-500 italic font-light lowercase leading-relaxed max-w-[85%]">
                                       {item.desc}
                                     </p>
                                   )}
                                 </div>
-                                <span className="text-xl font-serif text-[#475DB1] shrink-0 font-bold">
+                                <span className="text-[19px] font-serif text-[#475DB1] shrink-0 font-bold">
                                   {item.price}
                                 </span>
                               </div>
@@ -564,7 +572,7 @@ export default function Menu() {
                 </div>
 
                 {/* Elegant Navigation & Download */}
-                <div className="mt-10 pt-10 border-t border-black/5 flex justify-between items-center">
+                <div className="mt-auto pt-6 border-t border-black/5 flex justify-between items-center bg-[#FDFBF7]/80 backdrop-blur-sm z-20">
                   <button
                     onClick={prev}
                     className={`flex items-center gap-4 text-[12px] uppercase tracking-widest font-bold transition-all ${sectionIdx === 0 && pageIdx === 0 ? "opacity-0 cursor-default" : "text-black hover:text-[#475DB1]"}`}

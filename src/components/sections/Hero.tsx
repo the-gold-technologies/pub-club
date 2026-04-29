@@ -11,6 +11,7 @@ const heroImages = [
   "/images/hero/interior-hero-v4.jpg",
   "/images/hero/hero-12.jpg",
   "/images/hero/hero-13.jpg",
+  "/images/hero/hero-new-2.png",
 ];
 
 export default function Hero() {
@@ -112,8 +113,26 @@ export default function Hero() {
           </div>
         ))}
         {/* Persistent Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-990/90 via-dark-990/30 to-transparent z-20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-990/80 via-transparent to-dark-990/20 z-20" />
+        {/* Cinematic Persistent Overlays */}
+        <div className="absolute inset-0 z-20 pointer-events-none">
+          {/* Main readability gradient (Left to Right) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/40 to-transparent" />
+
+          {/* Bottom vignette for CTAs and bottom bar */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent h-1/2 bottom-0 top-auto" />
+
+          {/* Subtle top frame */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent h-1/3" />
+
+          {/* Radial spotlight effect for text region */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 25% 45%, transparent 0%, rgba(0,0,0,0.3) 100%)",
+            }}
+          />
+        </div>
       </div>
 
       {/* Main Content */}
@@ -121,7 +140,7 @@ export default function Hero() {
         <div className="flex-1 flex flex-col justify-center w-full">
           <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-6">
             {/* Left side */}
-            <div className="max-w-2xl space-y-6">
+            <div className="max-w-2xl space-y-6 relative group">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] font-serif text-white leading-[0.9] tracking-tight drop-shadow-2xl overflow-hidden">
                 <span className="hero-h1-line1 block pr-2">
                   Where Village <br /> Warmth Meets

@@ -144,7 +144,7 @@ export default function Amenities() {
                     src={item.img}
                     alt={item.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-1000 opacity-60 group-hover:opacity-100"
+                    className="object-cover group-hover:scale-105 transition-transform duration-1000 opacity-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] via-[#0a192f]/60 to-transparent z-10" />
                 </div>
@@ -154,10 +154,10 @@ export default function Amenities() {
 
               {/* Content */}
               <div className="relative z-20 h-full p-8 flex flex-col justify-end">
-                <div className="mb-4 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center group-hover:bg-primary-600 group-hover:text-white transition-all duration-500 text-primary-400">
+                <div className="mb-4 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center group-hover:bg-[#475DB1] group-hover:text-white transition-all duration-500 text-primary-400">
                   <item.icon size={20} strokeWidth={1.5} />
                 </div>
-                <h4 className="text-xl font-medium text-white mb-1 group-hover:text-primary-400 transition-colors duration-500">
+                <h4 className="text-xl font-medium text-white mb-1 group-hover:text-[#475DB1] transition-colors duration-500">
                   {item.name}
                 </h4>
                 <p className="text-xs text-primary-100/60 font-light tracking-wide opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
