@@ -12,8 +12,11 @@ const images = [
   { src: "/images/gallery/gallery-1.jpg", alt: "Authentic Pub Atmosphere" },
   { src: "/images/gallery/gallery-2.jpg", alt: "Vibrant Main Bar" },
   { src: "/images/gallery/gallery-3.jpg", alt: "Traditional Pub Character" },
-  { src: "/images/gallery/dining-new.png", alt: "Elegant Dining Experience" },
-  { src: "/images/amenities/barn-new.png", alt: "Atmospheric Interiors" },
+  {
+    src: "/images/gallery/interior-dining.jpg",
+    alt: "Elegant Dining Experience",
+  },
+  { src: "/images/amenities/barn.jpg", alt: "Atmospheric Interiors" },
   { src: "/images/gallery/gallery-6.jpg", alt: "Gourmet Dining Setup" },
   { src: "/images/gallery/gallery-7.jpg", alt: "Cozy Bookshelf Nook" },
   { src: "/images/gallery/gallery-8.jpg", alt: "Blue Exterior Charm" },
@@ -44,7 +47,10 @@ const images = [
   { src: "/images/gallery/gallery-33.jpg", alt: "Premium Dining Hall" },
   { src: "/images/gallery/gallery-34.jpg", alt: "Traditional Pub Heart" },
   { src: "/images/gallery/gallery-35.jpg", alt: "Seven Stars Experience" },
-  { src: "/images/gallery/event-celebration.jpg", alt: "Special Event Celebration" },
+  {
+    src: "/images/gallery/event-celebration.jpg",
+    alt: "Special Event Celebration",
+  },
   { src: "/images/gallery/cta-background.jpg", alt: "Atmospheric Dining" },
 ];
 
@@ -95,7 +101,11 @@ export default function Gallery() {
   }, []);
 
   return (
-    <section ref={ref} id="gallery" className="py-24 bg-[#0a192f] relative overflow-hidden">
+    <section
+      ref={ref}
+      id="gallery"
+      className="py-24 bg-[#0a192f] relative overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="gallery-header mb-16 flex items-end justify-between border-b border-white/10 pb-8">
           <div className="flex flex-col gap-3">
@@ -113,8 +123,9 @@ export default function Gallery() {
               </em>
             </h3>
             <p className="text-primary-100/70 leading-relaxed font-light text-lg max-w-2xl">
-              A comprehensive look into the Seven Stars. Explore our historic architecture, 
-              vibrant interiors, and the premium gastro experience across our entire curated collection.
+              A comprehensive look into the Seven Stars. Explore our historic
+              architecture, vibrant interiors, and the premium gastro experience
+              across our entire curated collection.
             </p>
           </div>
           <div className="hidden md:flex items-center justify-center w-14 h-14 rounded-full border border-white/10 text-primary-400/60">
@@ -125,7 +136,7 @@ export default function Gallery() {
 
       {/* Auto-scrolling Marquee Gallery */}
       <div className="gallery-marquee-container relative w-full overflow-hidden">
-        <div 
+        <div
           ref={marqueeRef}
           className="flex w-max animate-marquee-massive items-center gap-4 hover:[animation-play-state:paused] px-4"
         >
@@ -157,8 +168,12 @@ export default function Gallery() {
 
       <style jsx global>{`
         @keyframes marquee-massive {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
         }
         .animate-marquee-massive {
           animation: marquee-massive 140s linear infinite;

@@ -125,7 +125,7 @@ export default function MenuFeatured() {
           <div className="flex items-center gap-4 mb-3">
             <span className="h-[2px] w-10 bg-[#475DB1]" />
             <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-black">
-              The Chef's Selection
+              The Chef&apos;s Selection
             </span>
           </div>
           <h2 className="text-4xl md:text-[3.8rem] font-serif text-black leading-tight tracking-tighter mb-4">
@@ -154,7 +154,7 @@ export default function MenuFeatured() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="absolute bottom-8 left-8 text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
                 <span className="text-[10px] tracking-widest uppercase mb-1 block">
-                  Chef's Signature
+                  Chef&apos;s Signature
                 </span>
                 <p className="text-xl font-serif italic">
                   Culinary excellence in every bite.
