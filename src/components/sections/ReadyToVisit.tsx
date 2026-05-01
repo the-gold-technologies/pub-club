@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Phone, Calendar, ArrowRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,125 +10,115 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ReadyToVisit() {
   const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none",
+      gsap.fromTo(
+        cardRef.current,
+        { y: 60, opacity: 0, scale: 0.95 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
         },
-      });
+      );
 
-      // Cinematic staggered entrance matching Hero style
-      tl.fromTo(
-        ".cta-label",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-      )
-        .fromTo(
-          ".cta-title",
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
-          "-=0.5",
-        )
-        .fromTo(
-          ".cta-desc",
-          { opacity: 0, x: 30 },
-          { opacity: 1, x: 0, duration: 0.9, ease: "power3.out" },
-          "-=0.6",
-        )
-        .fromTo(
-          ".cta-btns",
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.7, stagger: 0.2, ease: "power3.out" },
-          "-=0.4",
-        );
+      gsap.fromTo(
+        ".cta-content-stagger",
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: cardRef.current,
+            start: "top 70%",
+          },
+        },
+      );
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-[600px] md:h-[600px] flex items-center overflow-hidden bg-[#0a192f]"
-    >
-      {/* Cinematic Background matching Hero logic */}
-      <div className="absolute inset-0 z-0">
+    <section ref={sectionRef} className="relative py-14 px-12  overflow-hidden">
+      <div className="absolute top-[10%] right-[3%] w-[320px] h-[320px] opacity-[0.4] pointer-events-none hidden lg:block transition-opacity duration-700 hover:opacity-100">
+        <Image
+          src="/images/gallery/food-gourmet.jpg"
+          alt=""
+          fill
+          className="object-cover rounded-[3rem] shadow-2xl rotate-[6deg]"
+        />
+      </div>
+      <div className="absolute bottom-[10%] left-[3%] w-[350px] h-[350px] opacity-[0.4] pointer-events-none hidden xl:block transition-opacity duration-700 hover:opacity-1">
         <Image
           src="/images/gallery/cta-background.jpg"
-          alt="Atmospheric Seven Stars"
+          alt=""
           fill
-          className="object-cover brightness-[0.8] contrast-[1.1] scale-105"
+          className="object-cover rounded-[3rem] shadow-2xl rotate-[-5deg]"
         />
-
-        {/* Hero-style Cinematic Persistent Overlays */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
-          {/* Symmetrical readability gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
-          <div className="absolute inset-0 bg-black/30" />
-
-          {/* Radial spotlight effect centered */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.5) 100%)",
-            }}
-          />
-        </div>
       </div>
 
-      {/* Content Container - Center Aligned as requested */}
-      <div className="relative z-20 w-full  px-6 sm:px-12 lg:px-24 flex flex-col items-end text-center">
-        <div ref={contentRef} className="max-w-3xl space-y-8">
+      <div
+        ref={cardRef}
+        className="relative  mx-auto rounded-[4rem] overflow-hidden   flex flex-col items-center justify-center text-center p-12  group  border border-black/[0.06]"
+      >
+        {/* Content - Hyper-precise match of screenshot composition */}
+        <div className="relative z-10 max-w-4xl py-6">
           <div className="space-y-4">
-            <span className="cta-label block text-[9px] tracking-[0.7em] text-white/50 uppercase font-bold">
-              WE SAVED YOU A SEAT
-            </span>
-            <h2 className="cta-title text-5xl md:text-5xl font-serif text-white tracking-tight leading-[1.1]">
-              Reservation for Your <br />
-              <em className="italic font-light text-white">
-                {" "}
-                Perfect Dining Experience
-              </em>
-            </h2>
-            <div className="cta-desc w-24 h-[1px] bg-white/20 mx-auto" />
-            <p className="cta-desc text-lg md:text-lg text-white/90 font-light max-w-xl mx-auto leading-relaxed">
-              Experience the perfect blend of village warmth and gourmet
-              excellence. Our tables are ready, and our kitchen is heating up.
-            </p>
-          </div>
+            <div className="">
+              <span className="cta-content-stagger block text-[9px] tracking-[0.6em] text-[#5B6DC8] uppercase font-black font-sans">
+                PLAN YOUR VISIT
+              </span>
+              <h2 className="text-[4.2rem] text-black tracking-tighter font-normal">
+                <span className="font-sans font-extrabold">Ready to </span>
+                <em className="font-serif italic font-extralight text-[#5B6DC8]">
+                  Visit?
+                </em>
+              </h2>
+            </div>
 
-          {/* CTA Buttons - Reduced Size */}
-          <div className="cta-btns flex flex-col sm:flex-row items-center justify-center gap-6 ">
-            <a
-              href="#contact"
-              className="group flex items-center gap-3 px-6 py-4 bg-[#475DB1] text-white uppercase tracking-[0.2em] text-[10px] font-bold transition-all rounded-full hover:bg-[#475DB1]/90 shadow-[0_10px_40px_rgba(71,93,177,0.3)] hover:scale-105 active:scale-95"
-            >
-              <Calendar size={16} />
-              Plan Your Visit
-              <ArrowRight
-                size={14}
-                className="transition-transform group-hover:translate-x-2"
-              />
-            </a>
-            <a
-              href="tel:+441865343337"
-              className="group flex items-center gap-3 px-6 py-4 border border-white/20 text-white/80 uppercase tracking-[0.2em] text-[10px] font-bold transition-all rounded-full hover:bg-white/5 hover:text-white"
-            >
-              <Phone size={16} />
-              Get in Touch
-            </a>
+            <div className="cta-content-stagger space-y-1">
+              <p className="text-xl md:text-2xl text-neutral-700 font-light leading-relaxed font-sans tracking-tight">
+                Book online or give us a call.
+              </p>
+              <p className="text-xl md:text-2xl text-neutral-700 font-light leading-relaxed font-sans tracking-tight">
+                We&apos;d love to see you.
+              </p>
+            </div>
+
+            {/* CTA Buttons - Matching Screenshot Icons and Layout */}
+            <div className="cta-content-stagger flex flex-col sm:flex-row items-center justify-center gap-5 pt-8">
+              <a
+                href="#contact"
+                className="group flex items-center gap-3 px-8 py-5 bg-[#475DB1] text-white uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-[#5B6DC8]/90  active:scale-95 font-sans"
+              >
+                <Calendar size={16} className="opacity-90" />
+                Book a Table
+              </a>
+
+              <a
+                href="tel:+441865343337"
+                className="group flex items-center gap-3 px-8 py-5 border border-neutral-300 text-neutral-800 uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-neutral-50 active:scale-95 font-sans"
+              >
+                <Phone size={16} className="opacity-70" />
+                Call Us
+              </a>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Boutique Border Overlay matching site language */}
-      <div className="absolute inset-10 border border-white/5 rounded-[3rem] pointer-events-none hidden lg:block z-30" />
     </section>
   );
 }

@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import AboutUs from "@/components/sections/AboutUs";
 import Dining from "@/components/sections/Dining";
-import Menu from "@/components/sections/Menu";
+import MenuFeatured from "@/components/sections/MenuFeatured";
 import FeatureTiles from "@/components/sections/FeatureTiles";
 import EventGallery from "@/components/sections/EventGallery";
 import Gallery from "@/components/sections/Gallery";
@@ -20,11 +20,10 @@ export default function Home() {
       <EventGallery />
       <Dining />
       <FeatureTiles />
-      <Menu />
+      <MenuFeatured />
       <Gallery />
       <Testimonials />
       <ReadyToVisit />
-      <Contact />
       <Footer />
     </div>
   );
