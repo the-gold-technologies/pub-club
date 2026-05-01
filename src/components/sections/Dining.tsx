@@ -8,16 +8,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const featureTiles = [
-  { icon: Trophy, title: "Sunday Roasts", desc: "A village tradition." },
-  { icon: Leaf, title: "Pub Classics", desc: "Honouring the roots." },
-  {
-    icon: Sparkles,
-    title: "Seasonal Specials",
-    desc: "Keeping it interesting.",
-  },
-];
-
 export default function Dining() {
   const ref = useRef<HTMLElement>(null);
 
@@ -146,42 +136,24 @@ export default function Dining() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
           <div className="space-y-12">
-            <div className="space-y-6">
-              <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg italic border-l-2 border-primary-600/30 pl-6">
+            <div className="space-y-8 md:space-y-10">
+              <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-xl italic border-l-4 border-primary-600/20 pl-8">
                 &quot;Our kitchen works with fresh, carefully sourced
                 ingredients to craft heartening dishes that become the season to
                 bond together.&quot;
               </p>
-              <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
-                At their heart, our dishes are rooted in British pub tradition
-                but we love to bring in Middle Eastern, European and South Asian
-                influences that keep things interesting.
-              </p>
-              <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
-                There&apos;s always something to look forward to with
-                scrumptious open sandwiches, wholesome cheese boards and
-                mouthwatering orange and cognac crème brulée.
-              </p>
-            </div>
-
-            <div className="dining-feature-tiles grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {featureTiles.map((tile, i) => (
-                <div
-                  key={i}
-                  className="dining-feature-tile p-6 cursor-pointer rounded-2xl bg-primary-50/50 border border-black/5 hover:border-primary-600/30 transition-all group shadow-sm"
-                >
-                  <tile.icon
-                    size={20}
-                    className="text-[#475DB1] mb-4 group-hover:text-primary-600 transition-colors"
-                  />
-                  <h5 className="text-black font-medium text-sm uppercase tracking-wider mb-1">
-                    {tile.title}
-                  </h5>
-                  <p className="text-[10px] text-neutral-500 uppercase tracking-widest">
-                    {tile.desc}
-                  </p>
-                </div>
-              ))}
+              <div className="space-y-6 md:space-y-8">
+                <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
+                  At their heart, our dishes are rooted in British pub tradition
+                  but we love to bring in Middle Eastern, European and South Asian
+                  influences that keep things interesting.
+                </p>
+                <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
+                  There&apos;s always something to look forward to with
+                  scrumptious open sandwiches, wholesome cheese boards and
+                  mouthwatering orange and cognac crème brulée.
+                </p>
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-8 pt-8 border-t border-black/5">
@@ -200,7 +172,7 @@ export default function Dining() {
             </div>
           </div>
 
-          <div className="dining-image relative h-[700px] w-full rounded-3xl overflow-hidden group border border-black/5 p-2 bg-primary-50">
+          <div className="dining-image relative h-[600px] w-full rounded-3xl overflow-hidden group border border-black/5 p-2 bg-primary-50">
             <div className="relative h-full w-full overflow-hidden rounded-2xl shadow-sm">
               <div className="absolute inset-0 bg-primary-900/10 group-hover:bg-transparent transition-colors z-10 duration-700" />
               <Image

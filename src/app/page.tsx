@@ -2,11 +2,13 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import AboutUs from "@/components/sections/AboutUs";
-import Amenities from "@/components/sections/Amenities";
 import Dining from "@/components/sections/Dining";
-import Events from "@/components/sections/Events";
 import Menu from "@/components/sections/Menu";
+import FeatureTiles from "@/components/sections/FeatureTiles";
+import EventGallery from "@/components/sections/EventGallery";
 import Gallery from "@/components/sections/Gallery";
+import ReadyToVisit from "@/components/sections/ReadyToVisit";
+import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -15,11 +17,13 @@ export default function Home() {
       <Navbar />
       <Hero />
       <AboutUs />
-      <Amenities />
+      <EventGallery />
       <Dining />
-      <Events />
+      <FeatureTiles />
       <Menu />
       <Gallery />
+      <Testimonials />
+      <ReadyToVisit />
       <Contact />
       <Footer />
     </div>

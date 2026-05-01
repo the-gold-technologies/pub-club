@@ -44,6 +44,8 @@ const images = [
   { src: "/images/gallery/gallery-33.jpg", alt: "Premium Dining Hall" },
   { src: "/images/gallery/gallery-34.jpg", alt: "Traditional Pub Heart" },
   { src: "/images/gallery/gallery-35.jpg", alt: "Seven Stars Experience" },
+  { src: "/images/gallery/event-celebration.jpg", alt: "Special Event Celebration" },
+  { src: "/images/gallery/cta-background.jpg", alt: "Atmospheric Dining" },
 ];
 
 export default function Gallery() {
