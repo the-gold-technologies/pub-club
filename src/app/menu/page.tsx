@@ -181,7 +181,9 @@ export default function MenuPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500" />
               <div className="absolute inset-0 p-10 flex flex-col justify-end z-10">
-                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold mb-2">01</span>
+                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold mb-2">
+                  01
+                </span>
                 <h3 className="text-4xl md:text-5xl font-serif text-white mb-6">
                   {menuCategories[0].title}
                 </h3>
@@ -206,14 +208,19 @@ export default function MenuPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/20 transition-opacity duration-500" />
               <div className="absolute inset-0 p-10 flex flex-col justify-between z-10">
-                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold">02</span>
+                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold">
+                  02
+                </span>
                 <div>
                   <h3 className="text-4xl md:text-5xl font-serif text-white mb-6">
                     {menuCategories[1].title}
                   </h3>
                   <div className="flex flex-col gap-4 text-white/80 font-light">
                     {menuCategories[1].items.map((item) => (
-                      <span key={item} className="flex items-center gap-3 border-b border-white/20 pb-3 last:border-0">
+                      <span
+                        key={item}
+                        className="flex items-center gap-3 border-b border-white/20 pb-3 last:border-0"
+                      >
                         {item}
                       </span>
                     ))}
@@ -233,7 +240,9 @@ export default function MenuPage() {
               <div className="absolute inset-0 bg-[#475DB1]/30 mix-blend-multiply" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
               <div className="absolute inset-0 p-10 flex flex-col justify-end z-10">
-                <span className="text-white/80 uppercase tracking-widest text-[10px] font-bold mb-2">03</span>
+                <span className="text-white/80 uppercase tracking-widest text-[10px] font-bold mb-2">
+                  03
+                </span>
                 <h3 className="text-3xl font-serif text-white mb-4">
                   {menuCategories[2].title}
                 </h3>
@@ -257,7 +266,9 @@ export default function MenuPage() {
                 />
               </div>
               <div className="absolute inset-0 p-10 flex flex-col justify-center items-center text-center z-10">
-                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold mb-4">04</span>
+                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold mb-4">
+                  04
+                </span>
                 <h3 className="text-4xl font-serif text-white mb-6">
                   {menuCategories[3].title}
                 </h3>
@@ -282,7 +293,9 @@ export default function MenuPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
               <div className="absolute inset-0 p-10 md:p-16 flex flex-col justify-center z-10 w-full md:w-1/2">
-                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold mb-2">05</span>
+                <span className="text-[#475DB1] uppercase tracking-widest text-[10px] font-bold mb-2">
+                  05
+                </span>
                 <h3 className="text-4xl md:text-5xl font-serif text-white mb-6">
                   {menuCategories[4].title}
                 </h3>

@@ -55,7 +55,7 @@ function FeatureTile({ feature, index }: { feature: any; index: number }) {
       // Trigger the very first slide change
       setActiveIndex((prev) => (prev + 1) % feature.images.length);
 
-      // Since there are 3 cards, and we want 1 card to change every 3 seconds, 
+      // Since there are 3 cards, and we want 1 card to change every 3 seconds,
       // the total loop for any individual card should be 9 seconds (9000ms)
       interval = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % feature.images.length);

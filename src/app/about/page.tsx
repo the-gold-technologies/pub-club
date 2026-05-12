@@ -136,7 +136,7 @@ export default function AboutPage() {
 
               <h1 className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
                 About
-                <span className="italic font-light text-slate-300">Us</span>
+                <span className="italic font-light text-[#475DB1]">Us</span>
               </h1>
             </div>
 

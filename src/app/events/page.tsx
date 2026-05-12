@@ -103,7 +103,7 @@ export default function EventsPage() {
 
               <h1 className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
                 Events & <br />
-                <span className="italic font-light text-slate-300">
+                <span className="italic font-light text-[#475DB1]">
                   Celebrations
                 </span>
               </h1>
