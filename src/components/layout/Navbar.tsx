@@ -66,7 +66,7 @@ export default function Navbar() {
               {["About", "Dining", "Events", "Menu", "Gallery"].map((item) => (
                 <Link
                   key={item}
-                  href={`#${item.toLowerCase()}`}
+                  href={`/${item.toLowerCase()}`}
                   className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
                 >
                   {item}
@@ -86,7 +86,7 @@ export default function Navbar() {
               }`}
             >
               <Link
-                href="#contact"
+                href="/contact"
                 className="hidden sm:flex px-6 py-2.5 text-sm font-medium rounded-full bg-[#475DB1] text-white hover:bg-[#475DB1]/90 shadow-[0_0_15px_rgba(202,158,90,0.2)] hover:shadow-[0_0_20px_rgba(202,158,90,0.4)] whitespace-nowrap transition-all duration-300"
               >
                 Book Table
@@ -95,9 +95,12 @@ export default function Navbar() {
 
             {/* Icon buttons */}
             <div className="flex items-center space-x-2">
-              <button className="p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center">
+              <Link
+                href={"/contact"}
+                className="p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center"
+              >
                 <User size={18} />
-              </button>
+              </Link>
               <button className="p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center">
                 <Calendar size={18} />
               </button>

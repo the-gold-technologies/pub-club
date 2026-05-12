@@ -8,14 +8,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const eventImages = [
-  { src: "/images/gallery/event-1.jpg", alt: "Event Highlights" },
-  { src: "/images/gallery/event-2.jpg", alt: "Vibrant Atmosphere" },
+  { src: "/images/gallery/gallery-3.jpg", alt: "Event Highlights" },
+  { src: "/images/gallery/gallery-4.jpg", alt: "Vibrant Atmosphere" },
   {
     src: "/images/gallery/event-celebration.jpg",
     alt: "Main Celebration",
   },
-  { src: "/images/gallery/event-4.jpg", alt: "Gathering Details" },
-  { src: "/images/gallery/event-5.jpg", alt: "Evening Glow" },
+  { src: "/images/gallery/gallery-8.jpg", alt: "Gathering Details" },
+  { src: "/images/gallery/gallery-6.jpg", alt: "Evening Glow" },
 ];
 
 export default function EventGallery() {

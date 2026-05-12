@@ -138,7 +138,7 @@ export default function AboutUs() {
 
             <div className="pt-2">
               <a
-                href="#dining"
+                href="/dining"
                 className="about-cta inline-flex items-center text-[#475DB1] hover:text-primary-700 uppercase tracking-widest text-sm group"
               >
                 <span className="mr-4">Explore our dining</span>

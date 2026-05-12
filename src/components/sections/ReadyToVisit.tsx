@@ -63,7 +63,7 @@ export default function ReadyToVisit() {
       </div>
       <div className="absolute bottom-[10%] left-[3%] w-[350px] h-[350px] opacity-[0.4] pointer-events-none hidden xl:block transition-opacity duration-700 hover:opacity-1">
         <Image
-          src="/images/gallery/cta-background.jpg"
+          src="/images/gallery/gallery-8.jpg"
           alt=""
           fill
           className="object-cover rounded-[3rem] shadow-2xl rotate-[-5deg]"
@@ -101,7 +101,7 @@ export default function ReadyToVisit() {
             {/* CTA Buttons - Matching Screenshot Icons and Layout */}
             <div className="cta-content-stagger flex flex-col sm:flex-row items-center justify-center gap-5 pt-8">
               <a
-                href="#contact"
+                href="/contact"
                 className="group flex items-center gap-3 px-8 py-5 bg-[#475DB1] text-white uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-[#5B6DC8]/90  active:scale-95 font-sans"
               >
                 <Calendar size={16} className="opacity-90" />

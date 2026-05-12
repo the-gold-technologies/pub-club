@@ -152,13 +152,13 @@ export default function Hero() {
 
               <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
                 <a
-                  href="#menu"
+                  href="/menu"
                   className="hero-cta w-max py-4 px-8 border border-[#475DB1] rounded-full text-[#475DB1] hover:text-white uppercase tracking-widest text-xs transition-all hover:bg-[#475DB1]/20"
                 >
                   Discover Menu
                 </a>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="hero-cta w-full sm:w-auto text-white px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-semibold transition-all shadow-[0_0_20px_rgba(202,158,90,0.2)] hover:shadow-[0_0_30px_rgba(202,158,90,0.4)] rounded-full"
                 >
                   Book a Table

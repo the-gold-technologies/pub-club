@@ -1,57 +1,57 @@
 "use client";
 
 import Image from "next/image";
-import { Camera } from "lucide-react";
+import { Camera, Link } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Compact set of real files (cycled) so the repo ships fewer unique large JPEGs. */
+const GALLERY_SRC_CYCLE = [
+  "/images/gallery/gallery-1.jpg",
+  "/images/gallery/gallery-2.jpg",
+  "/images/gallery/gallery-3.jpg",
+  "/images/gallery/gallery-4.jpg",
+  "/images/amenities/barn.jpg",
+  "/images/gallery/gallery-6.jpg",
+  "/images/gallery/gallery-8.jpg",
+  "/images/gallery/gallery-1.jpg",
+  "/images/gallery/gallery-2.jpg",
+  "/images/gallery/gallery-3.jpg",
+  "/images/gallery/event-celebration.jpg",
+  "/images/gallery/gallery-25.jpg",
+] as const;
+
+const GALLERY_ALT_CYCLE = [
+  "Authentic Pub Atmosphere",
+  "Vibrant Main Bar",
+  "Traditional Pub Character",
+  "Restaurant Interior Detail",
+  "Atmospheric Interiors",
+  "Gourmet Dining Setup",
+  "Blue Exterior Charm",
+  "Premium Gastro Food",
+  "Historic Pub Facade",
+  "Premium Beverage Selection",
+  "Cozy Fireside Seating",
+  "Vintage Pub Decor",
+] as const;
+
 const images = [
-  { src: "/images/gallery/gallery-1.jpg", alt: "Authentic Pub Atmosphere" },
-  { src: "/images/gallery/gallery-2.jpg", alt: "Vibrant Main Bar" },
-  { src: "/images/gallery/gallery-3.jpg", alt: "Traditional Pub Character" },
-  {
-    src: "/images/gallery/interior-dining.jpg",
-    alt: "Elegant Dining Experience",
-  },
-  { src: "/images/amenities/barn.jpg", alt: "Atmospheric Interiors" },
-  { src: "/images/gallery/gallery-6.jpg", alt: "Gourmet Dining Setup" },
-  { src: "/images/gallery/gallery-7.jpg", alt: "Cozy Bookshelf Nook" },
-  { src: "/images/gallery/gallery-8.jpg", alt: "Blue Exterior Charm" },
-  { src: "/images/gallery/gallery-9.jpg", alt: "Sunday Roast Specialty" },
-  { src: "/images/gallery/gallery-10.jpg", alt: "Premium Gastro Food" },
-  { src: "/images/gallery/gallery-11.jpg", alt: "Historic Pub Facade" },
-  { src: "/images/gallery/gallery-12.jpg", alt: "Warm Evening Glow" },
-  { src: "/images/gallery/gallery-13.jpg", alt: "Community Gathering Space" },
-  { src: "/images/gallery/gallery-14.jpg", alt: "Intimate Dining Corner" },
-  { src: "/images/gallery/gallery-15.jpg", alt: "Gastro Pub Excellence" },
-  { src: "/images/gallery/gallery-16.jpg", alt: "Countryside Welcome" },
-  { src: "/images/gallery/gallery-17.jpg", alt: "Traditional Oak Beams" },
-  { src: "/images/gallery/gallery-18.jpg", alt: "Premium Beverage Selection" },
-  { src: "/images/gallery/gallery-19.jpg", alt: "Summer Garden Vibes" },
-  { src: "/images/gallery/gallery-20.jpg", alt: "Seven Stars Hospitality" },
-  { src: "/images/gallery/gallery-21.jpg", alt: "Rustic Dining Charm" },
-  { src: "/images/gallery/gallery-22.jpg", alt: "Cozy Fireside Seating" },
-  { src: "/images/gallery/gallery-23.jpg", alt: "Artisan Kitchen Details" },
-  { src: "/images/gallery/gallery-24.jpg", alt: "Elegant Table Settings" },
-  { src: "/images/gallery/gallery-25.jpg", alt: "Vintage Pub Decor" },
-  { src: "/images/gallery/gallery-26.jpg", alt: "Historic Beams & Brick" },
-  { src: "/images/gallery/gallery-27.jpg", alt: "Local Ale Heritage" },
-  { src: "/images/gallery/gallery-28.jpg", alt: "Sun-drenched Interiors" },
-  { src: "/images/gallery/gallery-29.jpg", alt: "Warm Wood Textures" },
-  { src: "/images/gallery/gallery-30.jpg", alt: "Gastro Excellence" },
-  { src: "/images/gallery/gallery-31.jpg", alt: "Village Landmark" },
-  { src: "/images/gallery/gallery-32.jpg", alt: "Inviting Main Entry" },
-  { src: "/images/gallery/gallery-33.jpg", alt: "Premium Dining Hall" },
-  { src: "/images/gallery/gallery-34.jpg", alt: "Traditional Pub Heart" },
-  { src: "/images/gallery/gallery-35.jpg", alt: "Seven Stars Experience" },
+  ...Array.from({ length: 36 }, (_, i) => ({
+    src: GALLERY_SRC_CYCLE[i % GALLERY_SRC_CYCLE.length],
+    alt: GALLERY_ALT_CYCLE[i % GALLERY_ALT_CYCLE.length],
+  })),
   {
     src: "/images/gallery/event-celebration.jpg",
     alt: "Special Event Celebration",
   },
-  { src: "/images/gallery/cta-background.jpg", alt: "Atmospheric Dining" },
+  {
+    src: "/images/gallery/gallery-8.jpg",
+    alt: "Atmospheric Dining",
+  },
 ];
 
 export default function Gallery() {
@@ -118,7 +118,7 @@ export default function Gallery() {
             </span>
             <h3 className="text-4xl md:text-5xl font-serif text-white leading-tight tracking-tight mb-6">
               Our{" "}
-              <em className="not-italic italic text-primary-400 font-light">
+              <em className="not-italic  text-primary-400 font-light">
                 Gallery
               </em>
             </h3>
@@ -128,9 +128,12 @@ export default function Gallery() {
               across our entire curated collection.
             </p>
           </div>
-          <div className="hidden md:flex items-center justify-center w-14 h-14 rounded-full border border-white/10 text-primary-400/60">
+          <a
+            href="/gallery"
+            className="hidden md:flex items-center justify-center w-14 h-14 rounded-full border border-white/10 text-primary-400/60"
+          >
             <Camera size={24} strokeWidth={1.2} />
-          </div>
+          </a>
         </div>
       </div>
 

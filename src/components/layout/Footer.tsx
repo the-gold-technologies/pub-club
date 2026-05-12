@@ -18,12 +18,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const navLinks = [
-  { label: "About Us", href: "#about" },
-  { label: "Dining", href: "#dining" },
-  { label: "Events", href: "#events" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Menu", href: "#menu" },
-  { label: "Contact", href: "#contact" },
+  { label: "About Us", href: "/about" },
+  { label: "Dining", href: "/dining" },
+  { label: "Events", href: "/events" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Menu", href: "/menu" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const openingHours = [
@@ -164,7 +164,7 @@ export default function Footer() {
           </div>
 
           <Link
-            href="#contact"
+            href="/contact"
             className="footer-cta self-start md:self-end flex items-center justify-center px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-widest text-[12px] font-bold transition-all rounded-full group shadow-lg hover:shadow-primary-600/20"
           >
             <span>BOOK A TABLE</span>

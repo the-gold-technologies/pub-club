@@ -145,8 +145,8 @@ export default function Dining() {
               <div className="space-y-6 md:space-y-8">
                 <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
                   At their heart, our dishes are rooted in British pub tradition
-                  but we love to bring in Middle Eastern, European and South Asian
-                  influences that keep things interesting.
+                  but we love to bring in Middle Eastern, European and South
+                  Asian influences that keep things interesting.
                 </p>
                 <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
                   There&apos;s always something to look forward to with
@@ -154,6 +154,15 @@ export default function Dining() {
                   mouthwatering orange and cognac crème brulée.
                 </p>
               </div>
+            </div>
+
+            <div className="pt-4">
+              <a
+                href="/dining"
+                className="about-cta inline-flex items-center text-[#475DB1] hover:text-primary-700 uppercase tracking-widest text-sm group"
+              >
+                Explore Dining & Menu
+              </a>
             </div>
 
             <div className="grid grid-cols-2 gap-8 pt-8 border-t border-black/5">

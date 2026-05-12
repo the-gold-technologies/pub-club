@@ -12,27 +12,27 @@ const features = [
   {
     title: "Sunday Roasts",
     images: [
-      "/images/gallery/feature-roast-v3-1.jpg",
-      "/images/gallery/feature-roast-v3-2.jpg",
-      "/images/gallery/feature-roast-v3-3.jpg",
+      "/images/gallery/feature-roast-1.jpg",
+      "/images/gallery/food-gourmet.jpg",
+      "/images/gallery/gallery-25.jpg",
     ],
     description: "The ultimate British tradition, perfected with local meats.",
   },
   {
     title: "Pub Classics",
     images: [
-      "/images/gallery/feature-classic-v3-1.jpg",
-      "/images/gallery/feature-classic-v3-2.jpg",
-      "/images/gallery/feature-classic-v3-3.jpg",
+      "/images/gallery/feature-classic-1.jpg",
+      "/images/gallery/gallery-1.jpg",
+      "/images/gallery/gallery-3.jpg",
     ],
     description: "Time-honored favorites with a sophisticated gourmet twist.",
   },
   {
     title: "Seasonal Specials",
     images: [
-      "/images/gallery/feature-special-v3-1.jpg",
-      "/images/gallery/feature-special-v3-2.jpg",
-      "/images/gallery/feature-special-v3-3.jpg",
+      "/images/gallery/feature-special-1.jpg",
+      "/images/gallery/gallery-2.jpg",
+      "/images/gallery/gallery-4.jpg",
     ],
     description: "Fresh, local ingredients inspired by the changing seasons.",
   },
@@ -41,17 +41,32 @@ const features = [
 function FeatureTile({ feature, index }: { feature: any; index: number }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const nextSlide = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActiveIndex((prev) => (prev + 1) % feature.images.length);
-  };
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
 
-  const prevSlide = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActiveIndex(
-      (prev) => (prev - 1 + feature.images.length) % feature.images.length,
-    );
-  };
+    // The user requested a 3-second delay between each card changing.
+    // To achieve a perfect endless wave:
+    // - Card 0 starts its first fade at 3.0s
+    // - Card 1 starts its first fade at 6.0s
+    // - Card 2 starts its first fade at 9.0s
+    const startDelay = (index + 1) * 3000;
+
+    const timeout = setTimeout(() => {
+      // Trigger the very first slide change
+      setActiveIndex((prev) => (prev + 1) % feature.images.length);
+
+      // Since there are 3 cards, and we want 1 card to change every 3 seconds, 
+      // the total loop for any individual card should be 9 seconds (9000ms)
+      interval = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % feature.images.length);
+      }, 9000);
+    }, startDelay);
+
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
+  }, [feature.images.length, index]);
 
   return (
     <div className="feature-tile group relative h-[450px] md:h-[650px] w-full rounded-2xl overflow-hidden shadow-2xl cursor-pointer">
@@ -59,37 +74,21 @@ function FeatureTile({ feature, index }: { feature: any; index: number }) {
       {feature.images.map((img: string, i: number) => (
         <div
           key={i}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            i === activeIndex ? "opacity-100 z-0" : "opacity-0 -z-10"
+          className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${
+            i === activeIndex ? "opacity-100" : "opacity-0"
           }`}
         >
           <Image
             src={img}
             alt={`${feature.title} ${i + 1}`}
             fill
-            className="object-cover transition-transform duration-1000 group-hover:scale-105"
+            className="object-cover transition-transform duration-[10000ms] ease-linear group-hover:scale-110 scale-100"
           />
         </div>
       ))}
 
       {/* Cinematic Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
-
-      {/* Navigation Arrows */}
-      <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
-        <button
-          onClick={prevSlide}
-          className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-[#475DB1] transition-colors"
-        >
-          <ChevronLeft size={20} />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-[#475DB1] transition-colors"
-        >
-          <ChevronRight size={20} />
-        </button>
-      </div>
 
       {/* Content */}
       <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 z-10">

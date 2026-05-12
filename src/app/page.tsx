@@ -9,7 +9,6 @@ import EventGallery from "@/components/sections/EventGallery";
 import Gallery from "@/components/sections/Gallery";
 import ReadyToVisit from "@/components/sections/ReadyToVisit";
 import Testimonials from "@/components/sections/Testimonials";
-import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (

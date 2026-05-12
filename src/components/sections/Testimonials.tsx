@@ -18,14 +18,14 @@ const testimonials = [
       "A perfect blend of British tradition and modern culinary art. Their orange and cognac crème brulée is quite literally the best dessert I've had this year.",
     author: "Sarah Jenkins",
     role: "Frequent Guest",
-    image: "/images/gallery/testimonial-v2-2.jpg",
+    image: "/images/gallery/testimonial-v2-1.jpg",
   },
   {
     quote:
       "We hosted our anniversary here and the team went above and beyond. The setting is stunning, especially in the evening when the glow hits the stone walls.",
     author: "Robert & Elena",
     role: "Club Members",
-    image: "/images/gallery/testimonial-v2-3.jpg",
+    image: "/images/gallery/testimonial-v2-1.jpg",
   },
 ];
 

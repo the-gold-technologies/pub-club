@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Beer } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -43,6 +43,23 @@ const featuredItems = [
 export default function MenuFeatured() {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // State to track which item is main (index 0) and which are small (index 1 and 2)
+  const [displayIndices, setDisplayIndices] = useState([1, 0, 3]);
+
+  const handleSwap = (clickedPosition: number) => {
+    setDisplayIndices((prev) => {
+      const newIndices = [...prev];
+      const temp = newIndices[0];
+      newIndices[0] = newIndices[clickedPosition];
+      newIndices[clickedPosition] = temp;
+      return newIndices;
+    });
+  };
+
+  const mainItem = featuredItems[displayIndices[0]];
+  const smallItem1 = featuredItems[displayIndices[1]];
+  const smallItem2 = featuredItems[displayIndices[2]];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -145,10 +162,10 @@ export default function MenuFeatured() {
             <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] shadow-2xl group">
               <div className="item-image absolute inset-0">
                 <Image
-                  src={featuredItems[1].image}
-                  alt={featuredItems[1].name}
+                  src={mainItem.image}
+                  alt={mainItem.name}
                   fill
-                  className="object-cover scale-110"
+                  className="object-cover scale-110 transition-transform duration-700"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -162,16 +179,16 @@ export default function MenuFeatured() {
               </div>
               <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center shadow-lg transform -rotate-12">
                 <span className="font-serif text-base font-bold text-[#475DB1]">
-                  {featuredItems[1].price}
+                  {mainItem.price}
                 </span>
               </div>
             </div>
             <div className="max-w-2xl">
               <h3 className="text-3xl font-serif text-black mb-3">
-                {featuredItems[1].name}
+                {mainItem.name}
               </h3>
               <p className="text-base text-neutral-600 font-light leading-relaxed">
-                {featuredItems[1].description}
+                {mainItem.description}
               </p>
             </div>
           </div>
@@ -179,50 +196,56 @@ export default function MenuFeatured() {
           {/* Secondary Column */}
           <div className="lg:col-span-5 flex flex-col justify-center gap-12">
             {/* Small Item 1 */}
-            <div className="featured-item group">
+            <div 
+              className="featured-item group cursor-pointer"
+              onClick={() => handleSwap(1)}
+            >
               <div className="flex gap-6 items-center">
                 <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl">
                   <Image
-                    src={featuredItems[0].image}
-                    alt={featuredItems[0].name}
+                    src={smallItem1.image}
+                    alt={smallItem1.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
                 <div className="space-y-1">
                   <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
-                    {featuredItems[0].price}
+                    {smallItem1.price}
                   </span>
                   <h3 className="text-xl font-serif text-black group-hover:text-[#475DB1] transition-colors">
-                    {featuredItems[0].name}
+                    {smallItem1.name}
                   </h3>
                   <p className="text-xs text-neutral-500 font-light line-clamp-2">
-                    {featuredItems[0].description}
+                    {smallItem1.description}
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Small Item 2 */}
-            <div className="featured-item group">
+            <div 
+              className="featured-item group cursor-pointer"
+              onClick={() => handleSwap(2)}
+            >
               <div className="flex gap-6 items-center">
                 <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl">
                   <Image
-                    src={featuredItems[3].image}
-                    alt={featuredItems[3].name}
+                    src={smallItem2.image}
+                    alt={smallItem2.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
                 <div className="space-y-1">
                   <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
-                    {featuredItems[3].price}
+                    {smallItem2.price}
                   </span>
                   <h3 className="text-xl font-serif text-black group-hover:text-[#475DB1] transition-colors">
-                    {featuredItems[3].name}
+                    {smallItem2.name}
                   </h3>
                   <p className="text-xs text-neutral-500 font-light line-clamp-2">
-                    {featuredItems[3].description}
+                    {smallItem2.description}
                   </p>
                 </div>
               </div>
