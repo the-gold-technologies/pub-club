@@ -91,7 +91,7 @@ export default function ContactPage() {
             </span>
           </div>
           <h1 className="hero-reveal text-5xl md:text-7xl font-serif text-white tracking-tighter leading-[0.9]">
-            Contact <span className="italic font-light text-slate-300">Us</span>
+            Contact <span className="italic font-light text-[#475DB1]">Us</span>
           </h1>
         </div>
       </section>

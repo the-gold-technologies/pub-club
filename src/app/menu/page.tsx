@@ -136,7 +136,7 @@ export default function MenuPage() {
 
               <h1 className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
                 Our <br />
-                <span className="italic font-light text-slate-300">Menu</span>
+                <span className="italic font-light text-[#475DB1]">Menu</span>
               </h1>
             </div>
 
