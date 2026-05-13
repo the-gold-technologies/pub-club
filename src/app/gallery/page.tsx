@@ -10,14 +10,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ALL_CATEGORIES = [
-  "All",
-  "Indoor",
-  "Outdoor",
-  "Food",
-];
+const ALL_CATEGORIES = ["All", "Indoor", "Outdoor", "Food"];
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 15;
 
 const galleryItems = [
   // Indoor
@@ -87,141 +82,195 @@ const galleryItems = [
     category: "Indoor",
     aspect: "aspect-[4/5]",
   },
+  {
+    id: 12,
+    src: "/images/hero/interior-hero-v4.jpg",
+    category: "Indoor",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    id: 13,
+    src: "/images/gallery/testimonial-v2-1.jpg",
+    category: "Indoor",
+    aspect: "aspect-square",
+  },
+  {
+    id: 14,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-0066.jpg",
+    category: "Indoor",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    id: 15,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-125.jpg",
+    category: "Indoor",
+    aspect: "aspect-[4/5]",
+  },
 
   // Outdoor
   {
-    id: 12,
+    id: 16,
     src: "/images/amenities/garden.jpg",
     category: "Outdoor",
     aspect: "aspect-[4/3]",
   },
   {
-    id: 13,
+    id: 17,
     src: "/images/amenities/parking.jpg",
     category: "Outdoor",
     aspect: "aspect-square",
   },
   {
-    id: 14,
+    id: 18,
     src: "/images/amenities/barn.jpg",
     category: "Outdoor",
     aspect: "aspect-[3/4]",
   },
   {
-    id: 15,
+    id: 19,
     src: "/images/amenities/covered_space.jpg",
     category: "Outdoor",
     aspect: "aspect-[4/5]",
   },
   {
-    id: 16,
+    id: 20,
     src: "/images/about/exterior-blue.jpg",
     category: "Outdoor",
     aspect: "aspect-[16/9]",
   },
   {
-    id: 17,
+    id: 21,
     src: "/images/assets/SEVEN_STARS_2026_02_09-0001.jpg",
     category: "Outdoor",
     aspect: "aspect-[4/3]",
   },
   {
-    id: 18,
+    id: 22,
     src: "/images/assets/SEVEN_STARS_2026_02_09-0010.jpg",
     category: "Outdoor",
     aspect: "aspect-[3/4]",
   },
   {
-    id: 19,
+    id: 23,
     src: "/images/assets/SEVEN_STARS_2026_02_09-0065.jpg",
     category: "Outdoor",
     aspect: "aspect-square",
   },
   {
-    id: 20,
+    id: 24,
     src: "/images/assets/SEVEN_STARS_2026_02_09-0072.jpg",
     category: "Outdoor",
     aspect: "aspect-[4/5]",
   },
   {
-    id: 21,
+    id: 25,
     src: "/images/assets/SEVEN_STARS_2026_02_09-0074.jpg",
     category: "Outdoor",
     aspect: "aspect-square",
   },
   {
-    id: 22,
+    id: 26,
     src: "/images/hero/hero-12.jpg",
     category: "Outdoor",
     aspect: "aspect-[4/3]",
   },
+  {
+    id: 27,
+    src: "/images/hero/hero-13.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[16/9]",
+  },
+  {
+    id: 28,
+    src: "/images/hero/hero-new-2.png",
+    category: "Outdoor",
+    aspect: "aspect-square",
+  },
+  {
+    id: 29,
+    src: "/images/footer-bg.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    id: 30,
+    src: "/images/gallery/gallery-25.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[3/4]",
+  },
 
   // Food
   {
-    id: 23,
+    id: 31,
     src: "/images/gallery/food-gourmet.jpg",
     category: "Food",
     aspect: "aspect-square",
   },
   {
-    id: 24,
+    id: 32,
     src: "/images/gallery/feature-classic-1.jpg",
     category: "Food",
     aspect: "aspect-[4/3]",
   },
   {
-    id: 25,
+    id: 33,
     src: "/images/gallery/feature-roast-1.jpg",
     category: "Food",
     aspect: "aspect-[3/4]",
   },
   {
-    id: 26,
+    id: 34,
     src: "/images/gallery/feature-special-1.jpg",
     category: "Food",
     aspect: "aspect-[4/5]",
   },
   {
-    id: 27,
+    id: 35,
     src: "/images/gallery/event-celebration.jpg",
     category: "Food",
     aspect: "aspect-square",
   },
   {
-    id: 28,
+    id: 36,
     src: "/images/menu/SEVEN_STARS_2026_02_09-0159.jpg",
     category: "Food",
     aspect: "aspect-[4/3]",
   },
   {
-    id: 29,
+    id: 37,
     src: "/images/menu/SEVEN_STARS_2026_02_09-129.jpg",
     category: "Food",
     aspect: "aspect-[3/4]",
   },
   {
-    id: 30,
+    id: 38,
     src: "/images/menu/SEVEN_STARS_2026_02_09-142.jpg",
     category: "Food",
     aspect: "aspect-square",
   },
   {
-    id: 31,
+    id: 39,
     src: "/images/menu/SEVEN_STARS_2026_02_09-213.jpg",
     category: "Food",
     aspect: "aspect-[4/5]",
   },
   {
-    id: 32,
+    id: 40,
     src: "/images/assets/SEVEN_STARS_2026_02_09-0112.jpg",
     category: "Food",
     aspect: "aspect-[3/4]",
   },
   {
-    id: 33,
+    id: 41,
     src: "/images/amenities/ales_v2.jpg",
     category: "Food",
     aspect: "aspect-[16/9]",
+  },
+  {
+    id: 42,
+    src: "/images/gallery/gallery-6.jpg",
+    category: "Food",
+    aspect: "aspect-[4/3]",
   },
 ];
 
@@ -373,28 +422,49 @@ export default function GalleryPage() {
             ))}
           </div>
 
-          {/* Masonry Grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-            {currentItems.map((item) => (
-              <div
-                key={item.id}
-                className="gallery-item relative break-inside-avoid rounded-[2rem] overflow-hidden group shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer"
-              >
-                <div className={`relative w-full ${item.aspect}`}>
-                  <Image
-                    src={item.src}
-                    alt={item.category}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-white text-xs uppercase tracking-widest font-bold border border-white/30 px-6 py-2 rounded-full backdrop-blur-sm">
-                      {item.category}
-                    </span>
-                  </div>
+          {/* Flex Columns Grid for Dynamic Masonry with Perfect Bottom Alignment */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {[0, 1, 2].map((colIndex) => {
+              const colItems = currentItems.filter(
+                (_, idx) => idx % 3 === colIndex,
+              );
+
+              if (colItems.length === 0) return null;
+
+              return (
+                <div key={colIndex} className="flex flex-col gap-6 h-full">
+                  {colItems.map((item, itemIdx) => {
+                    const isLast = itemIdx === colItems.length - 1;
+                    return (
+                      <div
+                        key={item.id}
+                        className={`gallery-item relative rounded-[2rem] overflow-hidden group shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer w-full ${
+                          isLast ? "flex-1 min-h-[200px]" : ""
+                        }`}
+                      >
+                        <div
+                          className={`relative w-full ${
+                            isLast ? "h-full" : item.aspect
+                          }`}
+                        >
+                          <Image
+                            src={item.src}
+                            alt={item.category}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-start justify-start p-6">
+                            <span className="text-white text-xs uppercase tracking-widest font-bold border border-white/30 px-4 py-1.5 rounded-full backdrop-blur-md bg-white/10">
+                              {item.category}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Empty State */}

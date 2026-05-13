@@ -12,29 +12,120 @@ import {
   Music,
   Tent,
   Warehouse,
+  Calendar,
+  Clock,
+  ArrowRight,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Data for Upcoming Events
+const upcomingEvents = [
+  {
+    id: 1,
+    title: "Mother's Day Lunch",
+    date: "March 30th",
+    time: "Set Luncheon",
+    description:
+      "Treat Mum to a special day out with our exclusive 2 or 3 Course Set Luncheon. Enjoy our seasonal menus crafted by the head chef for the perfect family gathering.",
+    pricing:
+      "Adults: £28.95 (2 Courses) / £33.95 (3 Courses) | Children: £17.95 / £21.95",
+    highlight: "Glass of Prosecco for Moms",
+    contactInfo: "01865 343337 | info@sevenstarsatmb.co.uk",
+    image: "/images/481171001_957353706531406_1040071741557670337_nlow.png",
+    category: "Special Occasion",
+  },
+  {
+    id: 2,
+    title: "Summer Solstice Cask Ale Festival",
+    date: "June 21, 2026",
+    time: "12:00 PM - 11:00 PM",
+    description:
+      "Sample a curated line-up of rare local casks and artisan brews in our sunny beer garden with live acoustic accompaniment.",
+    pricing: null,
+    highlight: "Live Acoustic Sets All Afternoon",
+    contactInfo: null,
+    image: "/images/481171001_957353706531406_1040071741557670337_nlow.webp",
+    category: "Festival & Music",
+  },
+  {
+    id: 3,
+    title: "Midsummer Live Jazz & Seafood Soirée",
+    date: "August 8, 2026",
+    time: "4:00 PM - 9:00 PM",
+    description:
+      "Fresh coastal catches, premium oysters, and crisp champagne flows alongside smooth live saxophone rhythms.",
+    pricing: null,
+    highlight: "Fresh Local Oysters & Champagne",
+    contactInfo: null,
+    image: "/images/481171001_957353706531406_1040071741557670337_nlow (1).webp",
+    category: "Live Music",
+  },
+  {
+    id: 4,
+    title: "Seasonal Gastro Banquet & Pairing",
+    date: "October 12, 2026",
+    time: "7:00 PM - 10:30 PM",
+    description:
+      "A five-course tasting journey highlighting seasonal game, forest-foraged ingredients, and curated local vintages.",
+    pricing: null,
+    highlight: "Exclusive Chef's Tasting Experience",
+    contactInfo: null,
+    image: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
+    category: "Culinary Tasting",
+  },
+];
+
+// Data for Past Archive Events Marquee
+const oldEvents = [
+  {
+    src: "/images/481171001_957353706531406_1040071741557670337_nlow.png",
+    name: "Mother's Day Classic Luncheon",
+  },
+  {
+    src: "/images/481171001_957353706531406_1040071741557670337_nlow.webp",
+    name: "Cask Ale & Acoustic Soirée",
+  },
+  {
+    src: "/images/481171001_957353706531406_1040071741557670337_nlow (1).webp",
+    name: "Midsummer Jazz Evening",
+  },
+  {
+    src: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
+    name: "Private Gastro Pairing Banquet",
+  },
+  {
+    src: "/images/481171001_957353706531406_1040071741557670337_nlow.png",
+    name: "Spring Charity Gala Gathering",
+  },
+  {
+    src: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
+    name: "Seasonal Harvest Celebration",
+  },
+];
+
 export default function EventsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Parallax Background
-      gsap.to(bgRef.current, {
-        yPercent: 15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      if (bgRef.current && heroRef.current) {
+        gsap.to(bgRef.current, {
+          yPercent: 15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
 
       // Hero content stagger
       const tl = gsap.timeline({ delay: 0.2 });
@@ -121,8 +212,191 @@ export default function EventsPage() {
         </div>
       </section>
 
+      {/* UNIFIED CREATIVE OCCASIONS & ARCHIVE SHOWCASE */}
+      <section className="py-24 bg-slate-50 relative overflow-hidden">
+        {/* Background Ambient Decorative Accents */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#475DB1]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#475DB1]/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Unified Section Header */}
+          <div className="reveal-section text-center mb-20">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <span className="w-12 h-px bg-[#475DB1]" />
+              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold">
+                Seven Stars Calendar
+              </span>
+              <span className="w-12 h-px bg-[#475DB1]" />
+            </div>
+            <h2 className="text-5xl md:text-7xl font-serif text-slate-900 tracking-tight leading-none">
+              Upcoming{" "}
+              <em className="text-[#475DB1] font-light not-italic">&</em> Past
+              Occasions
+            </h2>
+            <p className="text-lg text-slate-500 font-light mt-4 max-w-2xl mx-auto">
+              Experience the vibrant tapestry of Seven Stars. Join us for
+              upcoming featured dining events or explore captured moments from
+              our historic archives.
+            </p>
+          </div>
+
+          {/* THE CREATIVE LEFT-RIGHT EDITORIAL SUITE */}
+          <div className="space-y-20 sm:space-y-32 mb-24">
+            {upcomingEvents.map((ev, idx) => {
+              const isEven = idx % 2 === 1; // Alternating layout condition
+              return (
+                <div
+                  key={ev.id}
+                  className="reveal-section grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+                >
+                  {/* Image Block */}
+                  <div
+                    className={`lg:col-span-6 relative flex justify-center ${
+                      isEven ? "lg:order-2" : "lg:order-1"
+                    }`}
+                  >
+                    {/* Beautifully-proportioned flyer frame perfectly calibrated to intermediate layout sizing */}
+                    <div className="relative aspect-[4/5] w-full max-w-[416px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 bg-white group">
+                      <Image
+                        src={ev.image}
+                        alt={ev.title}
+                        fill
+                        className="object-contain p-2.5 transition-transform duration-700 group-hover:scale-[1.02]"
+                      />
+                    </div>
+
+                    {/* Ambient subtle decorative back-glow */}
+                    <div className="absolute -inset-3 max-w-[416px] bg-[#475DB1]/5 rounded-[2.5rem] blur-2xl -z-10" />
+                  </div>
+
+                  {/* Content Block */}
+                  <div
+                    className={`lg:col-span-6 flex flex-col justify-center ${
+                      isEven ? "lg:order-1 lg:pr-12" : "lg:order-2 lg:pl-12"
+                    }`}
+                  >
+                    <div className="space-y-6 max-w-xl mx-auto lg:mx-0 text-center lg:text-left">
+                      {/* Editorial Category Tag */}
+                      <div className="inline-block">
+                        <span className="px-3.5 py-1 rounded-full bg-[#475DB1]/10 text-[#475DB1] text-[9px] uppercase tracking-widest font-black border border-[#475DB1]/20">
+                          {ev.category}
+                        </span>
+                      </div>
+
+                      {/* Main Title */}
+                      <h3 className="text-4xl sm:text-5xl font-serif text-slate-900 tracking-tight leading-tight">
+                        {ev.title}
+                      </h3>
+
+                      {/* High-end decorative accent line */}
+                      <div className="w-12 h-px bg-[#475DB1] mx-auto lg:mx-0" />
+
+                      {/* Concise Description */}
+                      <p className="text-slate-600 font-light text-base sm:text-lg leading-relaxed">
+                        {ev.description}
+                      </p>
+
+                      {/* Integrated Action trigger & Date/Time metadata footer strip docked towards image */}
+                      <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        {/* CTA Button placed on the side physically nearest to the image block */}
+                        <div className={`w-full sm:w-auto ${isEven ? 'sm:order-2' : 'sm:order-1'}`}>
+                          <a
+                            href="/contact"
+                            className="inline-flex items-center gap-3 bg-[#475DB1] hover:bg-[#384a91] text-white px-7 py-3 rounded-full text-xs uppercase tracking-widest font-bold transition-all duration-300 shadow-md hover:shadow-xl group/btn w-full sm:w-auto justify-center"
+                          >
+                            <span>Request Table</span>
+                            <ArrowRight
+                              size={12}
+                              className="group-hover/btn:translate-x-1 transition-transform duration-300 shrink-0"
+                            />
+                          </a>
+                        </div>
+
+                        {/* Date/Time Metadata arranged on the opposing side */}
+                        <div className={`flex flex-col items-center text-xs text-slate-500 space-y-1 w-full sm:w-auto ${isEven ? 'sm:order-1 sm:items-start' : 'sm:order-2 sm:items-end'}`}>
+                          <span className="flex items-center gap-1.5 font-medium text-[#475DB1]">
+                            <Calendar size={13} className="shrink-0" /> {ev.date}
+                          </span>
+                          <span className="flex items-center gap-1.5 font-light text-slate-400">
+                            <Clock size={13} className="shrink-0" /> {ev.time}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* PART 3: CONTINUOUS ARCHIVE VAULT SLIDE (Integrated directly into the section flow) */}
+          <div className="reveal-section pt-6 border-t border-slate-200/60">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 px-2">
+              <div>
+                <span className="text-[9px] tracking-widest text-[#475DB1] uppercase font-bold block">
+                  Historic Archive
+                </span>
+                <h3 className="text-2xl font-serif text-slate-900 tracking-tight">
+                  Moments From Our Vault
+                </h3>
+              </div>
+              <p className="text-xs text-slate-400 font-light italic max-w-sm">
+                Hover over any archived photograph below to reveal the signature
+                occasion name.
+              </p>
+            </div>
+
+            <div className="relative w-full overflow-hidden flex flex-col gap-6">
+              <div className="flex w-max animate-events-marquee hover:[animation-play-state:paused] items-center gap-6 py-2">
+                {[...Array(2)].map((_, loopIdx) => (
+                  <div key={loopIdx} className="flex gap-6 items-center">
+                    {oldEvents.map((ev, idx) => (
+                      <div
+                        key={`${loopIdx}-${idx}`}
+                        className="relative w-72 md:w-80 h-56 md:h-64 rounded-2xl overflow-hidden group cursor-pointer border border-slate-200/60 shadow-md hover:shadow-xl shrink-0 transition-all duration-300"
+                      >
+                        <Image
+                          src={ev.src}
+                          alt={ev.name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
+                          <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 w-full">
+                            <span className="text-[8px] tracking-widest text-[#475DB1] uppercase font-bold block mb-1">
+                              Archive Feature
+                            </span>
+                            <h4 className="text-white font-serif text-base leading-snug">
+                              {ev.name}
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <style jsx>{`
+          @keyframes eventsMarquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          .animate-events-marquee {
+            animation: eventsMarquee 40s linear infinite;
+          }
+        `}</style>
+      </section>
+
       {/* Introduction - The Indoor Space */}
-      <section className="py-24 md:py-32 bg-white">
+      {/* <section className="py-24 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="reveal-section space-y-8">
@@ -174,10 +448,10 @@ export default function EventsPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* The Garden - The Outdoor Space */}
-      <section className="py-24 md:py-32 bg-slate-50">
+      {/* <section className="py-24 md:py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="reveal-section lg:order-2 space-y-8">
@@ -229,7 +503,7 @@ export default function EventsPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* What We Host Section */}
       <section className="py-24 bg-slate-900 text-white overflow-hidden relative">
@@ -310,8 +584,8 @@ export default function EventsPage() {
                   </div>
                   <h3 className="text-2xl font-serif mb-4">Celebrations</h3>
                   <p className="text-white/90 font-light leading-relaxed">
-                    Birthdays, anniversaries, and family reunions find their perfect
-                    home in our versatile spaces.
+                    Birthdays, anniversaries, and family reunions find their
+                    perfect home in our versatile spaces.
                   </p>
                 </div>
               </div>
@@ -332,8 +606,8 @@ export default function EventsPage() {
                   </div>
                   <h3 className="text-2xl font-serif mb-4">Live Events</h3>
                   <p className="text-white/90 font-light leading-relaxed">
-                    Our garden and bar often come alive with live acoustic sets and
-                    community performances.
+                    Our garden and bar often come alive with live acoustic sets
+                    and community performances.
                   </p>
                 </div>
               </div>
