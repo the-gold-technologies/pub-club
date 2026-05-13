@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { User, Calendar, Menu } from "lucide-react";
+import { Contact, Calendar, Menu } from "lucide-react";
 import gsap from "gsap";
 
 export default function Navbar() {
@@ -97,9 +97,12 @@ export default function Navbar() {
             <div className="flex items-center space-x-2">
               <Link
                 href={"/contact"}
-                className="p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center"
+                className="relative group p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center"
               >
-                <User size={18} />
+                <Contact size={18} />
+                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-white/10 backdrop-blur-sm shadow-lg">
+                  Contact Us
+                </span>
               </Link>
               <button className="p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center">
                 <Calendar size={18} />
