@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import {
@@ -97,6 +98,23 @@ export default function EventsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  // State to track which event is main (index 0) and which are side items (index 1 and 2)
+  const [displayIndices, setDisplayIndices] = useState([0, 1, 2]);
+
+  const handleSwap = (clickedPosition: number) => {
+    setDisplayIndices((prev) => {
+      const newIndices = [...prev];
+      const temp = newIndices[0];
+      newIndices[0] = newIndices[clickedPosition];
+      newIndices[clickedPosition] = temp;
+      return newIndices;
+    });
+  };
+
+  const mainItem = upcomingEvents[displayIndices[0]];
+  const smallItem1 = upcomingEvents[displayIndices[1]];
+  const smallItem2 = upcomingEvents[displayIndices[2]];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -228,97 +246,124 @@ export default function EventsPage() {
           </div>
 
           {/* THE CREATIVE LEFT-RIGHT EDITORIAL SUITE */}
-          <div className="space-y-20 sm:space-y-32 mb-24">
-            {upcomingEvents.map((ev, idx) => {
-              const isEven = idx % 2 === 1; // Alternating layout condition
-              return (
+          <div className="mb-24">
+            {/* Featured Items - Asymmetric Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20">
+              {/* Main Large Item */}
+              <div className="reveal-section lg:col-span-7 space-y-6">
+                <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] shadow-2xl group bg-slate-50/50">
+                  <div className="absolute inset-0">
+                    <Image
+                      src={mainItem.image}
+                      alt={mainItem.title}
+                      fill
+                      className="object-contain transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="absolute bottom-8 left-8 text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
+                    <span className="text-[10px] tracking-widest uppercase mb-1 block">
+                      {mainItem.category}
+                    </span>
+                    <p className="text-xl font-serif italic">
+                      {mainItem.highlight || "Memorable moments at Seven Stars"}
+                    </p>
+                  </div>
+                  <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center shadow-lg transform -rotate-12 text-center p-1">
+                    <span className="font-serif text-xs font-bold text-[#475DB1] leading-tight">
+                      {mainItem.date}
+                    </span>
+                  </div>
+                </div>
+                <div className="max-w-2xl">
+                  <h3 className="text-3xl font-serif text-slate-900 mb-3">
+                    {mainItem.title}
+                  </h3>
+                  <p className="text-base text-slate-600 font-light leading-relaxed">
+                    {mainItem.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Secondary Column */}
+              <div className="lg:col-span-5 flex flex-col justify-center gap-12">
+                {/* Small Item 1 */}
                 <div
-                  key={ev.id}
-                  className="reveal-section grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+                  className="reveal-section group cursor-pointer"
+                  onClick={() => handleSwap(1)}
                 >
-                  {/* Image Block */}
-                  <div
-                    className={`lg:col-span-6 relative flex justify-center ${
-                      isEven ? "lg:order-2" : "lg:order-1"
-                    }`}
-                  >
-                    {/* Beautifully-proportioned flyer frame optimized for edge-to-edge asset span */}
-                    <div className="relative aspect-[4/5] w-full max-w-[416px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200/80 group bg-slate-50/20">
+                  <div className="flex gap-6 items-center">
+                    <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl bg-slate-50/50">
                       <Image
-                        src={ev.image}
-                        alt={ev.title}
+                        src={smallItem1.image}
+                        alt={smallItem1.title}
                         fill
-                        className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                        className="object-contain group-hover:scale-110 transition-transform duration-700"
                       />
                     </div>
-
-                    {/* Ambient subtle decorative back-glow */}
-                    <div className="absolute -inset-3 max-w-[416px] bg-[#475DB1]/5 rounded-[2.5rem] blur-2xl -z-10" />
-                  </div>
-
-                  {/* Content Block */}
-                  <div
-                    className={`lg:col-span-6 flex flex-col justify-center ${
-                      isEven ? "lg:order-1 lg:pr-12" : "lg:order-2 lg:pl-12"
-                    }`}
-                  >
-                    <div className="space-y-6 max-w-xl mx-auto lg:mx-0 text-center lg:text-left">
-                      {/* Editorial Category Tag */}
-                      <div className="inline-block">
-                        <span className="px-3.5 py-1 rounded-full bg-[#475DB1]/10 text-[#475DB1] text-[9px] uppercase tracking-widest font-black border border-[#475DB1]/20">
-                          {ev.category}
-                        </span>
-                      </div>
-
-                      {/* Main Title */}
-                      <h3 className="text-4xl sm:text-5xl font-serif text-slate-900 tracking-tight leading-tight">
-                        {ev.title}
+                    <div className="space-y-1">
+                      <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
+                        {smallItem1.date}
+                      </span>
+                      <h3 className="text-xl font-serif text-slate-900 group-hover:text-[#475DB1] transition-colors">
+                        {smallItem1.title}
                       </h3>
-
-                      {/* High-end decorative accent line */}
-                      <div className="w-12 h-px bg-[#475DB1] mx-auto lg:mx-0" />
-
-                      {/* Concise Description */}
-                      <p className="text-slate-600 font-light text-base sm:text-lg leading-relaxed">
-                        {ev.description}
+                      <p className="text-xs text-slate-500 font-light line-clamp-2">
+                        {smallItem1.description}
                       </p>
-
-                      {/* Integrated Action trigger & Date/Time metadata footer strip docked towards image */}
-                      <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        {/* CTA Button placed on the side physically nearest to the image block */}
-                        <div
-                          className={`w-full sm:w-auto ${isEven ? "sm:order-2" : "sm:order-1"}`}
-                        >
-                          <a
-                            href="/contact"
-                            className="inline-flex items-center gap-3 bg-[#475DB1] hover:bg-[#384a91] text-white px-7 py-3 rounded-full text-xs uppercase tracking-widest font-bold transition-all duration-300 shadow-md hover:shadow-xl group/btn w-full sm:w-auto justify-center"
-                          >
-                            <span>Request Table</span>
-                            <ArrowRight
-                              size={12}
-                              className="group-hover/btn:translate-x-1 transition-transform duration-300 shrink-0"
-                            />
-                          </a>
-                        </div>
-
-                        {/* Date/Time Metadata arranged on the opposing side */}
-                        <div
-                          className={`flex flex-col items-center text-xs text-slate-500 space-y-1 w-full sm:w-auto ${isEven ? "sm:order-1 sm:items-start" : "sm:order-2 sm:items-end"}`}
-                        >
-                          <span className="flex items-center gap-1.5 font-medium text-[#475DB1]">
-                            <Calendar size={13} className="shrink-0" />{" "}
-                            {ev.date}
-                          </span>
-                          <span className="flex items-center gap-1.5 font-light text-slate-400">
-                            <Clock size={13} className="shrink-0" /> {ev.time}
-                          </span>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Small Item 2 */}
+                <div
+                  className="reveal-section group cursor-pointer"
+                  onClick={() => handleSwap(2)}
+                >
+                  <div className="flex gap-6 items-center">
+                    <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl bg-slate-50/50">
+                      <Image
+                        src={smallItem2.image}
+                        alt={smallItem2.title}
+                        fill
+                        className="object-contain group-hover:scale-110 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
+                        {smallItem2.date}
+                      </span>
+                      <h3 className="text-xl font-serif text-slate-900 group-hover:text-[#475DB1] transition-colors">
+                        {smallItem2.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 font-light line-clamp-2">
+                        {smallItem2.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Explore CTA */}
+                <div className="reveal-section pt-4">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-5 group"
+                  >
+                    <div className="w-14 h-14 rounded-full bg-[#475DB1] flex items-center justify-center text-white transition-transform duration-500 group-hover:scale-110 group-hover:rotate-45">
+                      <ArrowRight size={20} />
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="block text-xs font-bold uppercase tracking-[0.15em] text-slate-900">
+                        Request Table
+                      </span>
+                      <span className="block text-[10px] text-slate-400 font-light">
+                        Inquire about our upcoming occasions
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* PART 3: CONTINUOUS ARCHIVE VAULT SLIDE (Integrated directly into the section flow) */}

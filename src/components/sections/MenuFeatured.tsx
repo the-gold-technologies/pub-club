@@ -42,7 +42,6 @@ const featuredItems = [
 
 export default function MenuFeatured() {
   const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // State to track which item is main (index 0) and which are small (index 1 and 2)
   const [displayIndices, setDisplayIndices] = useState([1, 0, 3]);
@@ -196,7 +195,7 @@ export default function MenuFeatured() {
           {/* Secondary Column */}
           <div className="lg:col-span-5 flex flex-col justify-center gap-12">
             {/* Small Item 1 */}
-            <div 
+            <div
               className="featured-item group cursor-pointer"
               onClick={() => handleSwap(1)}
             >
@@ -224,7 +223,7 @@ export default function MenuFeatured() {
             </div>
 
             {/* Small Item 2 */}
-            <div 
+            <div
               className="featured-item group cursor-pointer"
               onClick={() => handleSwap(2)}
             >
