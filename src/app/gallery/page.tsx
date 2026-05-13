@@ -12,165 +12,216 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ALL_CATEGORIES = [
   "All",
-  "Interiors",
-  "Beer Garden",
-  "Events",
-  "Gastronomy",
-  "The Cellar",
+  "Indoor",
+  "Outdoor",
+  "Food",
 ];
 
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 12;
 
 const galleryItems = [
-  // Interiors
+  // Indoor
   {
     id: 1,
-    src: "/images/gallery/gallery-2.jpg",
-    category: "Interiors",
+    src: "/images/gallery/gallery-1.jpg",
+    category: "Indoor",
     aspect: "aspect-[4/3]",
   },
   {
     id: 2,
-    src: "/images/gallery/gallery-25.jpg",
-    category: "Interiors",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    id: 3,
-    src: "/images/gallery/gallery-6.jpg",
-    category: "Interiors",
+    src: "/images/gallery/gallery-2.jpg",
+    category: "Indoor",
     aspect: "aspect-square",
   },
   {
+    id: 3,
+    src: "/images/gallery/gallery-3.jpg",
+    category: "Indoor",
+    aspect: "aspect-[3/4]",
+  },
+  {
     id: 4,
-    src: "/images/gallery/gallery-1.jpg",
-    category: "Interiors",
+    src: "/images/gallery/gallery-4.jpg",
+    category: "Indoor",
     aspect: "aspect-[4/3]",
   },
-  // Beer Garden
   {
     id: 5,
-    src: "/images/assets/SEVEN_STARS_2026_02_09-0074.jpg",
-    category: "Beer Garden",
+    src: "/images/gallery/gallery-6.jpg",
+    category: "Indoor",
     aspect: "aspect-square",
   },
   {
     id: 6,
-    src: "/images/assets/SEVEN_STARS_2026_02_09-0001.jpg",
-    category: "Beer Garden",
+    src: "/images/gallery/gallery-8.jpg",
+    category: "Indoor",
     aspect: "aspect-[4/5]",
   },
   {
     id: 7,
-    src: "/images/assets/SEVEN_STARS_2026_02_09-0010.jpg",
-    category: "Beer Garden",
-    aspect: "aspect-[16/9]",
+    src: "/images/gallery/gallery-25.jpg",
+    category: "Indoor",
+    aspect: "aspect-[3/4]",
   },
-  // Events
   {
     id: 8,
-    src: "/images/gallery/event-celebration.jpg",
-    category: "Events",
-    aspect: "aspect-square",
+    src: "/images/amenities/fireplace_v2.jpg",
+    category: "Indoor",
+    aspect: "aspect-[4/3]",
   },
   {
     id: 9,
-    src: "/images/gallery/gallery-3.jpg",
-    category: "Events",
-    aspect: "aspect-[3/4]",
+    src: "/images/amenities/music.jpg",
+    category: "Indoor",
+    aspect: "aspect-square",
   },
   {
     id: 10,
-    src: "/images/gallery/gallery-4.jpg",
-    category: "Events",
-    aspect: "aspect-[4/3]",
-  },
-  // Gastronomy
-  {
-    id: 11,
-    src: "/images/assets/SEVEN_STARS_2026_02_09-0112.jpg",
-    category: "Gastronomy",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    id: 12,
-    src: "/images/gallery/feature-classic-1.jpg",
-    category: "Gastronomy",
-    aspect: "aspect-square",
-  },
-  {
-    id: 13,
-    src: "/images/gallery/gallery-25.jpg",
-    category: "Gastronomy",
-    aspect: "aspect-[4/3]",
-  },
-  // The Cellar
-  {
-    id: 14,
-    src: "/images/gallery/gallery-8.jpg",
-    category: "The Cellar",
-    aspect: "aspect-[4/5]",
-  },
-  {
-    id: 15,
-    src: "/images/gallery/gallery-2.jpg",
-    category: "The Cellar",
-    aspect: "aspect-square",
-  },
-  {
-    id: 16,
-    src: "/images/gallery/gallery-6.jpg",
-    category: "The Cellar",
-    aspect: "aspect-[4/3]",
-  },
-  // Additional Mix for Pagination
-  {
-    id: 17,
-    src: "/images/gallery/gallery-1.jpg",
-    category: "Interiors",
-    aspect: "aspect-square",
-  },
-  {
-    id: 18,
-    src: "/images/gallery/gallery-3.jpg",
-    category: "Interiors",
-    aspect: "aspect-[4/5]",
-  },
-  {
-    id: 19,
-    src: "/images/gallery/gallery-4.jpg",
-    category: "Interiors",
+    src: "/images/hero/interior-hero-v2.jpg",
+    category: "Indoor",
     aspect: "aspect-[16/9]",
   },
   {
-    id: 20,
-    src: "/images/gallery/food-gourmet.jpg",
-    category: "Gastronomy",
-    aspect: "aspect-square",
+    id: 11,
+    src: "/images/hero/interior-hero-v5.jpg",
+    category: "Indoor",
+    aspect: "aspect-[4/5]",
   },
+
+  // Outdoor
   {
-    id: 21,
-    src: "/images/gallery/event-celebration.jpg",
-    category: "Events",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    id: 22,
-    src: "/images/gallery/gallery-8.jpg",
-    category: "Beer Garden",
+    id: 12,
+    src: "/images/amenities/garden.jpg",
+    category: "Outdoor",
     aspect: "aspect-[4/3]",
   },
   {
-    id: 23,
-    src: "/images/gallery/feature-roast-1.jpg",
-    category: "Gastronomy",
+    id: 13,
+    src: "/images/amenities/parking.jpg",
+    category: "Outdoor",
+    aspect: "aspect-square",
+  },
+  {
+    id: 14,
+    src: "/images/amenities/barn.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    id: 15,
+    src: "/images/amenities/covered_space.jpg",
+    category: "Outdoor",
     aspect: "aspect-[4/5]",
   },
   {
-    id: 24,
-    src: "/images/gallery/gallery-1.jpg",
-    category: "The Cellar",
+    id: 16,
+    src: "/images/about/exterior-blue.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[16/9]",
+  },
+  {
+    id: 17,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-0001.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    id: 18,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-0010.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    id: 19,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-0065.jpg",
+    category: "Outdoor",
     aspect: "aspect-square",
+  },
+  {
+    id: 20,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-0072.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[4/5]",
+  },
+  {
+    id: 21,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-0074.jpg",
+    category: "Outdoor",
+    aspect: "aspect-square",
+  },
+  {
+    id: 22,
+    src: "/images/hero/hero-12.jpg",
+    category: "Outdoor",
+    aspect: "aspect-[4/3]",
+  },
+
+  // Food
+  {
+    id: 23,
+    src: "/images/gallery/food-gourmet.jpg",
+    category: "Food",
+    aspect: "aspect-square",
+  },
+  {
+    id: 24,
+    src: "/images/gallery/feature-classic-1.jpg",
+    category: "Food",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    id: 25,
+    src: "/images/gallery/feature-roast-1.jpg",
+    category: "Food",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    id: 26,
+    src: "/images/gallery/feature-special-1.jpg",
+    category: "Food",
+    aspect: "aspect-[4/5]",
+  },
+  {
+    id: 27,
+    src: "/images/gallery/event-celebration.jpg",
+    category: "Food",
+    aspect: "aspect-square",
+  },
+  {
+    id: 28,
+    src: "/images/menu/SEVEN_STARS_2026_02_09-0159.jpg",
+    category: "Food",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    id: 29,
+    src: "/images/menu/SEVEN_STARS_2026_02_09-129.jpg",
+    category: "Food",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    id: 30,
+    src: "/images/menu/SEVEN_STARS_2026_02_09-142.jpg",
+    category: "Food",
+    aspect: "aspect-square",
+  },
+  {
+    id: 31,
+    src: "/images/menu/SEVEN_STARS_2026_02_09-213.jpg",
+    category: "Food",
+    aspect: "aspect-[4/5]",
+  },
+  {
+    id: 32,
+    src: "/images/assets/SEVEN_STARS_2026_02_09-0112.jpg",
+    category: "Food",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    id: 33,
+    src: "/images/amenities/ales_v2.jpg",
+    category: "Food",
+    aspect: "aspect-[16/9]",
   },
 ];
 
