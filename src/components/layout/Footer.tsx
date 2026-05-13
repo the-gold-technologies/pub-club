@@ -283,22 +283,28 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="footer-bottom py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="footer-bottom py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <p className="text-[10px] text-primary-400/60 uppercase tracking-[0.3em]">
             © {new Date().getFullYear()} Seven Stars. All Rights Reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <Link
-              href="#"
-              className="text-[10px] text-primary-400/60 hover:text-white uppercase tracking-widest transition-colors"
-            >
+          <div className="flex items-center gap-4 text-[10px] text-primary-400/60 uppercase tracking-widest flex-wrap justify-center">
+            <span className="flex items-center gap-1">
+              Made with <span className="text-red-500 text-xs">♥</span> by{" "}
+              <a
+                href="https://thegoldtechnologies.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-[#475DB1] font-bold underline decoration-white/20 underline-offset-2 transition-colors"
+              >
+                The Gold Technologies
+              </a>
+            </span>
+            <span className="text-primary-800">·</span>
+            <Link href="#" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
             <span className="text-primary-800">·</span>
-            <Link
-              href="#"
-              className="text-[10px] text-primary-400/60 hover:text-white uppercase tracking-widest transition-colors"
-            >
+            <Link href="#" className="hover:text-white transition-colors">
               Terms of Service
             </Link>
           </div>

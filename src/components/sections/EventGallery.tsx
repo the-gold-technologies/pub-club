@@ -9,14 +9,23 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const eventImages = [
-  { src: "/images/gallery/gallery-3.jpg", alt: "Event Highlights" },
-  { src: "/images/gallery/gallery-4.jpg", alt: "Vibrant Atmosphere" },
   {
-    src: "/images/gallery/event-celebration.jpg",
-    alt: "Main Celebration",
+    src: "/images/481171001_957353706531406_1040071741557670337_nlow.png",
+    alt: "Mother's Day Special Luncheon",
   },
-  { src: "/images/gallery/gallery-8.jpg", alt: "Gathering Details" },
-  { src: "/images/gallery/gallery-6.jpg", alt: "Evening Glow" },
+  {
+    src: "/images/481171001_957353706531406_1040071741557670337_nlow.webp",
+    alt: "Mother's Day Celebration Table",
+  },
+  {
+    src: "/images/481171001_957353706531406_1040071741557670337_nlow (1).webp",
+    alt: "Mother's Day Experience Preview",
+  },
+  {
+    src: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
+    alt: "Indian Heritage Banquet",
+  },
+  { src: "/images/gallery/gallery-3.jpg", alt: "Club Atmosphere" },
 ];
 
 export default function EventGallery() {
@@ -91,7 +100,7 @@ export default function EventGallery() {
                 src={eventImages[0].src}
                 alt={eventImages[0].alt}
                 fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
               />
             </Link>
             <Link
@@ -102,25 +111,25 @@ export default function EventGallery() {
                 src={eventImages[1].src}
                 alt={eventImages[1].alt}
                 fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
               />
             </Link>
           </div>
 
           {/* Center Column: 1 large tall image */}
-          <div className="md:col-span-3 h-full order-1 md:order-2">
+          <div className="md:col-span-3 h-full order-1 md:order-2 flex justify-center items-center">
             <Link
               href="/events"
-              className="gallery-photo-wrapper group relative h-[450px] md:h-[650px] w-full rounded-3xl overflow-hidden bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.5)] transition-all duration-500 block cursor-pointer"
+              className="gallery-photo-wrapper group relative h-[450px] md:h-[650px] aspect-[4/5] max-w-full rounded-3xl overflow-hidden transition-all duration-500 block cursor-pointer shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5"
             >
               <Image
                 src={eventImages[2].src}
                 alt={eventImages[2].alt}
                 fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                className="object-cover transition-transform duration-1000 group-hover:scale-[1.02] opacity-95 group-hover:opacity-100"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] via-transparent to-transparent opacity-30 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
             </Link>
           </div>
 
@@ -134,7 +143,7 @@ export default function EventGallery() {
                 src={eventImages[3].src}
                 alt={eventImages[3].alt}
                 fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
               />
             </Link>
             <Link

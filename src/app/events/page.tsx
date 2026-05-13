@@ -30,49 +30,36 @@ const upcomingEvents = [
     time: "Set Luncheon",
     description:
       "Treat Mum to a special day out with our exclusive 2 or 3 Course Set Luncheon. Enjoy our seasonal menus crafted by the head chef for the perfect family gathering.",
-    pricing:
-      "Adults: £28.95 (2 Courses) / £33.95 (3 Courses) | Children: £17.95 / £21.95",
-    highlight: "Glass of Prosecco for Moms",
+    pricing: "ADULTS £28.95 / £33.95 | CHILDREN £17.95 / £21.95",
+    highlight: "GLASS OF PROSECCO FOR MOMS",
     contactInfo: "01865 343337 | info@sevenstarsatmb.co.uk",
     image: "/images/481171001_957353706531406_1040071741557670337_nlow.png",
     category: "Special Occasion",
   },
   {
     id: 2,
-    title: "Summer Solstice Cask Ale Festival",
-    date: "June 21, 2026",
-    time: "12:00 PM - 11:00 PM",
+    title: "Mother's Day Family Luncheon",
+    date: "March 30th",
+    time: "Afternoon Table",
     description:
-      "Sample a curated line-up of rare local casks and artisan brews in our sunny beer garden with live acoustic accompaniment.",
-    pricing: null,
-    highlight: "Live Acoustic Sets All Afternoon",
-    contactInfo: null,
+      "Join us at Seven Stars at Marsh Baldon for an exquisite 2 or 3 Course Set Luncheon celebrating mothers. Includes a complimentary glass of Prosecco for moms alongside seasonal culinary highlights.",
+    pricing: "ADULTS £28.95 / £33.95 | CHILDREN £17.95 / £21.95",
+    highlight: "GLASS OF PROSECCO FOR MOMS",
+    contactInfo: "01865 343337 | info@sevenstarsatmb.co.uk",
     image: "/images/481171001_957353706531406_1040071741557670337_nlow.webp",
-    category: "Festival & Music",
+    category: "Family Dining",
   },
+
   {
     id: 3,
-    title: "Midsummer Live Jazz & Seafood Soirée",
-    date: "August 8, 2026",
-    time: "4:00 PM - 9:00 PM",
+    title: "Indian Culinary Showcase & Banquet",
+    date: "Upcoming Tasting",
+    time: "Evening Experience",
     description:
-      "Fresh coastal catches, premium oysters, and crisp champagne flows alongside smooth live saxophone rhythms.",
-    pricing: null,
-    highlight: "Fresh Local Oysters & Champagne",
-    contactInfo: null,
-    image: "/images/481171001_957353706531406_1040071741557670337_nlow (1).webp",
-    category: "Live Music",
-  },
-  {
-    id: 4,
-    title: "Seasonal Gastro Banquet & Pairing",
-    date: "October 12, 2026",
-    time: "7:00 PM - 10:30 PM",
-    description:
-      "A five-course tasting journey highlighting seasonal game, forest-foraged ingredients, and curated local vintages.",
-    pricing: null,
-    highlight: "Exclusive Chef's Tasting Experience",
-    contactInfo: null,
+      "Experience a quintessential collection of authentic Indian flavours, from spiced plant-based soya and rich paneer delicacies to traditional staple preparations crafted with aromatic heritage spices.",
+    pricing: "Tasting Menu & Pairings Available upon Request",
+    highlight: "Authentic Heritage Indian Recipes",
+    contactInfo: "Book via Info Desk or Call Directly",
     image: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
     category: "Culinary Tasting",
   },
@@ -86,23 +73,23 @@ const oldEvents = [
   },
   {
     src: "/images/481171001_957353706531406_1040071741557670337_nlow.webp",
-    name: "Cask Ale & Acoustic Soirée",
+    name: "Mother's Day Reserve Banquet",
   },
   {
     src: "/images/481171001_957353706531406_1040071741557670337_nlow (1).webp",
-    name: "Midsummer Jazz Evening",
+    name: "Mother's Day Set Luncheon",
   },
   {
     src: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
-    name: "Private Gastro Pairing Banquet",
+    name: "Indian Heritage Tasting Gathering",
   },
   {
     src: "/images/481171001_957353706531406_1040071741557670337_nlow.png",
-    name: "Spring Charity Gala Gathering",
+    name: "Spring Classic Gathering",
   },
   {
     src: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
-    name: "Seasonal Harvest Celebration",
+    name: "Heritage Spices Showcase Banquet",
   },
 ];
 
@@ -255,13 +242,13 @@ export default function EventsPage() {
                       isEven ? "lg:order-2" : "lg:order-1"
                     }`}
                   >
-                    {/* Beautifully-proportioned flyer frame perfectly calibrated to intermediate layout sizing */}
-                    <div className="relative aspect-[4/5] w-full max-w-[416px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 bg-white group">
+                    {/* Beautifully-proportioned flyer frame optimized for edge-to-edge asset span */}
+                    <div className="relative aspect-[4/5] w-full max-w-[416px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200/80 group bg-slate-50/20">
                       <Image
                         src={ev.image}
                         alt={ev.title}
                         fill
-                        className="object-contain p-2.5 transition-transform duration-700 group-hover:scale-[1.02]"
+                        className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
                       />
                     </div>
 
@@ -299,7 +286,9 @@ export default function EventsPage() {
                       {/* Integrated Action trigger & Date/Time metadata footer strip docked towards image */}
                       <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                         {/* CTA Button placed on the side physically nearest to the image block */}
-                        <div className={`w-full sm:w-auto ${isEven ? 'sm:order-2' : 'sm:order-1'}`}>
+                        <div
+                          className={`w-full sm:w-auto ${isEven ? "sm:order-2" : "sm:order-1"}`}
+                        >
                           <a
                             href="/contact"
                             className="inline-flex items-center gap-3 bg-[#475DB1] hover:bg-[#384a91] text-white px-7 py-3 rounded-full text-xs uppercase tracking-widest font-bold transition-all duration-300 shadow-md hover:shadow-xl group/btn w-full sm:w-auto justify-center"
@@ -313,9 +302,12 @@ export default function EventsPage() {
                         </div>
 
                         {/* Date/Time Metadata arranged on the opposing side */}
-                        <div className={`flex flex-col items-center text-xs text-slate-500 space-y-1 w-full sm:w-auto ${isEven ? 'sm:order-1 sm:items-start' : 'sm:order-2 sm:items-end'}`}>
+                        <div
+                          className={`flex flex-col items-center text-xs text-slate-500 space-y-1 w-full sm:w-auto ${isEven ? "sm:order-1 sm:items-start" : "sm:order-2 sm:items-end"}`}
+                        >
                           <span className="flex items-center gap-1.5 font-medium text-[#475DB1]">
-                            <Calendar size={13} className="shrink-0" /> {ev.date}
+                            <Calendar size={13} className="shrink-0" />{" "}
+                            {ev.date}
                           </span>
                           <span className="flex items-center gap-1.5 font-light text-slate-400">
                             <Clock size={13} className="shrink-0" /> {ev.time}
@@ -353,16 +345,16 @@ export default function EventsPage() {
                     {oldEvents.map((ev, idx) => (
                       <div
                         key={`${loopIdx}-${idx}`}
-                        className="relative w-72 md:w-80 h-56 md:h-64 rounded-2xl overflow-hidden group cursor-pointer border border-slate-200/60 shadow-md hover:shadow-xl shrink-0 transition-all duration-300"
+                        className="relative w-64 md:w-72 h-72 md:h-96 rounded-2xl overflow-hidden group cursor-pointer border border-slate-200/80 shadow-md hover:shadow-xl shrink-0 transition-all duration-300 bg-slate-50/20"
                       >
                         <Image
                           src={ev.src}
                           alt={ev.name}
                           fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                          className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
-                          <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 w-full">
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
+                          <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300 w-full text-left">
                             <span className="text-[8px] tracking-widest text-[#475DB1] uppercase font-bold block mb-1">
                               Archive Feature
                             </span>
