@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -78,31 +79,40 @@ export default function EventGallery() {
           </h2>
         </div>
 
-        {/* Gallery Layout - Matching User Image */}
+        {/* Gallery Layout - Navigates to Events on Click */}
         <div className="gallery-container grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
           {/* Left Column: 2 small images stacked */}
           <div className="md:col-span-1 flex flex-col gap-6 order-2 md:order-1">
-            <div className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10">
+            <Link
+              href="/events"
+              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+            >
               <Image
                 src={eventImages[0].src}
                 alt={eventImages[0].alt}
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
               />
-            </div>
-            <div className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10">
+            </Link>
+            <Link
+              href="/events"
+              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+            >
               <Image
                 src={eventImages[1].src}
                 alt={eventImages[1].alt}
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
               />
-            </div>
+            </Link>
           </div>
 
           {/* Center Column: 1 large tall image */}
           <div className="md:col-span-3 h-full order-1 md:order-2">
-            <div className="gallery-photo-wrapper group relative h-[450px] md:h-[650px] w-full rounded-3xl overflow-hidden bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.5)] transition-all duration-500">
+            <Link
+              href="/events"
+              className="gallery-photo-wrapper group relative h-[450px] md:h-[650px] w-full rounded-3xl overflow-hidden bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.5)] transition-all duration-500 block cursor-pointer"
+            >
               <Image
                 src={eventImages[2].src}
                 alt={eventImages[2].alt}
@@ -111,27 +121,33 @@ export default function EventGallery() {
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none" />
-            </div>
+            </Link>
           </div>
 
           {/* Right Column: 2 small images stacked */}
           <div className="md:col-span-1 flex flex-col gap-6 order-3">
-            <div className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10">
+            <Link
+              href="/events"
+              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+            >
               <Image
                 src={eventImages[3].src}
                 alt={eventImages[3].alt}
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
               />
-            </div>
-            <div className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10">
+            </Link>
+            <Link
+              href="/events"
+              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+            >
               <Image
                 src={eventImages[4].src}
                 alt={eventImages[4].alt}
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
               />
-            </div>
+            </Link>
           </div>
         </div>
       </div>
