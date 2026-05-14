@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Instagram, Linkedin, Youtube } from "lucide-react";
+import { Instagram, Facebook, Youtube } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
@@ -209,16 +209,20 @@ export default function Hero() {
           {/* Social icons */}
           <div className="hidden md:flex gap-2">
             <a
-              href="#"
+              href="https://www.instagram.com/sevenstarsatmarshbaldon/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Instagram size={15} />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/sevenstarsatmarshbaldon"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
-              <Linkedin size={15} />
+              <Facebook size={15} />
             </a>
             <a
               href="#"

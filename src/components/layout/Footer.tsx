@@ -185,13 +185,17 @@ export default function Footer() {
             </p>
             <div className="flex gap-3 pt-2">
               <a
-                href="#"
+                href="https://www.instagram.com/sevenstarsatmarshbaldon/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Instagram size={15} />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/sevenstarsatmarshbaldon"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Facebook size={15} />
