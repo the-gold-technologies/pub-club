@@ -63,15 +63,65 @@ export default function Navbar() {
           {/* Desktop Pill Nav */}
           <div className="nav-pill hidden lg:flex flex-1 justify-center">
             <div className="flex items-center p-1 rounded-full bg-black/30 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-500">
-              {["About", "Dining", "Events", "Menu", "Gallery"].map((item) => (
-                <Link
-                  key={item}
-                  href={`/${item.toLowerCase()}`}
-                  className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
-                >
-                  {item}
-                </Link>
-              ))}
+              {[
+                {
+                  name: "About Us",
+                  href: "/about",
+                  dropdown: [
+                    { name: "About Us", href: "/about" },
+                    { name: "Our Story & Community", href: "/our-story" },
+                  ],
+                },
+                { name: "Dining", href: "/dining" },
+                { name: "Events", href: "/events" },
+                { name: "Menu", href: "/menu" },
+                { name: "Gallery", href: "/gallery" },
+              ].map((item) =>
+                item.dropdown ? (
+                  <div key={item.name} className="relative group">
+                    <Link
+                      href={item.href}
+                      className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300 flex items-center"
+                    >
+                      {item.name}
+                      <svg
+                        className="w-3.5 h-3.5 ml-1 transition-transform duration-300 group-hover:rotate-180"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </Link>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 w-56">
+                      <div className="py-2 bg-black/80 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+                        {item.dropdown.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className="px-5 py-2.5 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+                  >
+                    {item.name}
+                  </Link>
+                ),
+              )}
             </div>
           </div>
 
