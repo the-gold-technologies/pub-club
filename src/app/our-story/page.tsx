@@ -20,36 +20,41 @@ export default function OurStoryPage() {
       title: "Late 2012",
       subtitle: "Closure",
       desc: "After years of instability, the pub closed its doors. The villages lost a 350-year-old central hub for community joy.",
-      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-1 lg:col-start-1 md:row-start-1 lg:row-start-1",
-      lines: { mobile: "down", tablet: "right", desktop: "right" }
+      gridClass:
+        "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-1 lg:col-start-1 md:row-start-1 lg:row-start-1",
+      lines: { mobile: "down", tablet: "right", desktop: "right" },
     },
     {
       title: "Dec 2012",
       subtitle: "Mission",
       desc: "What began as conversations turned into a mission. Residents formed the Baldons and Nuneham Community Society (BNCS).",
-      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-3 lg:col-start-3 md:row-start-1 lg:row-start-1",
-      lines: { mobile: "down", tablet: "down", desktop: "right" }
+      gridClass:
+        "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-3 lg:col-start-3 md:row-start-1 lg:row-start-1",
+      lines: { mobile: "down", tablet: "down", desktop: "right" },
     },
     {
       title: "Mar 2013",
       subtitle: "Reopening",
       desc: "Through community investment and grants, the society purchased the pub. On March 30th, the Seven Stars reopened.",
-      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-3 lg:col-start-5 md:row-start-2 lg:row-start-1",
-      lines: { mobile: "down", tablet: "left", desktop: "down-left" }
+      gridClass:
+        "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-3 lg:col-start-5 md:row-start-2 lg:row-start-1",
+      lines: { mobile: "down", tablet: "left", desktop: "down-left" },
     },
     {
       title: "The Journey",
       subtitle: "Milestones",
       desc: "Named CAMRA Pub of the Year in 2016. Continuous improvements and community support helped navigate challenges like COVID.",
-      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-1 lg:col-start-4 md:row-start-2 lg:row-start-2",
-      lines: { mobile: "down", tablet: "down-right", desktop: "left" }
+      gridClass:
+        "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-1 lg:col-start-4 md:row-start-2 lg:row-start-2",
+      lines: { mobile: "down", tablet: "down-right", desktop: "left" },
     },
     {
       title: "2023 & Beyond",
       subtitle: "Renewal",
       desc: "Under new stewards Namit and Sunit, the pub stays true to its roots with fresh energy. A true story of renewal.",
-      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-2 lg:col-start-2 md:row-start-3 lg:row-start-2",
-      lines: { mobile: "none", tablet: "none", desktop: "none" }
+      gridClass:
+        "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-2 lg:col-start-2 md:row-start-3 lg:row-start-2",
+      lines: { mobile: "none", tablet: "none", desktop: "none" },
     },
   ];
 
@@ -121,7 +126,7 @@ export default function OurStoryPage() {
       gsap.utils.toArray(".gsap-connector").forEach((line: any) => {
         // Detect if line is vertical by checking its width class
         const isVertical = line.classList.contains("w-[3px]");
-        
+
         gsap.fromTo(
           line,
           { scaleX: isVertical ? 1 : 0, scaleY: isVertical ? 0 : 1 },
@@ -135,7 +140,7 @@ export default function OurStoryPage() {
               end: "bottom 60%",
               scrub: true,
             },
-          }
+          },
         );
       });
     }, containerRef);
