@@ -19,27 +19,37 @@ export default function OurStoryPage() {
     {
       title: "Late 2012",
       subtitle: "Closure",
-      desc: "Let us take you back to late 2012, after years of instability, the pub closed its doors. For the villages of Marsh Baldon, Toot Baldon, and Nuneham Courtenay, this meant losing a place that had been central to their joy for over 350 years.",
+      desc: "After years of instability, the pub closed its doors. The villages lost a 350-year-old central hub for community joy.",
+      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-1 lg:col-start-1 md:row-start-1 lg:row-start-1",
+      lines: { mobile: "down", tablet: "right", desktop: "right" }
     },
     {
-      title: "December 2012",
+      title: "Dec 2012",
       subtitle: "Mission",
-      desc: "We’re grateful to our community who has always been there for us, motivating us to never stop hosting. What began as conversations among neighbours soon turned into a mission of buying and running the pub. By December 2012, residents formed the Baldons and Nuneham Community Society (BNCS).",
+      desc: "What began as conversations turned into a mission. Residents formed the Baldons and Nuneham Community Society (BNCS).",
+      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-3 lg:col-start-3 md:row-start-1 lg:row-start-1",
+      lines: { mobile: "down", tablet: "down", desktop: "right" }
     },
     {
-      title: "March 2013",
+      title: "Mar 2013",
       subtitle: "Reopening",
-      desc: "Through a community share offer, local investment, grants, and support from the previous owner, the society successfully purchased the pub in March 2013. But our story didn’t stop here. Villagers worked together to restore the space, and on 30th March 2013, the Seven Stars reopened a revived community hub.",
+      desc: "Through community investment and grants, the society purchased the pub. On March 30th, the Seven Stars reopened.",
+      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-3 lg:col-start-5 md:row-start-2 lg:row-start-1",
+      lines: { mobile: "down", tablet: "left", desktop: "down-left" }
     },
     {
-      title: "Over the years",
+      title: "The Journey",
       subtitle: "Milestones",
-      desc: "The pub earned CAMRA Pub of the Year (2016). Continuous improvements enhanced dining, accessibility and facilities. A professional lease helped navigate challenging periods like COVID.",
+      desc: "Named CAMRA Pub of the Year in 2016. Continuous improvements and community support helped navigate challenges like COVID.",
+      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-1 lg:col-start-4 md:row-start-2 lg:row-start-2",
+      lines: { mobile: "down", tablet: "down-right", desktop: "left" }
     },
     {
       title: "2023 & Beyond",
       subtitle: "Renewal",
-      desc: "In 2023, a new chapter began under the stewardship of Namit Julka and Sunit Bansode, who ensured that the club stays true to its roots but also welcomes fresh energy. Today, Seven Stars is a pub where the community comes to life. What began as a closure has become a story of renewal.",
+      desc: "Under new stewards Namit and Sunit, the pub stays true to its roots with fresh energy. A true story of renewal.",
+      gridClass: "col-span-1 md:col-span-2 lg:col-span-2 md:col-start-2 lg:col-start-2 md:row-start-3 lg:row-start-2",
+      lines: { mobile: "none", tablet: "none", desktop: "none" }
     },
   ];
 
@@ -107,37 +117,27 @@ export default function OurStoryPage() {
         },
       );
 
-      // Scroll-driven line animation using precise HTML timeline segments to route flawlessly into target cards
-      gsap.utils
-        .toArray(".gsap-connector-group")
-        .forEach((groupWrapper: any) => {
-          const lineH = groupWrapper.querySelector(".gsap-line-h");
-          const lineV = groupWrapper.querySelector(".gsap-line-v");
-
-          if (!lineH || !lineV) return;
-
-          // Build continuous scrubbed sequence drawing horizontal segment first, then routing straight down to intersect target card
-          const tlLine = gsap.timeline({
+      // Scroll-driven animation for the connector lines between grid items
+      gsap.utils.toArray(".gsap-connector").forEach((line: any) => {
+        // Detect if line is vertical by checking its width class
+        const isVertical = line.classList.contains("w-[3px]");
+        
+        gsap.fromTo(
+          line,
+          { scaleX: isVertical ? 1 : 0, scaleY: isVertical ? 0 : 1 },
+          {
+            scaleX: 1,
+            scaleY: 1,
+            ease: "none",
             scrollTrigger: {
-              trigger: groupWrapper,
-              start: "top 65%",
-              end: "bottom 35%",
+              trigger: line,
+              start: "top 80%",
+              end: "bottom 60%",
               scrub: true,
             },
-          });
-
-          tlLine
-            .fromTo(
-              lineH,
-              { scaleX: 0 },
-              { scaleX: 1, ease: "none", duration: 0.5 },
-            )
-            .fromTo(
-              lineV,
-              { scaleY: 0 },
-              { scaleY: 1, ease: "none", duration: 0.5 },
-            );
-        });
+          }
+        );
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -184,7 +184,10 @@ export default function OurStoryPage() {
 
             <div className="md:col-span-5 lg:col-span-4 pb-2 md:pb-4">
               <p className="hero-reveal text-white/80 font-light text-sm md:text-base leading-relaxed border-l border-[#475DB1]/50 pl-6">
-                Discover the rich history of the Seven Stars—saved by the community, for the community. A true village pub where every pint pours a story of resilience, joy, and shared moments since 2013.
+                Discover the rich history of the Seven Stars—saved by the
+                community, for the community. A true village pub where every
+                pint pours a story of resilience, joy, and shared moments since
+                2013.
               </p>
             </div>
           </div>
@@ -214,72 +217,61 @@ export default function OurStoryPage() {
         </div>
       </section>
 
-      {/* The Timeline Staggered Animated Layout */}
+      {/* The Timeline Grid Animated Layout */}
       <section className="py-16 sm:py-24 bg-white relative opacity-99 select-none overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="space-y-12 sm:space-y-16 relative pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-x-6 sm:gap-x-8 gap-y-12 sm:gap-y-16 lg:gap-y-20 relative pt-8 sm:pt-12">
             {timelineSteps.map((step, idx) => {
-              const isRightAligned = idx % 2 === 1;
-
               return (
                 <div
                   key={idx}
-                  className={`gsap-step-card flex ${
-                    isRightAligned ? "justify-end" : "justify-start"
-                  } relative group`}
+                  className={`gsap-step-card relative group flex flex-col h-full ${step.gridClass}`}
                 >
-                  {/* Native HTML Solid Connector Lines routing exactly down to join the boundary of the next card below */}
-                  {idx < timelineSteps.length - 1 && (
-                    <div
-                      className={`hidden md:block absolute top-[60%] ${
-                        isRightAligned
-                          ? "right-[45%] w-[32.5%]"
-                          : "left-[45%] w-[32.5%]"
-                      } h-[calc(40%+4rem)] z-0 pointer-events-none gsap-connector-group`}
-                    >
-                      {/* Faint uncolored static base track providing visual route guide */}
-                      <div
-                        className={`absolute inset-0 ${
-                          isRightAligned
-                            ? "border-t-[3px] border-l-[3px] rounded-tl-3xl"
-                            : "border-t-[3px] border-r-[3px] rounded-tr-3xl"
-                        } border-solid border-slate-200/80`}
-                      />
-
-                      {/* Dynamic live scroll-drawing segments placed absolutely over the base track */}
-                      {/* Horizontal top segment */}
-                      <div
-                        className={`absolute top-0 left-0 right-0 border-t-[3px] border-solid border-[#475DB1] gsap-line-h ${
-                          isRightAligned ? "origin-right" : "origin-left"
-                        }`}
-                      />
-
-                      {/* Vertical drop segment routing directly down to intersect the card layout perfectly */}
-                      <div
-                        className={`absolute top-0 bottom-0 ${
-                          isRightAligned
-                            ? "left-0 border-l-[3px]"
-                            : "right-0 border-r-[3px]"
-                        } border-solid border-[#475DB1] origin-top gsap-line-v`}
-                      />
-                    </div>
+                  {/* Connectors container - rendered based on configuration */}
+                  {/* Mobile Lines */}
+                  {step.lines.mobile === "down" && (
+                    <div className="block md:hidden absolute -bottom-12 left-1/2 w-[3px] h-12 bg-[#475DB1] origin-top gsap-connector z-0" />
                   )}
 
-                  {/* Actual Card Container preserving premium aesthetic layout */}
-                  <div className="w-full md:w-[48%] relative z-10">
-                    {/* Nested Translucent Glow Badge dynamically scaling up when card is hovered */}
-                    <div
-                      className={`absolute -top-6 sm:-top-8 ${
-                        isRightAligned
-                          ? "-right-6 sm:-right-8"
-                          : "-left-6 sm:-left-8"
-                      } w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center z-10 pointer-events-none group-hover:scale-110 transition-transform duration-500`}
-                    >
-                      {/* Outer faint ring */}
+                  {/* Tablet Lines */}
+                  {step.lines.tablet === "right" && (
+                    <div className="hidden md:block lg:hidden absolute top-1/2 -right-8 w-8 h-[3px] bg-[#475DB1] origin-left gsap-connector z-0" />
+                  )}
+                  {step.lines.tablet === "left" && (
+                    <div className="hidden md:block lg:hidden absolute top-1/2 -left-8 w-8 h-[3px] bg-[#475DB1] origin-right gsap-connector z-0" />
+                  )}
+                  {step.lines.tablet === "down" && (
+                    <div className="hidden md:block lg:hidden absolute top-full left-1/2 w-[3px] h-16 bg-[#475DB1] origin-top gsap-connector z-0" />
+                  )}
+                  {step.lines.tablet === "down-right" && (
+                    <>
+                      <div className="hidden md:block lg:hidden absolute top-full left-1/2 w-[3px] h-8 bg-[#475DB1] origin-top gsap-connector z-0" />
+                      <div className="hidden md:block lg:hidden absolute top-[calc(100%+2rem)] left-1/2 w-[calc(50%+1rem)] h-[3px] bg-[#475DB1] origin-left gsap-connector z-0" />
+                      <div className="hidden md:block lg:hidden absolute top-[calc(100%+2rem)] -right-4 w-[3px] h-8 bg-[#475DB1] origin-top gsap-connector z-0" />
+                    </>
+                  )}
+
+                  {/* Desktop Lines */}
+                  {step.lines.desktop === "right" && (
+                    <div className="hidden lg:block absolute top-1/2 -right-8 w-8 h-[3px] bg-[#475DB1] origin-left gsap-connector z-0" />
+                  )}
+                  {step.lines.desktop === "left" && (
+                    <div className="hidden lg:block absolute top-1/2 -left-8 w-8 h-[3px] bg-[#475DB1] origin-right gsap-connector z-0" />
+                  )}
+                  {step.lines.desktop === "down-left" && (
+                    <>
+                      <div className="hidden lg:block absolute top-full right-1/2 w-[3px] h-10 bg-[#475DB1] origin-top gsap-connector z-0" />
+                      <div className="hidden lg:block absolute top-[calc(100%+2.5rem)] right-1/2 w-[calc(50%+1rem)] h-[3px] bg-[#475DB1] origin-right gsap-connector z-0" />
+                      <div className="hidden lg:block absolute top-[calc(100%+2.5rem)] -left-4 w-[3px] h-10 bg-[#475DB1] origin-top gsap-connector z-0" />
+                    </>
+                  )}
+
+                  {/* Actual Card Container */}
+                  <div className="w-full relative z-10 flex-grow flex flex-col">
+                    {/* Badge */}
+                    <div className="absolute -top-6 -left-6 sm:-top-8 sm:-left-8 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center z-20 pointer-events-none group-hover:scale-110 transition-transform duration-500">
                       <div className="absolute inset-0 rounded-full bg-[#475DB1]/10 scale-110 sm:scale-125 animate-pulse duration-1000" />
-                      {/* Secondary soft ring */}
                       <div className="absolute inset-1.5 sm:inset-2 rounded-full bg-blue-50 shadow-inner" />
-                      {/* Crisp solid core */}
                       <div className="absolute inset-2 sm:inset-3 rounded-full bg-white shadow-md border border-blue-100 flex items-center justify-center text-[#475DB1]">
                         <span className="font-serif text-lg font-bold leading-none">
                           0{idx + 1}
@@ -287,22 +279,16 @@ export default function OurStoryPage() {
                       </div>
                     </div>
 
-                    {/* Main Card Body featuring smooth vertical translation and complete border removal on hover */}
-                    <div className="p-5 sm:p-7 rounded-2xl bg-white shadow-lg group-hover:shadow-xl group-hover:-translate-y-1.5 transition-all duration-500 border border-slate-100/80 group-hover:border-transparent text-left relative overflow-hidden">
-                      {/* Text wrapper elevated to z-30 to ensure absolute typography clarity over soft glowing aura rings */}
-                      <div className="relative z-30">
-                        {/* Subtitle baseline marker */}
-                        <div className="text-[10px] font-mono font-bold text-[#475DB1] uppercase tracking-widest mb-1.5">
+                    {/* Main Card Body */}
+                    <div className="p-6 sm:p-8 rounded-2xl bg-white shadow-lg group-hover:shadow-xl group-hover:-translate-y-1.5 transition-all duration-500 border border-slate-100/80 group-hover:border-transparent text-left relative overflow-hidden flex-grow flex flex-col pt-10 sm:pt-12">
+                      <div className="relative z-30 flex-grow flex flex-col">
+                        <div className="text-[10px] font-mono font-bold text-[#475DB1] uppercase tracking-widest mb-2">
                           {step.subtitle}
                         </div>
-
-                        {/* Title string */}
-                        <h3 className="text-xl sm:text-2xl font-serif text-slate-900 tracking-tight mb-2.5 group-hover:text-[#475DB1] transition-colors">
+                        <h3 className="text-xl sm:text-2xl font-serif text-slate-900 tracking-tight mb-3 group-hover:text-[#475DB1] transition-colors">
                           {step.title}
                         </h3>
-
-                        {/* Description string */}
-                        <p className="text-sm text-slate-500 leading-relaxed font-normal">
+                        <p className="text-sm text-slate-500 leading-relaxed font-normal flex-grow">
                           {step.desc}
                         </p>
                       </div>
