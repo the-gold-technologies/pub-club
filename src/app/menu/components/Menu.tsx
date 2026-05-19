@@ -40,6 +40,8 @@ export default function Menu({ data = {} }: { data?: any }) {
   const [sectionIdx, setSectionIdx] = useState(0);
   const [pageIdx, setPageIdx] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadToast, setDownloadToast] = useState<string | null>(null);
   const flipPageRef = useRef<HTMLDivElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
 
@@ -152,6 +154,37 @@ export default function Menu({ data = {} }: { data?: any }) {
   const activePage =
     activeSection?.pages?.[pageIdx] || activeSection?.pages?.[0];
 
+  const handleDownload = async () => {
+    const pdfUrl = activeSection?.pdf;
+
+    if (!pdfUrl || pdfUrl === "#") {
+      setDownloadToast("No PDF available for this menu section.");
+      setTimeout(() => setDownloadToast(null), 3000);
+      return;
+    }
+
+    setIsDownloading(true);
+    try {
+      const response = await fetch(pdfUrl, { mode: "cors" });
+      if (!response.ok) throw new Error("Download failed");
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      const filename = pdfUrl.split("/").pop() || `${activeSection.title || "menu"}.pdf`;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      // Fallback: open in new tab if fetch/CORS fails
+      window.open(pdfUrl, "_blank");
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   if (!activeSection || !activePage) return null;
 
   return (
@@ -161,6 +194,13 @@ export default function Menu({ data = {} }: { data?: any }) {
       className="py-24 bg-[#faf9f6] relative overflow-hidden border-t border-black/5"
     >
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+      {/* Download Toast */}
+      {downloadToast && (
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999] bg-black/90 text-white text-[13px] px-6 py-3 rounded-full shadow-2xl tracking-wide transition-all animate-fade-in">
+          {downloadToast}
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
         {/* Header */}
@@ -311,13 +351,15 @@ export default function Menu({ data = {} }: { data?: any }) {
                     <ChevronLeft size={20} /> Previous
                   </button>
 
-                  <a
-                    href={activeSection.pdf || "#"}
-                    download
-                    className="text-neutral-400 hover:text-[#475DB1] transition-colors"
+                  <button
+                    id="menu-download-btn"
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                    title={activeSection.pdf ? `Download ${activeSection.title} menu PDF` : "No PDF available"}
+                    className={`transition-colors ${isDownloading ? "text-[#475DB1] animate-pulse cursor-wait" : activeSection.pdf ? "text-neutral-400 hover:text-[#475DB1]" : "text-neutral-300 cursor-not-allowed"}`}
                   >
                     <Download size={24} />
-                  </a>
+                  </button>
 
                   <button
                     onClick={next}
