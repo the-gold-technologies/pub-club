@@ -7,13 +7,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface DiningHeroProps {
-  data?: any;
-}
-
-export default function DiningHero({ data = {} }: DiningHeroProps) {
-  const heroRef = useRef<HTMLDivElement>(null);
+export default function StoryHero({ data }: { data: any }) {
   const bgRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -31,19 +27,19 @@ export default function DiningHero({ data = {} }: DiningHeroProps) {
         });
       }
 
-      // Hero content stagger
-      const tl = gsap.timeline({ delay: 0.2 });
-      tl.from(".hero-reveal", {
+      // Hero animations
+      gsap.from(".hero-reveal", {
         y: 40,
         opacity: 0,
         duration: 1,
         stagger: 0.2,
         ease: "power4.out",
+        delay: 0.2,
       });
     }, heroRef);
 
     return () => ctx.revert();
-  }, [data]);
+  }, []);
 
   return (
     <section
@@ -55,7 +51,7 @@ export default function DiningHero({ data = {} }: DiningHeroProps) {
         {data.backgroundImage && (
           <Image
             src={data.backgroundImage}
-            alt={data.headingPart1}
+            alt="Our Story"
             fill
             className="object-cover opacity-50"
             priority
@@ -66,7 +62,7 @@ export default function DiningHero({ data = {} }: DiningHeroProps) {
 
       <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16 pt-32">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-end">
-          <div className="md:col-span-7">
+          <div className="md:col-span-7 lg:col-span-8">
             <div className="hero-reveal overflow-hidden mb-6 flex items-center gap-4">
               <div className="w-12 h-px bg-[#475DB1]" />
               <span className="block text-[#475DB1] uppercase tracking-[0.4em] text-[10px] font-bold">
@@ -82,12 +78,10 @@ export default function DiningHero({ data = {} }: DiningHeroProps) {
             </h1>
           </div>
 
-          <div className="md:col-span-5 pb-2">
-            <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
-              <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
-                &quot;{data.description}&quot;
-              </p>
-            </div>
+          <div className="md:col-span-5 lg:col-span-4 pb-2 md:pb-4">
+            <p className="hero-reveal text-white/80 font-light text-sm md:text-base leading-relaxed border-l border-[#475DB1]/50 pl-6">
+              {data.description}
+            </p>
           </div>
         </div>
       </div>
