@@ -9,42 +9,22 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const featuredItems = [
-  {
-    name: "Cured Scottish Salmon",
-    price: "£14.50",
-    description:
-      "Citrus-cured salmon, pickled cucumber, radish, and herb emulsion.",
-    image: "/images/menu/SEVEN_STARS_2026_02_09-129.jpg",
-  },
-  {
-    name: "Pan-Seared Duck Breast",
-    price: "£26.95",
-    description:
-      "Tender duck breast, honey-glazed carrots, potato fondant, and rich red wine reduction.",
-    image: "/images/menu/SEVEN_STARS_2026_02_09-142.jpg",
-  },
-  {
-    name: "Golden Squash Risotto",
-    price: "£18.50",
-    description:
-      "Creamy butternut squash risotto, crumbled feta, roasted beetroot, and crispy kale.",
-    image: "/images/menu/SEVEN_STARS_2026_02_09-213.jpg",
-  },
-  {
-    name: "Chocolate Lava Cake",
-    price: "£9.50",
-    description:
-      "Warm chocolate fondant, vanilla bean ice cream, fresh strawberries, and berry coulis.",
-    image: "/images/menu/SEVEN_STARS_2026_02_09-0159.jpg",
-  },
-];
 
-export default function MenuFeatured() {
+
+interface MenuFeaturedProps {
+  data?: any;
+}
+
+export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
   const sectionRef = useRef<HTMLElement>(null);
+
+  const featuredItems = Array.isArray(data.dishes) ? data.dishes : [];
 
   // State to track which item is main (index 0) and which are small (index 1 and 2)
   const [displayIndices, setDisplayIndices] = useState([1, 0, 3]);
+
+  // Ensure index safe bounds if features are fewer
+  const activeIndices = displayIndices.map(idx => idx % featuredItems.length);
 
   const handleSwap = (clickedPosition: number) => {
     setDisplayIndices((prev) => {
@@ -56,9 +36,9 @@ export default function MenuFeatured() {
     });
   };
 
-  const mainItem = featuredItems[displayIndices[0]];
-  const smallItem1 = featuredItems[displayIndices[1]];
-  const smallItem2 = featuredItems[displayIndices[2]];
+  const mainItem = featuredItems[activeIndices[0]];
+  const smallItem1 = featuredItems[activeIndices[1]];
+  const smallItem2 = featuredItems[activeIndices[2]];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -117,7 +97,7 @@ export default function MenuFeatured() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [featuredItems, data]);
 
   return (
     <section
@@ -141,114 +121,119 @@ export default function MenuFeatured() {
           <div className="flex items-center gap-4 mb-3">
             <span className="h-[2px] w-10 bg-[#475DB1]" />
             <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-black">
-              The Chef&apos;s Selection
+              {data.upperTag}
             </span>
           </div>
           <h2 className="text-4xl md:text-[3.8rem] font-serif text-black leading-tight tracking-tighter mb-4">
-            Taste the{" "}
-            <em className="italic font-light text-[#475DB1]">Exceptional</em>
+            {data.regularHeading}{" "}
+            <em className="italic font-light text-[#475DB1]">{data.italicHeading}</em>
           </h2>
           <p className="text-base text-neutral-500 font-light leading-relaxed">
-            Experience our most celebrated seasonal creations, each crafted with
-            locally sourced ingredients and culinary passion.
+            {data.description}
           </p>
         </div>
 
         {/* Featured Items - Asymmetric Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20">
           {/* Main Large Item */}
-          <div className="featured-item lg:col-span-7 space-y-6">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] shadow-2xl group">
-              <div className="item-image absolute inset-0">
-                <Image
-                  src={mainItem.image}
-                  alt={mainItem.name}
-                  fill
-                  className="object-cover scale-110 transition-transform duration-700"
-                />
+          {mainItem && (
+            <div className="featured-item lg:col-span-7 space-y-6">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] shadow-2xl group">
+                <div className="item-image absolute inset-0">
+                  <Image
+                    src={mainItem.image}
+                    alt={mainItem.name}
+                    fill
+                    className="object-cover scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="absolute bottom-8 left-8 text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
+                  <span className="text-[10px] tracking-widest uppercase mb-1 block">
+                    Chef&apos;s Signature
+                  </span>
+                  <p className="text-xl font-serif italic">
+                    Culinary excellence in every bite.
+                  </p>
+                </div>
+                <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center shadow-lg transform -rotate-12">
+                  <span className="font-serif text-base font-bold text-[#475DB1]">
+                    {mainItem.price}
+                  </span>
+                </div>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="absolute bottom-8 left-8 text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
-                <span className="text-[10px] tracking-widest uppercase mb-1 block">
-                  Chef&apos;s Signature
-                </span>
-                <p className="text-xl font-serif italic">
-                  Culinary excellence in every bite.
+              <div className="max-w-2xl">
+                <h3 className="text-3xl font-serif text-black mb-3">
+                  {mainItem.name}
+                </h3>
+                <p className="text-base text-neutral-600 font-light leading-relaxed">
+                  {mainItem.description}
                 </p>
               </div>
-              <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center shadow-lg transform -rotate-12">
-                <span className="font-serif text-base font-bold text-[#475DB1]">
-                  {mainItem.price}
-                </span>
-              </div>
             </div>
-            <div className="max-w-2xl">
-              <h3 className="text-3xl font-serif text-black mb-3">
-                {mainItem.name}
-              </h3>
-              <p className="text-base text-neutral-600 font-light leading-relaxed">
-                {mainItem.description}
-              </p>
-            </div>
-          </div>
+          )}
 
           {/* Secondary Column */}
           <div className="lg:col-span-5 flex flex-col justify-center gap-12">
             {/* Small Item 1 */}
-            <div
-              className="featured-item group cursor-pointer"
-              onClick={() => handleSwap(1)}
-            >
-              <div className="flex gap-6 items-center">
-                <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl">
-                  <Image
-                    src={smallItem1.image}
-                    alt={smallItem1.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
-                    {smallItem1.price}
-                  </span>
-                  <h3 className="text-xl font-serif text-black group-hover:text-[#475DB1] transition-colors">
-                    {smallItem1.name}
-                  </h3>
-                  <p className="text-xs text-neutral-500 font-light line-clamp-2">
-                    {smallItem1.description}
-                  </p>
+            {smallItem1 && (
+              <div
+                className="featured-item group cursor-pointer"
+                onClick={() => handleSwap(1)}
+              >
+                <div className="flex gap-6 items-center">
+                  <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl">
+                    <Image
+                      src={smallItem1.image}
+                      alt={smallItem1.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
+                      {smallItem1.price}
+                    </span>
+                    <h3 className="text-xl font-serif text-black group-hover:text-[#475DB1] transition-colors">
+                      {smallItem1.name}
+                    </h3>
+                    <p className="text-xs text-neutral-500 font-light line-clamp-2">
+                      {smallItem1.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Small Item 2 */}
-            <div
-              className="featured-item group cursor-pointer"
-              onClick={() => handleSwap(2)}
-            >
-              <div className="flex gap-6 items-center">
-                <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl">
-                  <Image
-                    src={smallItem2.image}
-                    alt={smallItem2.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
-                    {smallItem2.price}
-                  </span>
-                  <h3 className="text-xl font-serif text-black group-hover:text-[#475DB1] transition-colors">
-                    {smallItem2.name}
-                  </h3>
-                  <p className="text-xs text-neutral-500 font-light line-clamp-2">
-                    {smallItem2.description}
-                  </p>
+            {smallItem2 && (
+              <div
+                className="featured-item group cursor-pointer"
+                onClick={() => handleSwap(2)}
+              >
+                <div className="flex gap-6 items-center">
+                  <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl">
+                    <Image
+                      src={smallItem2.image}
+                      alt={smallItem2.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
+                      {smallItem2.price}
+                    </span>
+                    <h3 className="text-xl font-serif text-black group-hover:text-[#475DB1] transition-colors">
+                      {smallItem2.name}
+                    </h3>
+                    <p className="text-xs text-neutral-500 font-light line-clamp-2">
+                      {smallItem2.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Explore CTA */}
             <div className="featured-item pt-4">
@@ -275,3 +260,4 @@ export default function MenuFeatured() {
     </section>
   );
 }
+

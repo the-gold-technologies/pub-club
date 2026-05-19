@@ -1,62 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { Camera, Link } from "lucide-react";
+import { Camera } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Compact set of real files (cycled) so the repo ships fewer unique large JPEGs. */
-const GALLERY_SRC_CYCLE = [
-  "/images/gallery/gallery-1.jpg",
-  "/images/gallery/gallery-2.jpg",
-  "/images/gallery/gallery-3.jpg",
-  "/images/gallery/gallery-4.jpg",
-  "/images/amenities/barn.jpg",
-  "/images/gallery/gallery-6.jpg",
-  "/images/gallery/gallery-8.jpg",
-  "/images/gallery/gallery-1.jpg",
-  "/images/gallery/gallery-2.jpg",
-  "/images/gallery/gallery-3.jpg",
-  "/images/gallery/event-celebration.jpg",
-  "/images/gallery/gallery-25.jpg",
-] as const;
 
-const GALLERY_ALT_CYCLE = [
-  "Authentic Pub Atmosphere",
-  "Vibrant Main Bar",
-  "Traditional Pub Character",
-  "Restaurant Interior Detail",
-  "Atmospheric Interiors",
-  "Gourmet Dining Setup",
-  "Blue Exterior Charm",
-  "Premium Gastro Food",
-  "Historic Pub Facade",
-  "Premium Beverage Selection",
-  "Cozy Fireside Seating",
-  "Vintage Pub Decor",
-] as const;
 
-const images = [
-  ...Array.from({ length: 36 }, (_, i) => ({
-    src: GALLERY_SRC_CYCLE[i % GALLERY_SRC_CYCLE.length],
-    alt: GALLERY_ALT_CYCLE[i % GALLERY_ALT_CYCLE.length],
-  })),
-  {
-    src: "/images/gallery/event-celebration.jpg",
-    alt: "Special Event Celebration",
-  },
-  {
-    src: "/images/gallery/gallery-8.jpg",
-    alt: "Atmospheric Dining",
-  },
-];
+interface GalleryProps {
+  data?: any;
+}
 
-export default function Gallery() {
+export default function Gallery({ data = {} }: GalleryProps) {
   const ref = useRef<HTMLElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
+
+  const images = Array.isArray(data.images) ? data.images : [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -98,7 +60,7 @@ export default function Gallery() {
     }, ref);
 
     return () => ctx.revert();
-  }, []);
+  }, [images, data]);
 
   return (
     <section
@@ -114,18 +76,16 @@ export default function Gallery() {
                 04
               </span>
               <span className="w-6 h-[1px] bg-primary-400/30"></span>
-              Visual Journey
+              {data.upperTag}
             </span>
             <h3 className="text-4xl md:text-5xl font-serif text-white leading-tight tracking-tight mb-6">
-              Our{" "}
+              {data.regularHeading}{" "}
               <em className="not-italic  text-primary-400 font-light">
-                Gallery
+                {data.italicHeading}
               </em>
             </h3>
             <p className="text-primary-100/70 leading-relaxed font-light text-lg max-w-2xl">
-              A comprehensive look into the Seven Stars. Explore our historic
-              architecture, vibrant interiors, and the premium gastro experience
-              across our entire curated collection.
+              {data.description}
             </p>
           </div>
           <a
@@ -145,7 +105,7 @@ export default function Gallery() {
         >
           {[...Array(2)].map((_, listIdx) => (
             <div key={listIdx} className="flex gap-4 items-center">
-              {images.map((img, i) => (
+              {images.map((img: any, i: number) => (
                 <div
                   key={`${listIdx}-${i}`}
                   className="gallery-item relative w-[280px] md:w-[350px] h-80 rounded-2xl overflow-hidden group cursor-pointer border border-primary-500/20 shadow-xl"

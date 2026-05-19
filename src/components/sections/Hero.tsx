@@ -5,18 +5,18 @@ import { Instagram, Facebook, Youtube } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-const heroImages = [
-  "/images/hero/interior-hero-v5.jpg",
-  "/images/hero/interior-hero-v2.jpg",
-  "/images/hero/interior-hero-v4.jpg",
-  "/images/hero/hero-12.jpg",
-  "/images/hero/hero-13.jpg",
-  "/images/hero/hero-new-2.png",
-];
 
-export default function Hero() {
+
+interface HeroProps {
+  data?: any;
+}
+
+export default function Hero({ data = {} }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [currentIdx, setCurrentIdx] = useState(0);
+
+  const heroImages = Array.isArray(data.images) ? data.images : [];
+  const marqueeTags = Array.isArray(data.marqueePills) ? data.marqueePills : [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -84,7 +84,7 @@ export default function Hero() {
       ctx.revert();
       clearInterval(timer);
     };
-  }, []);
+  }, [heroImages, data]);
 
   return (
     <section
@@ -96,7 +96,7 @@ export default function Hero() {
 
       {/* Background Slideshow */}
       <div className="absolute inset-0 z-0">
-        {heroImages.map((src, i) => (
+        {heroImages.map((src: string, i: number) => (
           <div
             key={src}
             className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${
@@ -113,7 +113,6 @@ export default function Hero() {
           </div>
         ))}
         {/* Persistent Overlays */}
-        {/* Cinematic Persistent Overlays */}
         <div className="absolute inset-0 z-20 pointer-events-none">
           {/* Main readability gradient (Left to Right) */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/40 to-transparent" />
@@ -142,26 +141,26 @@ export default function Hero() {
             {/* Left side */}
             <div className="max-w-2xl space-y-6 relative group">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] font-serif text-white leading-[0.9] tracking-tight drop-shadow-2xl overflow-hidden">
-                <span className="hero-h1-line1 block pr-2">
-                  Where Village <br /> Warmth Meets
+                <span className="hero-h1-line1 block pr-2 whitespace-pre-line">
+                  {data.headlineLine1}
                 </span>
                 <span className="hero-h1-line2 block italic text-[#475DB1] font-light pr-4 pb-3">
-                  Great Food
+                  {data.headlineLine2Italic}
                 </span>
               </h1>
 
               <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
                 <a
-                  href="/menu"
+                  href={data.primaryBtnUrl}
                   className="hero-cta w-max py-4 px-8 border border-[#475DB1] rounded-full text-[#475DB1] hover:text-white uppercase tracking-widest text-xs transition-all hover:bg-[#475DB1]/20"
                 >
-                  Discover Menu
+                  {data.primaryBtnLabel}
                 </a>
                 <a
-                  href="/contact"
-                  className="hero-cta w-full sm:w-auto text-white px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-semibold transition-all shadow-[0_0_20px_rgba(202,158,90,0.2)] hover:shadow-[0_0_30px_rgba(202,158,90,0.4)] rounded-full"
+                  href={data.secondaryBtnUrl}
+                  className="hero-cta w-full sm:w-auto text-white px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-semibold transition-all shadow-[0_0_20px_rgba(202,158,90,0.2)] hover:shadow-[0_0_30px_rgba(202,158,90,0.4)] rounded-full text-center"
                 >
-                  Book a Table
+                  {data.secondaryBtnLabel}
                 </a>
               </div>
             </div>
@@ -169,9 +168,7 @@ export default function Hero() {
             {/* Right side: description */}
             <div className="hero-desc max-w-sm lg:ml-auto lg:self-end mt-8 lg:mt-0 text-left">
               <p className="text-lg md:text-xl text-dark-100 font-light leading-relaxed">
-                We&apos;re your neighborhood pub situated in the heart of
-                Oxfordshire serving mouth-watering food, real ales, and a warm
-                welcome.
+                {data.description}
               </p>
             </div>
           </div>
@@ -184,13 +181,7 @@ export default function Hero() {
             <div className="flex w-max animate-marquee items-center gap-2 hover:[animation-play-state:paused]">
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex gap-8 items-center pr-4">
-                  {[
-                    "Sunday Roasts",
-                    "Local Ales",
-                    "Beer Garden",
-                    "Private Barn",
-                    "Seasonal Specials",
-                  ].map((tag) => (
+                  {marqueeTags.map((tag: string) => (
                     <span
                       key={tag}
                       className="whitespace-nowrap px-4 py-2 rounded-full backdrop-blur-md text-[12px] text-gray-300 flex items-center gap-2 hover:text-white cursor-pointer transition-colors shadow-lg"
@@ -209,7 +200,7 @@ export default function Hero() {
           {/* Social icons */}
           <div className="hidden md:flex gap-2">
             <a
-              href="https://www.instagram.com/sevenstarsatmarshbaldon/"
+              href={data.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
@@ -217,7 +208,7 @@ export default function Hero() {
               <Instagram size={15} />
             </a>
             <a
-              href="https://www.facebook.com/sevenstarsatmarshbaldon"
+              href={data.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
@@ -225,7 +216,7 @@ export default function Hero() {
               <Facebook size={15} />
             </a>
             <a
-              href="#"
+              href={data.youtubeUrl}
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Youtube size={15} />

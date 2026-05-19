@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useCMSStore } from "@/store/useCMSStore";
 import {
   Instagram,
   Facebook,
@@ -17,7 +18,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const navLinks = [
+const defaultNavLinks = [
   { label: "About Us", href: "/about" },
   { label: "Dining", href: "/dining" },
   { label: "Events", href: "/events" },
@@ -26,14 +27,23 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const openingHours = [
-  { day: "Monday – Thursday", hours: "12pm – 11pm" },
-  { day: "Friday – Saturday", hours: "12pm – 1am" },
-  { day: "Sunday", hours: "12pm – 10pm" },
-];
-
 export default function Footer() {
   const ref = useRef<HTMLElement>(null);
+  const { fetchPage, pages, navLinks } = useCMSStore();
+
+  useEffect(() => {
+    fetchPage("home").catch(console.error);
+  }, [fetchPage]);
+
+  const pageData = pages["home"];
+  const sections = pageData?.sections || {};
+  const footerCMS = sections["FooterCMS"] || {};
+
+  const openingHours = Array.isArray(footerCMS.openingHours) ? footerCMS.openingHours : [];
+
+  const displayNavLinks = Array.isArray(navLinks) && navLinks.length > 0
+    ? navLinks.map(link => ({ label: link.title, href: link.link }))
+    : defaultNavLinks;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -124,7 +134,7 @@ export default function Footer() {
     }, ref);
 
     return () => ctx.revert();
-  }, []);
+  }, [pageData]);
 
   return (
     <footer
@@ -133,20 +143,21 @@ export default function Footer() {
     >
       {/* Subtle Background Image Overlay */}
       <div className="absolute inset-0 z-0 opacity-[0.08]">
-        <Image
-          src="/images/footer-bg.jpg"
-          alt="Atmospheric Footer Background"
-          fill
-          className="object-cover"
-        />
+        {footerCMS.backgroundImage && (
+          <Image
+            src={footerCMS.backgroundImage}
+            alt="Atmospheric Footer Background"
+            fill
+            className="object-cover"
+          />
+        )}
       </div>
 
       {/* Large watermark word */}
       <div
-        className="footer-watermark absolute bottom-0 left-1/2 -translate-x-1/2 text-[15rem] md:text-[22rem] font-serif text-white/[0.03] select-none pointer-events-none leading-none tracking-tighter whitespace-nowrap z-0
-       "
+        className="footer-watermark absolute bottom-0 left-1/2 -translate-x-1/2 text-[15rem] md:text-[22rem] font-serif text-white/[0.03] select-none pointer-events-none leading-none tracking-tighter whitespace-nowrap z-0"
       >
-        SEVEN STARS
+        {footerCMS.watermark}
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -155,19 +166,19 @@ export default function Footer() {
           <div className="footer-brand space-y-4">
             <div className="flex items-center gap-3">
               <h2 className="font-serif text-4xl md:text-5xl tracking-widest text-white font-light">
-                SEVEN STARS
+                {footerCMS.companyName}
               </h2>
             </div>
             <p className="text-primary-200 font-light text-sm italic tracking-widest">
-              Countryside Gastro Club Pub
+              {footerCMS.tagline}
             </p>
           </div>
 
           <Link
-            href="/contact"
+            href={footerCMS.ctaUrl || "#"}
             className="footer-cta self-start md:self-end flex items-center justify-center px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-widest text-[12px] font-bold transition-all rounded-full group shadow-lg hover:shadow-primary-600/20"
           >
-            <span>BOOK A TABLE</span>
+            <span>{footerCMS.ctaLabel}</span>
           </Link>
         </div>
 
@@ -179,13 +190,11 @@ export default function Footer() {
               About
             </span>
             <p className="text-white/90 text-sm font-light leading-relaxed">
-              Born from a passion for exceptional hospitality, Seven Stars
-              merges the warmth of a countryside pub with the sophistication of
-              a premium gastro club.
+              {footerCMS.footerDescription}
             </p>
             <div className="flex gap-3 pt-2">
               <a
-                href="https://www.instagram.com/sevenstarsatmarshbaldon/"
+                href={footerCMS.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
@@ -193,7 +202,7 @@ export default function Footer() {
                 <Instagram size={15} />
               </a>
               <a
-                href="https://www.facebook.com/sevenstarsatmarshbaldon"
+                href={footerCMS.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
@@ -201,7 +210,9 @@ export default function Footer() {
                 <Facebook size={15} />
               </a>
               <a
-                href="#"
+                href={footerCMS.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Youtube size={15} />
@@ -212,10 +223,10 @@ export default function Footer() {
           {/* Col 2: Navigation */}
           <div className="footer-col space-y-5">
             <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-medium flex items-center gap-3">
-              Navigate
+              {footerCMS.navigateTitle || "Navigate"}
             </span>
             <ul className="space-y-3">
-              {navLinks.map((link) => (
+              {displayNavLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
@@ -234,7 +245,7 @@ export default function Footer() {
               Hours
             </span>
             <ul className="space-y-4">
-              {openingHours.map((item) => (
+              {openingHours.map((item: { day: string, hours: string }) => (
                 <li key={item.day} className="flex flex-col gap-1">
                   <span className="text-[10px] uppercase tracking-widest text-primary-300/60">
                     {item.day}
@@ -257,29 +268,30 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin size={14} className="text-primary-400 mt-1 shrink-0" />
                 <span className="text-white/90 text-sm font-light leading-relaxed">
-                  Seven Stars Lane,
-                  <br />
-                  Countryside Village,
-                  <br />
-                  England, UK
+                  {footerCMS.address && footerCMS.address.split("\n").map((line: string, i: number) => (
+                    <span key={i}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={14} className="text-primary-400 shrink-0" />
                 <a
-                  href="tel:+441234567890"
+                  href={`tel:${footerCMS.phoneNumber}`}
                   className="text-white/90 hover:text-white text-sm font-light transition-colors"
                 >
-                  +44 1234 567 890
+                  {footerCMS.phoneNumber}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={14} className="text-primary-400 shrink-0" />
                 <a
-                  href="mailto:hello@sevenstars.co.uk"
+                  href={`mailto:${footerCMS.emailAddress}`}
                   className="text-white/90 hover:text-white text-sm font-light transition-colors"
                 >
-                  hello@sevenstars.co.uk
+                  {footerCMS.emailAddress}
                 </a>
               </li>
             </ul>
@@ -289,7 +301,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="footer-bottom py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <p className="text-[10px] text-primary-400/60 uppercase tracking-[0.3em]">
-            © {new Date().getFullYear()} Seven Stars. All Rights Reserved.
+            {`© ${new Date().getFullYear()} ${footerCMS.companyName || "Seven Stars"}. All Rights Reserved.`}
           </p>
           <div className="flex items-center gap-4 text-[10px] text-primary-400/60 uppercase tracking-widest flex-wrap justify-center">
             <span className="text-primary-800">·</span>
@@ -302,7 +314,7 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-        <div className="flex items-center gap-1 text-[8px] text-[#3F6EA9] text-end  -mt-6 mb-4 justify-end">
+        <div className="flex items-center gap-1 text-[8px] text-[#3F6EA9] text-end -mt-6 mb-4 justify-end">
           Made with <span className="text-red-500 ">♥</span> by{" "}
           <a
             href="https://thegoldtechnologies.com/"

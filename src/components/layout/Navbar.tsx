@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { Contact, Calendar, Menu } from "lucide-react";
+import { useCMSStore } from "@/store/useCMSStore";
 import gsap from "gsap";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const { navLinks, fetchNavLinks } = useCMSStore();
 
   // Scroll listener
   useEffect(() => {
@@ -16,6 +18,36 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Fetch dynamic CMS navigation
+  useEffect(() => {
+    fetchNavLinks().catch(console.error);
+  }, [fetchNavLinks]);
+
+  const defaultLinks = [
+    {
+      name: "About Us",
+      href: "/about",
+      dropdown: [
+        { name: "About Us", href: "/about" },
+        { name: "Our Story & Community", href: "/our-story" },
+      ],
+    },
+    { name: "Dining", href: "/dining" },
+    { name: "Events", href: "/events" },
+    { name: "Menu", href: "/menu" },
+    { name: "Gallery", href: "/gallery" },
+  ];
+
+  const items = Array.isArray(navLinks)
+    ? navLinks.map((link) => ({
+        name: link.title,
+        href: link.link,
+        dropdown: link.dropdown
+          ? link.dropdown.map((sub) => ({ name: sub.title, href: sub.link }))
+          : undefined,
+      }))
+    : defaultLinks;
 
   // GSAP entrance — synced with Hero curtain (1s delay so curtain lifts first)
   useEffect(() => {
@@ -63,24 +95,11 @@ export default function Navbar() {
           {/* Desktop Pill Nav */}
           <div className="nav-pill hidden lg:flex flex-1 justify-center">
             <div className="flex items-center p-1 rounded-full bg-black/30 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-500">
-              {[
-                {
-                  name: "About Us",
-                  href: "/about",
-                  dropdown: [
-                    { name: "About Us", href: "/about" },
-                    { name: "Our Story & Community", href: "/our-story" },
-                  ],
-                },
-                { name: "Dining", href: "/dining" },
-                { name: "Events", href: "/events" },
-                { name: "Menu", href: "/menu" },
-                { name: "Gallery", href: "/gallery" },
-              ].map((item) =>
+              {items.map((item) =>
                 item.dropdown ? (
                   <div key={item.name} className="relative group">
                     <Link
-                      href={item.href}
+                      href={item.href || "#"}
                       className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300 flex items-center"
                     >
                       {item.name}
@@ -103,7 +122,7 @@ export default function Navbar() {
                         {item.dropdown.map((subItem) => (
                           <Link
                             key={subItem.name}
-                            href={subItem.href}
+                            href={subItem.href || "#"}
                             className="px-5 py-2.5 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
                           >
                             {subItem.name}
@@ -115,7 +134,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     key={item.name}
-                    href={item.href}
+                    href={item.href || "#"}
                     className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
                   >
                     {item.name}

@@ -4,39 +4,10 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const features = [
-  {
-    title: "Sunday Roasts",
-    images: [
-      "/images/gallery/feature-roast-1.jpg",
-      "/images/gallery/food-gourmet.jpg",
-      "/images/gallery/gallery-25.jpg",
-    ],
-    description: "The ultimate British tradition, perfected with local meats.",
-  },
-  {
-    title: "Pub Classics",
-    images: [
-      "/images/gallery/feature-classic-1.jpg",
-      "/images/gallery/gallery-1.jpg",
-      "/images/gallery/gallery-3.jpg",
-    ],
-    description: "Time-honored favorites with a sophisticated gourmet twist.",
-  },
-  {
-    title: "Seasonal Specials",
-    images: [
-      "/images/gallery/feature-special-1.jpg",
-      "/images/gallery/gallery-2.jpg",
-      "/images/gallery/gallery-4.jpg",
-    ],
-    description: "Fresh, local ingredients inspired by the changing seasons.",
-  },
-];
+
 
 function FeatureTile({ feature, index }: { feature: any; index: number }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -45,18 +16,13 @@ function FeatureTile({ feature, index }: { feature: any; index: number }) {
     let interval: NodeJS.Timeout;
 
     // The user requested a 3-second delay between each card changing.
-    // To achieve a perfect endless wave:
-    // - Card 0 starts its first fade at 3.0s
-    // - Card 1 starts its first fade at 6.0s
-    // - Card 2 starts its first fade at 9.0s
     const startDelay = (index + 1) * 3000;
 
     const timeout = setTimeout(() => {
       // Trigger the very first slide change
       setActiveIndex((prev) => (prev + 1) % feature.images.length);
 
-      // Since there are 3 cards, and we want 1 card to change every 3 seconds,
-      // the total loop for any individual card should be 9 seconds (9000ms)
+      // Since there are 3 cards, total loop loop is 9 seconds
       interval = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % feature.images.length);
       }, 9000);
@@ -121,8 +87,14 @@ function FeatureTile({ feature, index }: { feature: any; index: number }) {
   );
 }
 
-export default function FeatureTiles() {
+interface FeatureTilesProps {
+  data?: any;
+}
+
+export default function FeatureTiles({ data = {} }: FeatureTilesProps) {
   const sectionRef = useRef<HTMLElement>(null);
+
+  const features = Array.isArray(data.features) ? data.features : [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -160,7 +132,7 @@ export default function FeatureTiles() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [features, data]);
 
   return (
     <section ref={sectionRef} className="py-24 bg-[#0a192f] overflow-hidden">
@@ -168,20 +140,20 @@ export default function FeatureTiles() {
         {/* Header matching reference image style */}
         <div className="feature-header text-center mb-20 space-y-4">
           <h2 className="text-4xl md:text-5xl font-serif text-white tracking-tight leading-none">
-            Discover Our{" "}
-            <em className="italic font-light text-[#61A5FA]">Pub Traditions</em>
+            {data.regularHeading}{" "}
+            <em className="italic font-light text-[#61A5FA]">{data.italicHeading}</em>
           </h2>
           <div className="flex items-center justify-center gap-4">
             <div className="w-12 h-[1px] bg-white/10" />
             <p className="text-primary-100/40 uppercase tracking-[0.4em] text-[10px] font-bold">
-              Boutique Gastro Experience
+              {data.tagLabel}
             </p>
             <div className="w-12 h-[1px] bg-white/10" />
           </div>
         </div>
 
         <div className="feature-tiles-grid grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
-          {features.map((feature, index) => (
+          {features.map((feature: any, index: number) => (
             <FeatureTile key={index} feature={feature} index={index} />
           ))}
         </div>
@@ -189,3 +161,4 @@ export default function FeatureTiles() {
     </section>
   );
 }
+

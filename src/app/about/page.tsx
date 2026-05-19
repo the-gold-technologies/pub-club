@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { useCMSStore } from "@/store/useCMSStore";
 import {
   Car,
   Sun,
@@ -21,7 +22,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const amenities = [
+const iconMap: Record<string, any> = {
+  Car: Car,
+  Sun: Sun,
+  Flame: Flame,
+  Beer: Beer,
+  Home: Home,
+  Music: Music,
+  CloudRain: CloudRain,
+  Users: Users,
+  Heart: Heart,
+  Utensils: Utensils,
+};
+
+const defaultAmenities = [
   { icon: Car, label: "Free Parking" },
   { icon: Sun, label: "Beer Garden" },
   { icon: Flame, label: "Open Fireplace" },
@@ -31,10 +45,52 @@ const amenities = [
   { icon: CloudRain, label: "Covered Outdoor Space" },
 ];
 
+import PageLoader from "@/components/layout/PageLoader";
+
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const { fetchPage, pages, isLoading } = useCMSStore();
+
+  useEffect(() => {
+    fetchPage("about").catch(console.error);
+  }, [fetchPage]);
+
+  const pageData = pages["about"];
+  const sections = pageData?.sections || {};
+  const loading = isLoading["about"] ?? true;
+
+
+  // Extract sections
+  const hero = sections["AboutHero"] || {};
+  const roots = sections["AboutRoots"] || {};
+  const philosophy = sections["AboutPhilosophy"] || {};
+  const experience = sections["AboutExperience"] || {};
+  const amenitiesSection = sections["AboutAmenities"] || {};
+  const cta = sections["AboutCta"] || {};
+
+  // Process Highlights & Amenities
+  const highlights = experience.highlights || [
+    "The character of a classic Oxfordshire village.",
+    "Warmth of local open fires and aged beams.",
+    "A place where everyone is welcome.",
+  ];
+
+  const amenities = Array.isArray(amenitiesSection.amenities) && amenitiesSection.amenities.length > 0
+    ? amenitiesSection.amenities.map((item: any) => ({
+        icon: iconMap[item.icon] || InfoIconComponent(item.icon),
+        label: item.label,
+      }))
+    : defaultAmenities;
+
+  function InfoIconComponent(name: string) {
+    return iconMap[name] || HelpIcon;
+  }
+
+  function HelpIcon(props: any) {
+    return <Sun {...props} />;
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -63,8 +119,8 @@ export default function AboutPage() {
       });
 
       // Section reveal animations
-      const sections = gsap.utils.toArray(".reveal-section");
-      sections.forEach((section: any) => {
+      const sectionsElements = gsap.utils.toArray(".reveal-section");
+      sectionsElements.forEach((section: any) => {
         gsap.fromTo(
           section,
           { y: 50, opacity: 0 },
@@ -101,11 +157,13 @@ export default function AboutPage() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [pageData]);
 
   return (
     <div ref={containerRef} className="min-h-screen bg-white overflow-x-hidden">
+      <PageLoader isLoading={loading} />
       <Navbar />
+
 
       {/* Hero Section */}
       <section
@@ -115,7 +173,7 @@ export default function AboutPage() {
         {/* Background Image */}
         <div ref={bgRef} className="absolute inset-0 z-0 scale-110">
           <Image
-            src="/images/assets/SEVEN_STARS_2026_02_09-125.jpg"
+            src={hero.backgroundImage || "/images/assets/SEVEN_STARS_2026_02_09-125.jpg"}
             alt="About Seven Stars"
             fill
             className="object-cover opacity-50"
@@ -130,27 +188,27 @@ export default function AboutPage() {
               <div className="hero-reveal overflow-hidden mb-6 flex items-center gap-4">
                 <div className="w-12 h-px bg-[#475DB1]" />
                 <span className="block text-[#475DB1] uppercase tracking-[0.4em] text-[10px] font-bold">
-                  Our Story
+                  {hero.tagline || "Our Story"}
                 </span>
               </div>
 
               <h1 className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
-                About
-                <span className="italic font-light text-[#475DB1]">Us</span>
+                {hero.headingPart1 || "About"}
+                <span className="italic font-light text-[#475DB1]"> {hero.headingItalicHighlight || "Us"}</span>
               </h1>
             </div>
 
             <div className="md:col-span-5 pb-2">
               <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
                 <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
-                  &quot;A community-owned gem in the heart of Oxfordshire, where
-                  traditional hospitality meets a serious kitchen.&quot;
+                  &quot;{hero.quote || "A community-owned gem in the heart of Oxfordshire, where traditional hospitality meets a serious kitchen."}&quot;
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+
       {/* Story & Philosophy */}
       <section className="py-24 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -159,24 +217,20 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
                   <span className="w-8 h-[1px] bg-[#475DB1]"></span>
-                  Our Roots
+                  {roots.rootsTag || "Our Roots"}
                 </span>
                 <h2 className="text-4xl md:text-5xl font-serif text-slate-900 leading-tight">
-                  More than a pub, it belongs to its{" "}
-                  <em className="text-[#475DB1] font-light">community.</em>
+                  {roots.rootsHeading || "More than a pub, it belongs to its"}{" "}
+                  <em className="text-[#475DB1] font-light">{roots.rootsHeadingItalic || "community."}</em>
                 </h2>
               </div>
 
               <div className="space-y-6 text-lg text-slate-600 font-light leading-relaxed">
                 <p>
-                  The Seven Stars at Marsh Baldon is set in a picturesque
-                  Oxfordshire village. In the truest sense of the word, it
-                  belongs to the people who call this place home.
+                  {roots.rootsDesc1 || "The Seven Stars at Marsh Baldon is set in a picturesque Oxfordshire village. In the truest sense of the word, it belongs to the people who call this place home."}
                 </p>
                 <p>
-                  Community-owned and community-run, every pint poured and every
-                  plate served is a small act of keeping something genuinely
-                  valuable alive.
+                  {roots.rootsDesc2 || "Community-owned and community-run, every pint poured and every plate served is a small act of keeping something genuinely valuable alive."}
                 </p>
               </div>
 
@@ -186,7 +240,7 @@ export default function AboutPage() {
                     <Users size={20} />
                   </div>
                   <p className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                    Community
+                    {roots.pillar1 || "Community"}
                   </p>
                 </div>
                 <div className="text-center space-y-2">
@@ -194,7 +248,7 @@ export default function AboutPage() {
                     <Heart size={20} />
                   </div>
                   <p className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                    Passion
+                    {roots.pillar2 || "Passion"}
                   </p>
                 </div>
                 <div className="text-center space-y-2">
@@ -202,7 +256,7 @@ export default function AboutPage() {
                     <Utensils size={20} />
                   </div>
                   <p className="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                    Quality
+                    {roots.pillar3 || "Quality"}
                   </p>
                 </div>
               </div>
@@ -210,7 +264,7 @@ export default function AboutPage() {
 
             <div className="reveal-section relative h-[500px] rounded-3xl overflow-hidden shadow-2xl group">
               <Image
-                src="/images/assets/SEVEN_STARS_2026_02_09-0001.jpg"
+                src={roots.rootsImage || "/images/assets/SEVEN_STARS_2026_02_09-0001.jpg"}
                 alt="Community Spirit"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -218,7 +272,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <p className="font-serif text-2xl italic">
-                  &quot;Keeping something genuinely valuable alive.&quot;
+                  &quot;{roots.rootsQuote || "Keeping something genuinely valuable alive."}&quot;
                 </p>
               </div>
             </div>
@@ -254,13 +308,7 @@ export default function AboutPage() {
 
         <div className="max-w-5xl mx-auto px-4 text-center space-y-12 reveal-section">
           <h3 className="text-3xl md:text-5xl font-serif text-white leading-snug">
-            &quot;We believe that a great British pub should do three things
-            well: serve{" "}
-            <span className="text-[#475DB1] italic">excellent food</span>, pour
-            a <span className="text-[#475DB1] italic">proper drink</span>, and
-            make{" "}
-            <span className="text-[#475DB1] italic">every single person</span>{" "}
-            who walks through the door feel welcome.&quot;
+            &quot;{philosophy.philosophyQuote || "We believe that a great British pub should do three things well: serve excellent food, pour a proper drink, and make every single person who walks through the door feel welcome."}&quot;
           </h3>
           <div className="flex justify-center">
             <div className="w-20 h-1 bg-[#475DB1]" />
@@ -274,7 +322,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="reveal-section order-2 lg:order-1 relative h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
               <Image
-                src="/images/assets/SEVEN_STARS_2026_02_09-0066.jpg"
+                src={experience.differentImage || "/images/assets/SEVEN_STARS_2026_02_09-0066.jpg"}
                 alt="Cozy Interior"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -286,42 +334,29 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
                   <span className="w-8 h-[1px] bg-[#475DB1]"></span>
-                  The Experience
+                  {experience.differentTag || "The Experience"}
                 </span>
                 <h2 className="text-4xl md:text-5xl font-serif text-slate-900 leading-tight">
-                  Experience the{" "}
+                  {experience.differentHeading || "Experience the"}{" "}
                   <em className="text-[#475DB1] font-light">
-                    best of both worlds.
+                    {experience.differentHeadingItalic || "best of both worlds."}
                   </em>
                 </h2>
               </div>
 
               <p className="text-lg text-slate-600 font-light leading-relaxed">
-                Walk into The Seven Stars and you&apos;ll find the character and
-                warmth of a classic village. Local open fires, aged beams, and
-                the hum of good conversation create an atmosphere that is both
-                nostalgic and vibrantly alive.
+                {experience.differentDesc || "Walk into The Seven Stars and you'll find the character and warmth of a classic village. Local open fires, aged beams, and the hum of good conversation create an atmosphere that is both nostalgic and vibrantly alive."}
               </p>
 
               <div className="space-y-4 pt-4">
-                <div className="flex items-start gap-4">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#475DB1]" />
-                  <p className="text-slate-700 font-medium italic">
-                    The character of a classic Oxfordshire village.
-                  </p>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#475DB1]" />
-                  <p className="text-slate-700 font-medium italic">
-                    Warmth of local open fires and aged beams.
-                  </p>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#475DB1]" />
-                  <p className="text-slate-700 font-medium italic">
-                    A place where everyone is welcome.
-                  </p>
-                </div>
+                {highlights.map((highlight: string, index: number) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#475DB1]" />
+                    <p className="text-slate-700 font-medium italic">
+                      {highlight}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -333,27 +368,30 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal-section">
             <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium">
-              Amenities
+              {amenitiesSection.amenitiesTag || "Amenities"}
             </span>
             <h2 className="mt-4 text-4xl md:text-5xl font-serif text-slate-900">
-              Everything you need
+              {amenitiesSection.amenitiesHeading || "Everything you need"}
             </h2>
           </div>
 
           <div className="amenities-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-6">
-            {amenities.map((item, index) => (
-              <div
-                key={index}
-                className="amenity-card group p-6 bg-white rounded-2xl border border-slate-200/50 hover:border-[#475DB1]/30 hover:shadow-xl hover:shadow-[#475DB1]/5 transition-all duration-500 text-center"
-              >
-                <div className="w-12 h-12 mx-auto mb-4 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-[#475DB1]/10 group-hover:text-[#475DB1] transition-colors duration-500">
-                  <item.icon size={24} strokeWidth={1.5} />
+            {amenities.map((item: any, index: number) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={index}
+                  className="amenity-card group p-6 bg-white rounded-2xl border border-slate-200/50 hover:border-[#475DB1]/30 hover:shadow-xl hover:shadow-[#475DB1]/5 transition-all duration-500 text-center"
+                >
+                  <div className="w-12 h-12 mx-auto mb-4 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-[#475DB1]/10 group-hover:text-[#475DB1] transition-colors duration-500">
+                    <Icon size={24} strokeWidth={1.5} />
+                  </div>
+                  <p className="text-xs uppercase tracking-widest font-bold text-slate-500 group-hover:text-slate-900 transition-colors">
+                    {item.label}
+                  </p>
                 </div>
-                <p className="text-xs uppercase tracking-widest font-bold text-slate-500 group-hover:text-slate-900 transition-colors">
-                  {item.label}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -367,19 +405,17 @@ export default function AboutPage() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center space-y-10 reveal-section">
           <h2 className="text-5xl md:text-7xl font-serif text-white">
-            Celebrate your <br />
-            <em className="font-light italic">special moments</em> with us.
+            {cta.ctaHeading || "Celebrate your special moments with us."}
           </h2>
           <p className="text-xl text-white/80 font-light max-w-2xl mx-auto">
-            From intimate dinners to grand celebrations in our private barn, we
-            make every occasion unforgettable.
+            {cta.ctaDesc || "From intimate dinners to grand celebrations in our private barn, we make every occasion unforgettable."}
           </p>
           <div className="pt-6">
             <a
-              href="/contact"
+              href={cta.ctaButtonUrl || "/contact"}
               className="inline-block px-12 py-5 bg-white text-[#475DB1] rounded-full uppercase tracking-[0.2em] text-sm font-bold hover:bg-slate-100 hover:scale-105 transition-all duration-300 shadow-xl"
             >
-              Book Your Visit
+              {cta.ctaButtonLabel || "Book Your Visit"}
             </a>
           </div>
         </div>

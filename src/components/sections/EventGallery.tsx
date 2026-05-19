@@ -8,28 +8,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const eventImages = [
-  {
-    src: "/images/481171001_957353706531406_1040071741557670337_nlow.png",
-    alt: "Mother's Day Special Luncheon",
-  },
-  {
-    src: "/images/481171001_957353706531406_1040071741557670337_nlow.webp",
-    alt: "Mother's Day Celebration Table",
-  },
-  {
-    src: "/images/481171001_957353706531406_1040071741557670337_nlow (1).webp",
-    alt: "Mother's Day Experience Preview",
-  },
-  {
-    src: "/images/481983309_18036627329600436_7680148243878380970_nlow.webp",
-    alt: "Indian Heritage Banquet",
-  },
-  { src: "/images/gallery/gallery-3.jpg", alt: "Club Atmosphere" },
-];
 
-export default function EventGallery() {
+
+interface EventGalleryProps {
+  data?: any;
+}
+
+export default function EventGallery({ data = {} }: EventGalleryProps) {
   const ref = useRef<HTMLElement>(null);
+
+  const eventImages = Array.isArray(data.images) ? data.images : [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -67,7 +55,7 @@ export default function EventGallery() {
     }, ref);
 
     return () => ctx.revert();
-  }, []);
+  }, [eventImages, data]);
 
   return (
     <section
@@ -78,12 +66,12 @@ export default function EventGallery() {
         {/* Title Section */}
         <div className="gallery-title mb-16 space-y-4">
           <span className="text-[10px] tracking-[0.5em] text-primary-400 uppercase font-medium">
-            Events & Celebrations
+            {data.upperTag}
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-white tracking-tight leading-none">
-            Perfect For{" "}
+            {data.headingPart1}{" "}
             <em className="not-italic text-primary-400 font-light">
-              Every Moment
+              {data.headingItalicHighlight}
             </em>
           </h2>
         </div>
@@ -92,71 +80,81 @@ export default function EventGallery() {
         <div className="gallery-container grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
           {/* Left Column: 2 small images stacked */}
           <div className="md:col-span-1 flex flex-col gap-6 order-2 md:order-1">
-            <Link
-              href="/events"
-              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
-            >
-              <Image
-                src={eventImages[0].src}
-                alt={eventImages[0].alt}
-                fill
-                className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
-              />
-            </Link>
-            <Link
-              href="/events"
-              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
-            >
-              <Image
-                src={eventImages[1].src}
-                alt={eventImages[1].alt}
-                fill
-                className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
-              />
-            </Link>
+            {eventImages[0] && (
+              <Link
+                href="/events"
+                className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+              >
+                <Image
+                  src={eventImages[0].src}
+                  alt={eventImages[0].alt}
+                  fill
+                  className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
+                />
+              </Link>
+            )}
+            {eventImages[1] && (
+              <Link
+                href="/events"
+                className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+              >
+                <Image
+                  src={eventImages[1].src}
+                  alt={eventImages[1].alt}
+                  fill
+                  className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
+                />
+              </Link>
+            )}
           </div>
 
           {/* Center Column: 1 large tall image */}
           <div className="md:col-span-3 h-full order-1 md:order-2 flex justify-center items-center">
-            <Link
-              href="/events"
-              className="gallery-photo-wrapper group relative h-[450px] md:h-[650px] aspect-[4/5] max-w-full rounded-3xl overflow-hidden transition-all duration-500 block cursor-pointer shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5"
-            >
-              <Image
-                src={eventImages[2].src}
-                alt={eventImages[2].alt}
-                fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-[1.02] opacity-95 group-hover:opacity-100"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] via-transparent to-transparent opacity-30 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
-            </Link>
+            {eventImages[2] && (
+              <Link
+                href="/events"
+                className="gallery-photo-wrapper group relative h-[450px] md:h-[650px] aspect-[4/5] max-w-full rounded-3xl overflow-hidden transition-all duration-500 block cursor-pointer shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5"
+              >
+                <Image
+                  src={eventImages[2].src}
+                  alt={eventImages[2].alt}
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-[1.02] opacity-95 group-hover:opacity-100"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a192f] via-transparent to-transparent opacity-30 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
+              </Link>
+            )}
           </div>
 
           {/* Right Column: 2 small images stacked */}
           <div className="md:col-span-1 flex flex-col gap-6 order-3">
-            <Link
-              href="/events"
-              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
-            >
-              <Image
-                src={eventImages[3].src}
-                alt={eventImages[3].alt}
-                fill
-                className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
-              />
-            </Link>
-            <Link
-              href="/events"
-              className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
-            >
-              <Image
-                src={eventImages[4].src}
-                alt={eventImages[4].alt}
-                fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-              />
-            </Link>
+            {eventImages[3] && (
+              <Link
+                href="/events"
+                className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+              >
+                <Image
+                  src={eventImages[3].src}
+                  alt={eventImages[3].alt}
+                  fill
+                  className="object-contain transition-transform duration-1000 group-hover:scale-[1.02] opacity-85 group-hover:opacity-100"
+                />
+              </Link>
+            )}
+            {eventImages[4] && (
+              <Link
+                href="/events"
+                className="gallery-photo-wrapper group relative aspect-[4/5] rounded-2xl overflow-hidden bg-white/5 shadow-2xl transition-all duration-500 hover:z-10 block cursor-pointer"
+              >
+                <Image
+                  src={eventImages[4].src}
+                  alt={eventImages[4].alt}
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                />
+              </Link>
+            )}
           </div>
         </div>
       </div>

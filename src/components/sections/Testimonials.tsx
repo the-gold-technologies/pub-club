@@ -5,33 +5,17 @@ import Image from "next/image";
 import gsap from "gsap";
 import { Quote } from "lucide-react";
 
-const testimonials = [
-  {
-    quote:
-      "The atmosphere at Seven Stars is unmatched. From the warm welcome to the exquisite Middle Eastern influences in their Sunday roast, it's a truly boutique experience.",
-    author: "James Harrison",
-    role: "Local Food Critic",
-    image: "/images/gallery/testimonial-v2-1.jpg",
-  },
-  {
-    quote:
-      "A perfect blend of British tradition and modern culinary art. Their orange and cognac crème brulée is quite literally the best dessert I've had this year.",
-    author: "Sarah Jenkins",
-    role: "Frequent Guest",
-    image: "/images/gallery/testimonial-v2-1.jpg",
-  },
-  {
-    quote:
-      "We hosted our anniversary here and the team went above and beyond. The setting is stunning, especially in the evening when the glow hits the stone walls.",
-    author: "Robert & Elena",
-    role: "Club Members",
-    image: "/images/gallery/testimonial-v2-1.jpg",
-  },
-];
 
-export default function Testimonials() {
+
+interface TestimonialsProps {
+  data?: any;
+}
+
+export default function Testimonials({ data = {} }: TestimonialsProps) {
   const [active, setActive] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
+
+  const testimonials = Array.isArray(data.testimonials) ? data.testimonials : [];
 
   const changeTestimonial = (index: number) => {
     if (index === active || isChanging) return;
@@ -78,7 +62,7 @@ export default function Testimonials() {
       }
     }, 8000);
     return () => clearInterval(timer);
-  }, [active, isChanging]);
+  }, [active, isChanging, testimonials.length]);
 
   return (
     <section className="bg-[#faf9f6] overflow-hidden min-h-[600px] flex items-center relative border-t border-black/5">
@@ -89,27 +73,29 @@ export default function Testimonials() {
         {/* Left Side: Content */}
         <div className="p-12 md:p-24 flex flex-col justify-center items-center text-center relative bg-[#FDFBF7] min-h-[550px]">
           <div className="max-w-xl w-full flex flex-col justify-center min-h-[350px]">
-            <div className="testimonial-content space-y-10">
-              <div className="flex justify-center">
-                <Quote
-                  className="text-[#475DB1] w-12 h-12 opacity-25 rotate-180"
-                  fill="currentColor"
-                />
-              </div>
+            {testimonials[active] && (
+              <div className="testimonial-content space-y-10">
+                <div className="flex justify-center">
+                  <Quote
+                    className="text-[#475DB1] w-12 h-12 opacity-25 rotate-180"
+                    fill="currentColor"
+                  />
+                </div>
 
-              <p className="text-2xl md:text-3xl font-serif text-neutral-800 italic leading-snug tracking-tight px-4">
-                &quot;{testimonials[active].quote}&quot;
-              </p>
-
-              <div className="space-y-2">
-                <h4 className="text-sm tracking-[0.4em] text-black uppercase font-bold">
-                  {testimonials[active].author}
-                </h4>
-                <p className="text-[11px] tracking-[0.3em] text-[#475DB1] uppercase font-bold opacity-80">
-                  {testimonials[active].role}
+                <p className="text-2xl md:text-3xl font-serif text-neutral-800 italic leading-snug tracking-tight px-4">
+                  &quot;{testimonials[active].quote}&quot;
                 </p>
+
+                <div className="space-y-2">
+                  <h4 className="text-sm tracking-[0.4em] text-black uppercase font-bold">
+                    {testimonials[active].author}
+                  </h4>
+                  <p className="text-[11px] tracking-[0.3em] text-[#475DB1] uppercase font-bold opacity-80">
+                    {testimonials[active].role}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Decorative accent - Left side only */}
@@ -118,7 +104,7 @@ export default function Testimonials() {
 
         {/* Right Side: Image */}
         <div className="relative h-[450px] md:h-auto overflow-hidden bg-[#FDFBF7]">
-          {testimonials.map((testimonial, i) => (
+          {testimonials.map((testimonial: any, i: number) => (
             <div
               key={i}
               className={`absolute inset-0 transition-all duration-[1500ms] ease-in-out ${
@@ -144,3 +130,4 @@ export default function Testimonials() {
     </section>
   );
 }
+
