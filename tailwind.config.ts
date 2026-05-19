@@ -6,6 +6,13 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    "aspect-square",
+    "aspect-[4/3]",
+    "aspect-[3/4]",
+    "aspect-[4/5]",
+    "aspect-[16/9]",
+  ],
   theme: {
     extend: {
       colors: {
