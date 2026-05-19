@@ -26,291 +26,16 @@ interface MenuPage {
 interface MenuSection {
   id: string;
   title: string;
+  subtitle?: string;
   pdf: string;
   pages: MenuPage[];
 }
 
-const menuSections: MenuSection[] = [
-  {
-    id: "main",
-    title: "Main Menu",
-    pdf: "/pdf/Spring Menu April 2026.pdf",
-    pages: [
-      {
-        categories: [
-          {
-            name: "Small Plates",
-            items: [
-              { name: "Marinated Olives (VG) (GF)", price: "£4.95" },
-              {
-                name: "Focaccia with Balsamic and Olive Oil (VG)",
-                price: "£5.95",
-              },
-              { name: "Devil Crispy Whitebait", price: "£6.50" },
-              { name: "Salt N Pepper Squid", price: "£8.95" },
-              {
-                name: "Halloumi Fries with Honey Chilli Sauce (GF/V)",
-                price: "£7.50",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        categories: [
-          {
-            name: "To Start",
-            items: [
-              {
-                name: "Soup Of The Day",
-                desc: "Served With Sourdough",
-                price: "£7.50",
-              },
-              {
-                name: "Smoked Trout Mousse",
-                desc: "Fennel & Orange Salad, Beetroot Reduction, Lump fish Caviar & Sourdough",
-                price: "£10.95",
-              },
-              {
-                name: "Hoisin Crispy Duck Salad",
-                desc: "Cucumber, Scallions, Pomegranate, Roasted Cashew Nuts, Red Wine Gastrique",
-                price: "£10.95",
-              },
-              {
-                name: "Arabic Crème Chicken Skewers",
-                desc: "Chermoula, Scallions, Pomegranate, Levantine Spiced Salad",
-                price: "£9.50",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        categories: [
-          {
-            name: "To Start (Cont.)",
-            items: [
-              {
-                name: "Spiced Home-Reared Lamb Kofta",
-                desc: "Red Pepper Hummus, Lightly Spiced Onion, Tzatziki (GF)",
-                price: "£11.95",
-              },
-              {
-                name: "Pan Fried King Scallops",
-                desc: "Garlic Butter, Pink Peppercorn, Dill, Pancetta & Lemon Zest (GF)",
-                price: "£14.95",
-              },
-              {
-                name: "Burrata",
-                desc: "Glazed Peaches, Vine Cherry Tomatoes, Walnuts, Rocket & Pesto (V) (GF)",
-                price: "£11.95",
-              },
-              {
-                name: "Harissa Roasted Heart Artichoke",
-                desc: "Green Hummus, Pomegranate, Paprika & Pita Bread (VG)",
-                price: "£10.95",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        categories: [
-          {
-            name: "Mains",
-            items: [
-              {
-                name: "8 Oz Rib Eye Steak",
-                desc: "Grilled Vine Tomato, Pan-Fried Mushrooms, Triple-Cooked Chips (GF)",
-                price: "£31.50",
-              },
-              {
-                name: "Beer Battered Haddock & Chips",
-                desc: "Mushy Peas, Tartar Sauce, Grilled Lemon (GF)",
-                price: "£19.50",
-              },
-              {
-                name: "Cotswold Lamb Chips",
-                desc: "Chermoula, Sweet Potato Mash, Grilled Asparagus, Vine Cherry Tomato & Lamb Gastrique (GF)",
-                price: "£26.95",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        categories: [
-          {
-            name: "Mains (Cont.)",
-            items: [
-              {
-                name: "Pan Fried Duck Breast",
-                desc: "Dauphinoise Potatoes, Garlic Kale, Cherry Tomatoes, Red Wine Jus",
-                price: "£25.95",
-              },
-              {
-                name: "Thai Massaman Chicken Curry",
-                desc: "Oriental Vegetables & Jasmine Rice",
-                price: "£19.95",
-              },
-              {
-                name: "Pan Fried Salmon Supreme",
-                desc: "N’Duja Butter Sauce, Cheese & Onion Croquette, Rainbow Chard, Samphire",
-                price: "£23.95",
-              },
-              {
-                name: "King Prawns & Devon Crab Linguine",
-                desc: "Lobster Bisque, Buttered Samphire, Garlic Bread",
-                price: "£23.95",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        categories: [
-          {
-            name: "Mains & Burgers",
-            items: [
-              {
-                name: "Chicken & Bacon Caesar Salad",
-                desc: "Cos Lettuce, Soft-Boiled Egg, Croutons, Shaved Parmesan",
-                price: "£18.50",
-              },
-              {
-                name: "Peas, Asparagus & Wild Mushroom Risotto",
-                desc: "Red Radish, Parmigiano Reggiano, Pea shoots & Herb Oil (V) (GF)",
-                price: "£18.95",
-              },
-              {
-                name: "Arabic Spiced Roasted Cauliflower",
-                desc: "Baba Ganoush, Moroccan Chick Peas, Sesame Seeds, Red Dukkah, Pomegranate, Coriander, Herb Oil (VG) (GF)",
-                price: "£17.95",
-              },
-              {
-                name: "The Star Cheeseburger",
-                desc: "Baby Gem, Vine Tomato, Red Onion, Gherkin, Smoked Cheddar, Crispy Smoked Bacon, Burger Sauce",
-                price: "£18.95",
-              },
-              {
-                name: "Bangkok Spicy Bean Burger",
-                desc: "Baby Gem, Vine Tomato, Red Onion, Gherkin, Vegan Cheese, Burger Sauce (VG)",
-                price: "£17.95",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        categories: [
-          {
-            name: "Sides",
-            items: [
-              { name: "Truffle Parmesan Fries (GF)", price: "£6.95" },
-              { name: "Rocket Parmesan Salad (V) (GF)", price: "£4.95" },
-              { name: "Sweet Potato Fries (VG)", price: "£4.95" },
-              { name: "Tenderstem Broccoli (V) (GF)", price: "£5.95" },
-              { name: "Triple Cooked Chips (VG)", price: "£5.95" },
-              { name: "Herbed New Potato (V)", price: "£4.95" },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "sunday",
-    title: "Sunday Menu",
-    pdf: "/pdf/Sunday Menu april 2026.pdf",
-    pages: [
-      {
-        categories: [
-          {
-            name: "Sunday Lunch",
-            subtitle:
-              "Served with Yorkshire Pudding, Roast Potatoes, Seasonal Greens, Red Cabbage, Crushed Swede, Carrots, Celeriac Puree & Red Wine Gravy",
-            items: [
-              { name: "Roasted Oxfordshire Beef Sirloin", price: "£22.00" },
-              { name: "Roasted Chicken Supreme", price: "£20.00" },
-              { name: "Roasted Loin Of Pork", price: "£19.50" },
-              { name: "Mushroom & Cranberry Nut Roast (V)", price: "£18.50" },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "dessert",
-    title: "Dessert Menu",
-    pdf: "/pdf/Dessert Menu new.pdf",
-    pages: [
-      {
-        categories: [
-          {
-            name: "Desserts",
-            items: [
-              {
-                name: "Baldon Apple & Apricot Crumble",
-                desc: "Served With Custard Or Ice Cream",
-                price: "£8.50",
-              },
-              {
-                name: "Vanilla Panna Cotta",
-                desc: "Summer Berries, Coulis (GF)",
-                price: "£8.25",
-              },
-              {
-                name: "Warm Chocolate Brownie",
-                desc: "With Vanilla Ice Cream",
-                price: "£8.50",
-              },
-              {
-                name: "Mulled Red Wine Poached Pear",
-                desc: "With Orange Sorbet (VG/GF)",
-                price: "£8.50",
-              },
-              {
-                name: "Lotus Biscoff Cheesecake",
-                desc: "With Salted Caramel Icecream",
-                price: "£8.95",
-              },
-              {
-                name: "Cheese Board",
-                desc: "Oxfordshire Blue Cheese, Oxford Isis, Brie",
-                price: "£12.50",
-              },
-              { name: "Orange & Cognac Crème Brulée (GF)", price: "£8.50" },
-            ],
-          },
-        ],
-      },
-      {
-        categories: [
-          {
-            name: "Hot Drinks",
-            items: [
-              { name: "Coffee / Decaffe / Latte", price: "Various" },
-              { name: "Hot Chocolate", price: "£3.90" },
-              { name: "Specialty Teas", price: "£3.60" },
-              { name: "Liqueur Coffees", price: "£8.50" },
-            ],
-          },
-          {
-            name: "Post Meal Drinks",
-            items: [
-              { name: "Espresso Martini", price: "£9.95" },
-              { name: "Tiramisu White Russian", price: "£9.95" },
-              { name: "Irish Hot Toddy", price: "£8.95" },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
+export default function Menu({ data = {} }: { data?: any }) {
+  const menuSections: MenuSection[] = Array.isArray(data.menuSections)
+    ? data.menuSections
+    : [];
 
-export default function Menu() {
   const ref = useRef<HTMLElement>(null);
   const [sectionIdx, setSectionIdx] = useState(0);
   const [pageIdx, setPageIdx] = useState(0);
@@ -339,6 +64,8 @@ export default function Menu() {
 
     return () => ctx.revert();
   }, []);
+
+  if (menuSections.length === 0) return null;
 
   const changePage = (newSection: number, newPage: number) => {
     if (isFlipping) return;
@@ -421,8 +148,11 @@ export default function Menu() {
     }
   };
 
-  const activeSection = menuSections[sectionIdx];
-  const activePage = activeSection.pages[pageIdx];
+  const activeSection = menuSections[sectionIdx] || menuSections[0];
+  const activePage =
+    activeSection?.pages?.[pageIdx] || activeSection?.pages?.[0];
+
+  if (!activeSection || !activePage) return null;
 
   return (
     <section
@@ -438,21 +168,22 @@ export default function Menu() {
           <div className="flex flex-col gap-3">
             <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
               <span className="font-serif text-2xl text-black/10 leading-none">
-                05
+                {data.sectionNumber}
               </span>
               <span className="w-6 h-[1px] bg-primary-600/30"></span>
-              Seasonal Selection
+              {data.tagline}
             </span>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
               <h3 className="text-4xl md:text-5xl font-serif text-black leading-tight tracking-tight">
-                Our{" "}
-                <em className="not-italic text-[#475DB1] font-light">Menu</em>
+                {data.headingPart1}{" "}
+                <em className="not-italic text-[#475DB1] font-light">
+                  {data.headingItalicHighlight}
+                </em>
               </h3>
             </div>
           </div>
           <p className="text-neutral-600 leading-relaxed font-light text-lg max-w-3xl">
-            At The Seven Stars, our kitchen starts with fresh, quality
-            ingredients and builds outward from there.
+            {data.description}
           </p>
         </div>
 
@@ -468,17 +199,17 @@ export default function Menu() {
               <div className="p-12 flex flex-col items-center justify-between h-full text-center py-20 border-r-[25px] border-black/5 w-full">
                 <div className="flex flex-col items-center">
                   <h4 className="text-3xl font-serif text-black mb-1 tracking-tight">
-                    Marsh Baldon
+                    {data.locationName}
                   </h4>
                   <p className="text-[#475DB1] text-[10px] uppercase tracking-[0.3em]">
-                    Oxfordshire
+                    {data.locationCounty}
                   </p>
                 </div>
 
                 <div className="space-y-8">
                   {menuSections.map((s, i) => (
                     <button
-                      key={s.id}
+                      key={s.id || i}
                       onClick={() => changePage(i, 0)}
                       className={`block text-[11px] uppercase tracking-[0.4em] font-bold transition-all relative group ${sectionIdx === i ? "text-black scale-110" : "text-neutral-400 hover:text-black"}`}
                     >
@@ -532,7 +263,7 @@ export default function Menu() {
                       {activeSection.title}
                     </h4>
                     <span className="text-[11px] text-[#475DB1] font-bold uppercase tracking-[0.2em]">
-                      Gastronomic Journey
+                      {activeSection.subtitle || data.activeSectionSubtitle}
                     </span>
                   </div>
 
@@ -581,7 +312,7 @@ export default function Menu() {
                   </button>
 
                   <a
-                    href={activeSection.pdf}
+                    href={activeSection.pdf || "#"}
                     download
                     className="text-neutral-400 hover:text-[#475DB1] transition-colors"
                   >
@@ -602,10 +333,10 @@ export default function Menu() {
 
         <div className="mt-24 text-center">
           <a
-            href="/contact"
+            href={data.ctaLink}
             className="inline-flex items-center px-14 py-6 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-[0.2em] text-[12px] font-bold transition-all rounded-full shadow-xl"
           >
-            Enquire For Private Dining
+            {data.ctaText}
           </a>
         </div>
       </div>

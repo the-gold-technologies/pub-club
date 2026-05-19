@@ -38,12 +38,18 @@ interface CMSStoreState {
   errors: Record<string, string | null>;
   navLinks: NavLink[] | null;
   globalSEO: any | null;
+  events: any[] | null;
+  gallery: any[] | null;
+  menu: any[] | null;
 }
 
 interface CMSStoreActions {
   fetchPage: (slug: string) => Promise<any>;
   fetchNavLinks: () => Promise<void>;
   fetchGlobalSEO: () => Promise<void>;
+  fetchEvents: () => Promise<void>;
+  fetchGallery: () => Promise<void>;
+  fetchMenu: () => Promise<void>;
 }
 
 const getApiBaseUrl = () => {
@@ -61,6 +67,9 @@ export const useCMSStore = create<CMSStoreState & CMSStoreActions>(
     errors: {},
     navLinks: null,
     globalSEO: null,
+    events: null,
+    gallery: null,
+    menu: null,
 
     fetchPage: async (slug: string) => {
       // Return cached page data if already fetched to prevent redundant calls
@@ -200,6 +209,66 @@ export const useCMSStore = create<CMSStoreState & CMSStoreActions>(
         }
       } catch (error) {
         console.error("Error fetching global SEO data:", error);
+      }
+    },
+
+    fetchEvents: async () => {
+      try {
+        const baseUrl = getApiBaseUrl();
+        const response = await fetch(`${baseUrl}/api/events`, {
+          next: { revalidate: 60 },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch events data");
+        }
+
+        const json = await response.json();
+        if (json.success && Array.isArray(json.data)) {
+          set({ events: json.data });
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    },
+
+    fetchGallery: async () => {
+      try {
+        const baseUrl = getApiBaseUrl();
+        const response = await fetch(`${baseUrl}/api/gallery`, {
+          next: { revalidate: 60 },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch gallery data");
+        }
+
+        const json = await response.json();
+        if (json.success && Array.isArray(json.data)) {
+          set({ gallery: json.data });
+        }
+      } catch (error) {
+        console.error("Error fetching gallery:", error);
+      }
+    },
+
+    fetchMenu: async () => {
+      try {
+        const baseUrl = getApiBaseUrl();
+        const response = await fetch(`${baseUrl}/api/menu`, {
+          next: { revalidate: 60 },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch menu data");
+        }
+
+        const json = await response.json();
+        if (json.success && Array.isArray(json.data)) {
+          set({ menu: json.data });
+        }
+      } catch (error) {
+        console.error("Error fetching menu:", error);
       }
     },
   }),
