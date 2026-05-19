@@ -229,7 +229,7 @@ export default function Footer() {
               {displayNavLinks.map((link) => (
                 <li key={link.label}>
                   <Link
-                    href={link.href}
+                    href={link.href || "#"}
                     className="text-white/90 hover:text-white text-sm font-light transition-colors tracking-wide flex items-center gap-2 group"
                   >
                     {link.label}
