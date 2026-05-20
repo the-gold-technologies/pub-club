@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/providers/LenisProvider";
+import Script from "next/script";
+import FooterScripts from "@/components/layout/FooterScripts";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
@@ -9,23 +11,143 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-export const metadata: Metadata = {
-  title: "Seven Stars | Countryside Gastro Club Pub",
-  description:
-    "Experience luxury dining, elegant ambience, and unforgettable events at Seven Stars Gastro Club Pub.",
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_CMS_API_URL) {
+    return process.env.NEXT_PUBLIC_CMS_API_URL;
+  }
+  return "https://cms-seven-star.vercel.app";
 };
 
-export default function RootLayout({
+async function getGlobalSEO() {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const response = await fetch(`${baseUrl}/api/seo/global`, {
+      cache: "no-store", // Always fetch fresh to prevent caching stale settings
+    });
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json.success ? json.data : null;
+  } catch (error) {
+    console.error("Error fetching global SEO for metadata:", error);
+    return null;
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const globalSEO = await getGlobalSEO();
+
+  const title = globalSEO?.siteTitle || "Seven Stars | Countryside Gastro Club Pub";
+  const description =
+    globalSEO?.siteDescription ||
+    "Experience luxury dining, elegant ambience, and unforgettable events at Seven Stars Gastro Club Pub.";
+  const favicon = globalSEO?.favicon || "/favicon.ico";
+
+  return {
+    title,
+    description,
+    icons: {
+      icon: favicon,
+    },
+    other: globalSEO?.searchConsoleId
+      ? {
+          "google-site-verification": globalSEO.searchConsoleId,
+        }
+      : undefined,
+  };
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const globalSEO = await getGlobalSEO();
+
   return (
     <html lang="en">
+      <head>
+        {/* Dynamic Favicon */}
+        {globalSEO?.favicon && (
+          <link
+            rel="icon"
+            href={`${globalSEO.favicon}?v=${Math.floor(Date.now() / 3600000)}`}
+            type={
+              globalSEO.favicon.match(/\.(jpg|jpeg)$/i)
+                ? "image/jpeg"
+                : globalSEO.favicon.match(/\.png$/i)
+                ? "image/png"
+                : "image/x-icon"
+            }
+          />
+        )}
+
+        {/* Google Tag Manager (GTM) */}
+        {globalSEO?.gtmId && (
+          <Script
+            id="gtm-script"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','${globalSEO.gtmId}');
+              `,
+            }}
+          />
+        )}
+
+        {/* Google Analytics (GA4) */}
+        {globalSEO?.googleAnalyticsId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${globalSEO.googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${globalSEO.googleAnalyticsId}');
+                `,
+              }}
+            />
+          </>
+        )}
+
+        {/* Custom Header Scripts */}
+        {globalSEO?.customHeaderScripts && (
+          <script
+            dangerouslySetInnerHTML={{ __html: globalSEO.customHeaderScripts }}
+          />
+        )}
+      </head>
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased text-black bg-white`}
       >
+        {/* GTM Noscript */}
+        {globalSEO?.gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${globalSEO.gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
+
         <LenisProvider>{children}</LenisProvider>
+
+        {/* Custom Footer Scripts */}
+        {globalSEO?.customFooterScripts && (
+          <FooterScripts html={globalSEO.customFooterScripts} />
+        )}
       </body>
     </html>
   );
