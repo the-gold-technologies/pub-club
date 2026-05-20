@@ -16,7 +16,9 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
   const [message, setMessage] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
@@ -57,7 +59,9 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
     setErrorMsg("");
 
     try {
-      const apiBaseUrl = process.env.NEXT_PUBLIC_CMS_API_URL || "https://cms-seven-star.vercel.app";
+      const apiBaseUrl =
+        process.env.NEXT_PUBLIC_CMS_API_URL ||
+        "https://cms-seven-star.vercel.app";
       const res = await fetch(`${apiBaseUrl}/api/enquiries`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -226,7 +230,9 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                     Select a subject
                   </option>
                   <option value="Table Reservation">Table Reservation</option>
-                  <option value="Private Event Enquiry">Private Event Enquiry</option>
+                  <option value="Private Event Enquiry">
+                    Private Event Enquiry
+                  </option>
                   <option value="General Question">General Question</option>
                 </select>
                 <label
