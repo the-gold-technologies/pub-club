@@ -12,6 +12,10 @@ export default {
     "aspect-[3/4]",
     "aspect-[4/5]",
     "aspect-[16/9]",
+    {
+      pattern: /^(col|row)-(span|start)-(\d+|full)$/,
+      variants: ["md", "lg"],
+    },
   ],
   theme: {
     extend: {
