@@ -10,7 +10,7 @@ const Navbar = dynamic(() => import("@/components/layout/Navbar"), { ssr: true }
 const Footer = dynamic(() => import("@/components/layout/Footer"), { ssr: true });
 const EventsHero = dynamic(() => import("@/app/events/components/EventsHero"), { ssr: false });
 const UpcomingEvents = dynamic(() => import("@/app/events/components/UpcomingEvents"), { ssr: false });
-const EventsArchive = dynamic(() => import("@/app/events/components/EventsArchive"), { ssr: false });
+// const EventsArchive = dynamic(() => import("@/app/events/components/EventsArchive"), { ssr: false });
 const WhatWeHost = dynamic(() => import("@/app/events/components/WhatWeHost"), { ssr: false });
 const EventsCapabilities = dynamic(() => import("@/app/events/components/EventsCapabilities"), { ssr: false });
 
@@ -31,9 +31,9 @@ export default function EventsPage() {
       <Navbar />
       <EventsHero data={sections["EventsHero"] || {}} />
       <UpcomingEvents data={sections["UpcomingEvents"] || {}} />
-      <EventsArchive data={sections["EventsArchive"] || {}} />
+      {/* <EventsArchive data={sections["EventsArchive"] || {}} /> */}
       <WhatWeHost data={sections["WhatWeHost"] || {}} />
-      <EventsCapabilities />
+      <EventsCapabilities data={sections["EventsCapabilities"] || {}} />
       <Footer />
     </div>
   );

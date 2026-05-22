@@ -41,7 +41,7 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
   }, [data]);
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32 bg-white">
+    <section ref={containerRef} className="py-24 md:py-32 bg-[#0A192F] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="reveal-section order-2 lg:order-1 relative h-[600px] rounded-[2rem] overflow-hidden shadow-2xl group">
@@ -62,38 +62,38 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
                 <span className="w-8 h-[1px] bg-[#475DB1]"></span>
                 {data.barnTagline}
               </span>
-              <h2 className="text-4xl md:text-5xl font-serif text-slate-900 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-serif text-white leading-tight">
                 {data.barnHeading} <em className="text-[#475DB1] font-light italic">{data.barnHeadingItalic}</em>
               </h2>
             </div>
 
-            <p className="text-xl text-slate-600 font-light leading-relaxed">
+            <p className="text-xl text-slate-300 font-light leading-relaxed">
               {data.barnDesc}
             </p>
 
             <div className="space-y-6 pt-4">
               <div className="flex items-start gap-5">
-                <div className="mt-1 w-10 h-10 shrink-0 rounded-full bg-primary-50 flex items-center justify-center text-[#475DB1]">
+                <div className="mt-1 w-10 h-10 shrink-0 rounded-full bg-white/10 flex items-center justify-center text-[#475DB1]">
                   <Users size={18} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm uppercase tracking-widest mb-1">
+                  <h4 className="font-bold text-white text-sm uppercase tracking-widest mb-1">
                     {data.capacityTitle}
                   </h4>
-                  <p className="text-slate-500 font-light text-sm">
+                  <p className="text-slate-400 font-light text-sm">
                     {data.capacityDesc}
                   </p>
                 </div>
               </div>
               <div className="flex items-start gap-5">
-                <div className="mt-1 w-10 h-10 shrink-0 rounded-full bg-primary-50 flex items-center justify-center text-[#475DB1]">
+                <div className="mt-1 w-10 h-10 shrink-0 rounded-full bg-white/10 flex items-center justify-center text-[#475DB1]">
                   <GlassWater size={18} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm uppercase tracking-widest mb-1">
+                  <h4 className="font-bold text-white text-sm uppercase tracking-widest mb-1">
                     {data.beerTentTitle}
                   </h4>
-                  <p className="text-slate-500 font-light text-sm">
+                  <p className="text-slate-400 font-light text-sm">
                     {data.beerTentDesc}
                   </p>
                 </div>

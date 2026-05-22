@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { Phone, Calendar } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ContactPopupModal from "./ContactPopupModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,7 @@ interface ReadyToVisitProps {
 export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -104,13 +106,13 @@ export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
 
             {/* CTA Buttons - Matching Screenshot Icons and Layout */}
             <div className="cta-content-stagger flex flex-col sm:flex-row items-center justify-center gap-5 pt-8">
-              <a
-                href={data.bookUrl}
-                className="group flex items-center gap-3 px-8 py-5 bg-[#475DB1] text-white uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-[#5B6DC8]/90  active:scale-95 font-sans"
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="group flex items-center gap-3 px-8 py-5 bg-[#475DB1] text-white uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-[#5B6DC8]/90 active:scale-95 font-sans cursor-pointer"
               >
                 <Calendar size={16} className="opacity-90" />
                 {data.bookLabel}
-              </a>
+              </button>
 
               <a
                 href={data.phoneUrl}
@@ -123,6 +125,8 @@ export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
           </div>
         </div>
       </div>
+
+      <ContactPopupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }
