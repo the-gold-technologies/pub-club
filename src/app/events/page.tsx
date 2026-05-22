@@ -13,6 +13,7 @@ const UpcomingEvents = dynamic(() => import("@/app/events/components/UpcomingEve
 // const EventsArchive = dynamic(() => import("@/app/events/components/EventsArchive"), { ssr: false });
 const WhatWeHost = dynamic(() => import("@/app/events/components/WhatWeHost"), { ssr: false });
 const EventsCapabilities = dynamic(() => import("@/app/events/components/EventsCapabilities"), { ssr: false });
+const InstagramRibbon = dynamic(() => import("@/app/events/components/InstagramRibbon"), { ssr: false });
 
 export default function EventsPage() {
   const { fetchPage, pages, isLoading } = useCMSStore();
@@ -34,6 +35,7 @@ export default function EventsPage() {
       {/* <EventsArchive data={sections["EventsArchive"] || {}} /> */}
       <WhatWeHost data={sections["WhatWeHost"] || {}} />
       <EventsCapabilities data={sections["EventsCapabilities"] || {}} />
+      <InstagramRibbon data={sections["EventsArchive"] || {}} />
       <Footer />
     </div>
   );
