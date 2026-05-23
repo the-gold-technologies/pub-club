@@ -5,8 +5,6 @@ import { Instagram, Facebook, Youtube } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
-
-
 interface HeroProps {
   data?: any;
 }
@@ -137,7 +135,7 @@ export default function Hero({ data = {} }: HeroProps) {
       {/* Main Content */}
       <div className="relative z-30 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col pt-32 pb-8">
         <div className="flex-1 flex flex-col justify-center w-full">
-          <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-6">
+          <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-6 max-[650px]:gap-4">
             {/* Left side */}
             <div className="max-w-2xl space-y-6 relative group">
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] font-serif text-white leading-[0.9] tracking-tight drop-shadow-2xl overflow-hidden">
@@ -149,7 +147,7 @@ export default function Hero({ data = {} }: HeroProps) {
                 </span>
               </h1>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row items-center max-[650px]:items-start gap-3 pt-2">
                 <a
                   href={data.primaryBtnUrl}
                   className="hero-cta w-max py-4 px-8 border border-[#475DB1] rounded-full text-[#475DB1] hover:text-white uppercase tracking-widest text-xs transition-all hover:bg-[#475DB1]/20"
@@ -158,7 +156,7 @@ export default function Hero({ data = {} }: HeroProps) {
                 </a>
                 <a
                   href={data.secondaryBtnUrl}
-                  className="hero-cta w-full sm:w-auto text-white px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-semibold transition-all shadow-[0_0_20px_rgba(202,158,90,0.2)] hover:shadow-[0_0_30px_rgba(202,158,90,0.4)] rounded-full text-center"
+                  className="hero-cta w-full sm:w-auto max-[650px]:w-max max-[650px]:px-10 text-white px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-semibold transition-all shadow-[0_0_20px_rgba(202,158,90,0.2)] hover:shadow-[0_0_30px_rgba(202,158,90,0.4)] rounded-full text-center"
                 >
                   {data.secondaryBtnLabel}
                 </a>

@@ -2,12 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import ContactPopupModal from "@/components/sections/ContactPopupModal";
 
 interface OutdoorSeatingProps {
   data?: any;
 }
 
 export default function OutdoorSeating({ data = {} }: OutdoorSeatingProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const hasNavigateUrl = data.outdoorCtaLink && data.outdoorCtaLink.trim() !== "" && data.outdoorCtaLink !== "#";
+
   return (
     <section className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,12 +38,21 @@ export default function OutdoorSeating({ data = {} }: OutdoorSeatingProps) {
             <p className="text-neutral-600 font-light leading-relaxed max-w-md">
               {data.outdoorDesc}
             </p>
-            <Link
-              href={data.outdoorCtaLink || "#"}
-              className="inline-block border border-black px-10 py-3.5 text-[12px] uppercase tracking-widest font-bold hover:bg-[#475DB1] hover:border-[#475DB1] hover:text-white transition-all rounded-full"
-            >
-              {data.outdoorCtaText}
-            </Link>
+            {hasNavigateUrl ? (
+              <Link
+                href={data.outdoorCtaLink}
+                className="inline-block border border-black px-10 py-3.5 text-[12px] uppercase tracking-widest font-bold hover:bg-[#475DB1] hover:border-[#475DB1] hover:text-white transition-all rounded-full"
+              >
+                {data.outdoorCtaText}
+              </Link>
+            ) : (
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="inline-block border border-black px-10 py-3.5 text-[12px] uppercase tracking-widest font-bold hover:bg-[#475DB1] hover:border-[#475DB1] hover:text-white transition-all rounded-full"
+              >
+                {data.outdoorCtaText}
+              </button>
+            )}
 
             {/* Pagination/Scroll Indicators */}
             <div className="pt-4">
@@ -47,6 +61,7 @@ export default function OutdoorSeating({ data = {} }: OutdoorSeatingProps) {
           </div>
         </div>
       </div>
+      <ContactPopupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

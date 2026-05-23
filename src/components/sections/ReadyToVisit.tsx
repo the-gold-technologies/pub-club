@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Phone, Calendar } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -106,13 +107,23 @@ export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
 
             {/* CTA Buttons - Matching Screenshot Icons and Layout */}
             <div className="cta-content-stagger flex flex-col sm:flex-row items-center justify-center gap-5 pt-8">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="group flex items-center gap-3 px-8 py-5 bg-[#475DB1] text-white uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-[#5B6DC8]/90 active:scale-95 font-sans cursor-pointer"
-              >
-                <Calendar size={16} className="opacity-90" />
-                {data.bookLabel}
-              </button>
+              {data.bookUrl && data.bookUrl.trim() !== "" && data.bookUrl !== "#" ? (
+                <Link
+                  href={data.bookUrl}
+                  className="group flex items-center gap-3 px-8 py-5 bg-[#475DB1] text-white uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-[#5B6DC8]/90 active:scale-95 font-sans cursor-pointer"
+                >
+                  <Calendar size={16} className="opacity-90" />
+                  {data.bookLabel}
+                </Link>
+              ) : (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="group flex items-center gap-3 px-8 py-5 bg-[#475DB1] text-white uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-[#5B6DC8]/90 active:scale-95 font-sans cursor-pointer"
+                >
+                  <Calendar size={16} className="opacity-90" />
+                  {data.bookLabel}
+                </button>
+              )}
 
               <a
                 href={data.phoneUrl}
