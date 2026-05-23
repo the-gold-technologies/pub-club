@@ -56,21 +56,6 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isMobileMenuOpen]);
 
-  const defaultLinks = [
-    {
-      name: "About Us",
-      href: "/about",
-      dropdown: [
-        { name: "About Us", href: "/about" },
-        { name: "Our Story & Community", href: "/our-story" },
-      ],
-    },
-    { name: "Dining", href: "/dining" },
-    { name: "Events", href: "/events" },
-    { name: "Menu", href: "/menu" },
-    { name: "Gallery", href: "/gallery" },
-  ];
-
   const items = Array.isArray(navLinks)
     ? navLinks.map((link) => ({
         name: link.title,
@@ -79,7 +64,7 @@ export default function Navbar() {
           ? link.dropdown.map((sub) => ({ name: sub.title, href: sub.link }))
           : undefined,
       }))
-    : defaultLinks;
+    : [];
 
   // GSAP entrance — synced with Hero curtain (1s delay so curtain lifts first)
   useEffect(() => {
