@@ -8,7 +8,10 @@ interface ContactPopupModalProps {
   onClose: () => void;
 }
 
-export default function ContactPopupModal({ isOpen, onClose }: ContactPopupModalProps) {
+export default function ContactPopupModal({
+  isOpen,
+  onClose,
+}: ContactPopupModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Form states
@@ -18,7 +21,9 @@ export default function ContactPopupModal({ isOpen, onClose }: ContactPopupModal
   const [message, setMessage] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   // Disable background scrolling when modal is open
@@ -58,7 +63,8 @@ export default function ContactPopupModal({ isOpen, onClose }: ContactPopupModal
 
     try {
       const apiBaseUrl =
-        process.env.NEXT_PUBLIC_CMS_API_URL || "https://cms-seven-star.vercel.app";
+        process.env.NEXT_PUBLIC_CMS_API_URL ||
+        "https://cms-seven-star.vercel.app";
       const res = await fetch(`${apiBaseUrl}/api/enquiries`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,6 +78,28 @@ export default function ContactPopupModal({ isOpen, onClose }: ContactPopupModal
 
       const json = await res.json();
       if (res.ok && json.success) {
+        // Submit to FormSubmit.co for email notification
+        try {
+          const contactEmail =
+            process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
+            "info@sevenstarsatmb.co.uk";
+          await fetch(`https://formsubmit.co/ajax/${contactEmail}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              subject: subject || "New Popup Enquiry",
+              message,
+            }),
+          });
+        } catch (emailErr) {
+          console.error("Failed to send email notification:", emailErr);
+        }
+
         setSubmitStatus("success");
         setName("");
         setEmail("");
@@ -105,13 +133,19 @@ export default function ContactPopupModal({ isOpen, onClose }: ContactPopupModal
   return (
     <div
       onClick={handleBackdropClick}
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md transition-all duration-500 ease-out ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md transition-all duration-500 ease-out ${
+        isOpen
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+      }`}
     >
       <div
         ref={modalRef}
-        className={`relative w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden p-10 md:p-14 transition-all duration-500 ease-out transform ${isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-95 translate-y-8 opacity-0"
-          }`}
+        className={`relative w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden p-10 md:p-14 transition-all duration-500 ease-out transform ${
+          isOpen
+            ? "scale-100 translate-y-0 opacity-100"
+            : "scale-95 translate-y-8 opacity-0"
+        }`}
       >
         {/* Close Button */}
         <button
