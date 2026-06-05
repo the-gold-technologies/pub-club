@@ -126,7 +126,7 @@ export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
               )}
 
               <a
-                href={data.phoneUrl}
+                href={data.phoneUrl ? (data.phoneUrl.startsWith("tel:") ? data.phoneUrl : `tel:${data.phoneUrl.replace(/\s+/g, "")}`) : "#"}
                 className="group flex items-center gap-3 px-8 py-5 border border-neutral-300 text-neutral-800 uppercase tracking-[0.3em] text-[10px] font-black transition-all rounded-full hover:bg-neutral-50 active:scale-95 font-sans"
               >
                 <Phone size={16} className="opacity-70" />
