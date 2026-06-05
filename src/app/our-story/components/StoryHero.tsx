@@ -79,7 +79,7 @@ export default function StoryHero({ data }: { data: any }) {
           </div>
 
           <div className="md:col-span-5 lg:col-span-4 pb-2 md:pb-4">
-            <p className="hero-reveal text-white/80 font-light text-sm md:text-base leading-relaxed border-l border-[#475DB1]/50 pl-6">
+            <p className="hero-reveal text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic border-l border-[#475DB1]/50 pl-6">
               {data.description}
             </p>
           </div>

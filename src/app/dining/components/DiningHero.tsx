@@ -85,7 +85,7 @@ export default function DiningHero({ data = {} }: DiningHeroProps) {
           <div className="md:col-span-5 pb-2">
             <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
               <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
-                &quot;{data.description}&quot;
+                {data.description}
               </p>
             </div>
           </div>

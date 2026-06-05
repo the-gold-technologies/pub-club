@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/providers/LenisProvider";
 import Script from "next/script";
@@ -9,6 +9,10 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
+});
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  variable: "--font-eb-garamond",
 });
 
 const getApiBaseUrl = () => {
@@ -36,7 +40,8 @@ async function getGlobalSEO() {
 export async function generateMetadata(): Promise<Metadata> {
   const globalSEO = await getGlobalSEO();
 
-  const title = globalSEO?.siteTitle || "Seven Stars | Countryside Gastro Club Pub";
+  const title =
+    globalSEO?.siteTitle || "Seven Stars | Countryside Gastro Club Pub";
   const description =
     globalSEO?.siteDescription ||
     "Experience luxury dining, elegant ambience, and unforgettable events at Seven Stars Gastro Club Pub.";
@@ -75,8 +80,8 @@ export default async function RootLayout({
               globalSEO.favicon.match(/\.(jpg|jpeg)$/i)
                 ? "image/jpeg"
                 : globalSEO.favicon.match(/\.png$/i)
-                ? "image/png"
-                : "image/x-icon"
+                  ? "image/png"
+                  : "image/x-icon"
             }
           />
         )}
@@ -128,7 +133,7 @@ export default async function RootLayout({
         )}
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased text-black bg-white`}
+        className={`${inter.variable} ${playfair.variable} ${ebGaramond.variable} font-sans antialiased text-black bg-white`}
       >
         {/* GTM Noscript */}
         {globalSEO?.gtmId && (
