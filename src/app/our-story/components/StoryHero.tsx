@@ -44,7 +44,7 @@ export default function StoryHero({ data }: { data: any }) {
   return (
     <section
       ref={heroRef}
-      className="relative h-[55vh] flex items-center justify-center overflow-hidden bg-slate-950"
+      className="relative h-[55vh] min-h-[480px] flex items-center justify-center overflow-hidden bg-slate-950"
     >
       {/* Background Image */}
       <div ref={bgRef} className="absolute inset-0 z-0 scale-110">

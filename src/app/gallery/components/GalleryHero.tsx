@@ -41,7 +41,7 @@ export default function GalleryHero({ data = {} }: { data?: any }) {
   return (
     <section
       ref={containerRef}
-      className="relative h-[55vh] flex items-center justify-center overflow-hidden bg-slate-950"
+      className="relative h-[55vh] min-h-[480px] flex items-center justify-center overflow-hidden bg-slate-950"
     >
       <div ref={bgRef} className="absolute inset-0 z-0 scale-110">
         {data.backgroundImage && (

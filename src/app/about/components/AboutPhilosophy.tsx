@@ -29,7 +29,7 @@ export default function AboutPhilosophy({ data }: { data: any }) {
 
       <div className="max-w-5xl mx-auto px-4 text-center space-y-12 reveal-section">
         <h3 className="text-3xl md:text-5xl font-serif text-white leading-snug">
-          &quot;{data.philosophyQuote}&quot;
+          {data.philosophyQuote}
         </h3>
         <div className="flex justify-center">
           <div className="w-20 h-1 bg-[#475DB1]" />

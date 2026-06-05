@@ -150,7 +150,7 @@ export default function Hero({ data = {} }: HeroProps) {
               <div className="flex flex-col sm:flex-row items-center max-[650px]:items-start gap-3 pt-2">
                 <a
                   href={data.primaryBtnUrl}
-                  className="hero-cta w-max py-4 px-8 border border-[#475DB1] rounded-full text-[#475DB1] hover:text-white uppercase tracking-widest text-xs transition-all hover:bg-[#475DB1]/20"
+                  className="hero-cta w-max py-4 px-8 border border-white rounded-full text-white hover:bg-[#5B75CE]/20 hover:border-[#5B75CE]/50 hover:text-white uppercase tracking-widest text-xs transition-all"
                 >
                   {data.primaryBtnLabel}
                 </a>

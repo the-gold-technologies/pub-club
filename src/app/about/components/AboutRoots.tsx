@@ -16,7 +16,9 @@ export default function AboutRoots({ data }: { data: any }) {
               </span>
               <h2 className="text-4xl md:text-5xl font-serif text-slate-900 leading-tight">
                 {data.rootsHeading}{" "}
-                <em className="text-[#475DB1] font-light">{data.rootsHeadingItalic}</em>
+                <em className="text-[#475DB1] font-light">
+                  {data.rootsHeadingItalic}
+                </em>
               </h2>
             </div>
 
@@ -64,9 +66,7 @@ export default function AboutRoots({ data }: { data: any }) {
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8 text-white">
-              <p className="font-serif text-2xl italic">
-                &quot;{data.rootsQuote}&quot;
-              </p>
+              <p className="font-serif text-2xl italic">{data.rootsQuote}</p>
             </div>
           </div>
         </div>
