@@ -20,14 +20,19 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
 
   const featuredItems = Array.isArray(data.dishes) ? data.dishes : [];
 
-  // State to track which item is main (index 0) and which are small (index 1 and 2)
-  const [displayIndices, setDisplayIndices] = useState([1, 0, 3]);
+  // State to track the index order of featured items
+  const [displayIndices, setDisplayIndices] = useState<number[]>([0, 1, 2]);
 
-  // Ensure index safe bounds if features are fewer
-  const activeIndices = displayIndices.map(idx => idx % featuredItems.length);
+  // Sync indices when CMS dishes load or change in length
+  useEffect(() => {
+    if (featuredItems.length > 0) {
+      setDisplayIndices(Array.from({ length: featuredItems.length }, (_, i) => i));
+    }
+  }, [featuredItems.length]);
 
   const handleSwap = (clickedPosition: number) => {
     setDisplayIndices((prev) => {
+      if (prev.length <= clickedPosition) return prev;
       const newIndices = [...prev];
       const temp = newIndices[0];
       newIndices[0] = newIndices[clickedPosition];
@@ -36,9 +41,15 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
     });
   };
 
-  const mainItem = featuredItems[activeIndices[0]];
-  const smallItem1 = featuredItems[activeIndices[1]];
-  const smallItem2 = featuredItems[activeIndices[2]];
+  const mainItem = displayIndices.length > 0 && displayIndices[0] < featuredItems.length
+    ? featuredItems[displayIndices[0]]
+    : undefined;
+  const smallItem1 = displayIndices.length > 1 && displayIndices[1] < featuredItems.length
+    ? featuredItems[displayIndices[1]]
+    : undefined;
+  const smallItem2 = displayIndices.length > 2 && displayIndices[2] < featuredItems.length
+    ? featuredItems[displayIndices[2]]
+    : undefined;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -106,9 +117,11 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
       className="py-16 bg-neutral-50 relative overflow-hidden"
     >
       {/* Decorative Branding Elements */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-serif text-black/[0.02] select-none pointer-events-none whitespace-nowrap hidden lg:block">
-        Signature Dishes
-      </div>
+      {data.watermark && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] font-serif text-black/[0.02] select-none pointer-events-none whitespace-nowrap hidden lg:block">
+          {data.watermark}
+        </div>
+      )}
 
       {/* Decorative Beer Icon to cover white space */}
       <div className="absolute top-5 right-[-5%] text-[#475DB1]/[0.03] select-none pointer-events-none hidden lg:block">
@@ -150,10 +163,10 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="absolute bottom-8 left-8 text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
                   <span className="text-[10px] tracking-widest uppercase mb-1 block">
-                    Chef&apos;s Signature
+                    {data.badgeLabel || "Chef's Signature"}
                   </span>
                   <p className="text-xl font-serif italic">
-                    Culinary excellence in every bite.
+                    {data.badgeText || "Culinary excellence in every bite."}
                   </p>
                 </div>
                 <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center shadow-lg transform -rotate-12">
@@ -238,7 +251,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
             {/* Explore CTA */}
             <div className="featured-item pt-4">
               <Link
-                href="/menu"
+                href={data.btnUrl || "/menu"}
                 className="inline-flex items-center gap-5 group"
               >
                 <div className="w-14 h-14 rounded-full bg-[#475DB1] flex items-center justify-center text-white transition-transform duration-500 group-hover:scale-110 group-hover:rotate-45">
@@ -246,11 +259,13 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
                 </div>
                 <div className="space-y-0.5">
                   <span className="block text-xs font-bold uppercase tracking-[0.15em] text-black">
-                    Explore Full Menu
+                    {data.btnLabel || "Explore Full Menu"}
                   </span>
-                  <span className="block text-[10px] text-neutral-400 font-light">
-                    See our complete seasonal collection
-                  </span>
+                  {data.btnSublabel && (
+                    <span className="block text-[10px] text-neutral-400 font-light">
+                      {data.btnSublabel}
+                    </span>
+                  )}
                 </div>
               </Link>
             </div>
