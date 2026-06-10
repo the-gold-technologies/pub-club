@@ -1,9 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { Users, Heart, Utensils } from "lucide-react";
 
 export default function AboutRoots({ data }: { data: any }) {
+  const rootsImages = Array.isArray(data.rootsImages) && data.rootsImages.length > 0
+    ? data.rootsImages
+    : data.rootsImage
+      ? [data.rootsImage]
+      : [];
+
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    if (rootsImages.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % rootsImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [rootsImages.length]);
+
   return (
     <section className="py-24 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,19 +72,48 @@ export default function AboutRoots({ data }: { data: any }) {
             </div>
           </div>
 
-          <div className="reveal-section relative h-[500px] rounded-3xl overflow-hidden shadow-2xl group">
-            {data.rootsImage && (
-              <Image
-                src={data.rootsImage}
-                alt="Community Spirit"
-                fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-105"
-              />
+          <div className="reveal-section relative h-[500px] rounded-3xl overflow-hidden shadow-2xl group bg-slate-950">
+            {rootsImages.map((src: string, i: number) => (
+              <div
+                key={src}
+                style={{ transitionDuration: "2000ms" }}
+                className={`absolute inset-0 transition-all ease-in-out ${
+                  i === currentIdx ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"
+                }`}
+              >
+                <Image
+                  src={src}
+                  alt={`Community Spirit ${i + 1}`}
+                  fill
+                  style={{ transitionDuration: "4000ms" }}
+                  className="object-cover group-hover:scale-110 transition-transform ease-out"
+                />
+              </div>
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent z-20 pointer-events-none" />
+            
+            {rootsImages.length > 1 && (
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5 z-30">
+                {rootsImages.map((_: any, i: number) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentIdx(i)}
+                    className={`h-1.5 transition-all duration-500 rounded-full cursor-pointer ${
+                      i === currentIdx ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60"
+                    }`}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+              </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-            <div className="absolute bottom-8 left-8 right-8 text-white">
-              <p className="font-serif text-2xl italic">{data.rootsQuote}</p>
-            </div>
+
+            {data.rootsQuote && (
+              <div className="absolute bottom-16 left-8 right-8 text-center text-white z-30 pointer-events-none">
+                <p className="font-serif text-2xl italic leading-snug drop-shadow-md">
+                  {data.rootsQuote}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

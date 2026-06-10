@@ -105,10 +105,11 @@ export default function AboutUs({ data = {} }: AboutUsProps) {
                 src={data.image}
                 alt={data.imageAlt}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out"
+                className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out object-center"
                 priority
               />
-            )}<div className="absolute inset-4 border border-primary-600/20 z-20 pointer-events-none rounded-2xl" />
+            )}
+            <div className="absolute inset-4 border border-primary-600/20 z-20 pointer-events-none rounded-2xl" />
           </div>
 
           <div className="order-1 lg:order-2 space-y-8">
@@ -128,11 +129,15 @@ export default function AboutUs({ data = {} }: AboutUsProps) {
               </h3>
             </div>
 
-            {Array.isArray(data.paragraphs) && data.paragraphs.map((para: string, idx: number) => (
-              <p key={idx} className="about-para text-neutral-600 leading-relaxed font-light text-lg">
-                {para}
-              </p>
-            ))}
+            {Array.isArray(data.paragraphs) &&
+              data.paragraphs.map((para: string, idx: number) => (
+                <p
+                  key={idx}
+                  className="about-para text-neutral-600 leading-relaxed font-light text-lg"
+                >
+                  {para}
+                </p>
+              ))}
 
             <div className="pt-2">
               <a

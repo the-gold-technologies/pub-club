@@ -9,7 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function MenuCurated({ data = {} }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const menuCategories = Array.isArray(data.menuCategories) ? data.menuCategories : [];
+  const menuCategories = Array.isArray(data.menuCategories)
+    ? data.menuCategories
+    : [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -179,7 +181,7 @@ export default function MenuCurated({ data = {} }: { data?: any }) {
               <Image
                 src={menuCategories[4].image}
                 fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110 object-bottom"
+                className="object-cover transition-transform duration-1000 group-hover:scale-110 object-center"
                 alt={menuCategories[4].title}
               />
             )}
