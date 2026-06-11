@@ -176,7 +176,7 @@ export default function MenuCurated({ data = {} }: { data?: any }) {
           </div>
 
           {/* 5. Desserts: Wide Banner Bottom */}
-          <div className="md:col-span-3 relative rounded-[2rem] overflow-hidden group shadow-xl reveal-section h-[300px]">
+          <div className="md:col-span-3 relative rounded-[2rem] overflow-hidden group shadow-xl reveal-section h-[400px]">
             {menuCategories[4]?.image && (
               <Image
                 src={menuCategories[4].image}

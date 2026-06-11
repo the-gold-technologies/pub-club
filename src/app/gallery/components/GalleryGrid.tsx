@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,6 +35,42 @@ export default function GalleryGrid({ data = {} }: { data?: any }) {
     setActiveCategory(cat);
     setCurrentPage(1);
   };
+
+  const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
+
+  const closeLightbox = () => setSelectedItemIndex(null);
+
+  const showNext = () => {
+    setSelectedItemIndex((prev) => (prev !== null ? (prev + 1) % filteredItems.length : null));
+  };
+
+  const showPrev = () => {
+    setSelectedItemIndex((prev) => (prev !== null ? (prev - 1 + filteredItems.length) % filteredItems.length : null));
+  };
+
+  useEffect(() => {
+    if (selectedItemIndex === null) return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") showNext();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "Escape") closeLightbox();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedItemIndex, filteredItems.length]);
+
+  useEffect(() => {
+    if (selectedItemIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedItemIndex]);
 
   useEffect(() => {
     if (!galleryRef.current) return;
@@ -91,6 +127,10 @@ export default function GalleryGrid({ data = {} }: { data?: any }) {
                   return (
                     <div
                       key={item.id}
+                      onClick={() => {
+                        const globalIndex = filteredItems.findIndex((x: any) => x.id === item.id);
+                        if (globalIndex !== -1) setSelectedItemIndex(globalIndex);
+                      }}
                       className={`gallery-item relative rounded-[2rem] overflow-hidden group shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer w-full ${
                         isLast ? "flex-1 min-h-[200px]" : ""
                       }`}
@@ -171,6 +211,69 @@ export default function GalleryGrid({ data = {} }: { data?: any }) {
           </div>
         )}
       </div>
+
+      {/* Lightbox Modal */}
+      {selectedItemIndex !== null && filteredItems[selectedItemIndex] && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm select-none"
+          onClick={closeLightbox}
+        >
+          {/* Close Button */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors cursor-pointer bg-white/10 hover:bg-white/20 p-3 rounded-full backdrop-blur-md z-10"
+            aria-label="Close lightbox"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Navigation - Prev Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              showPrev();
+            }}
+            className="absolute left-6 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-all cursor-pointer bg-white/10 hover:bg-white/20 p-4 rounded-full backdrop-blur-md hover:scale-105 active:scale-95 z-10"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          {/* Navigation - Next Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              showNext();
+            }}
+            className="absolute right-6 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-all cursor-pointer bg-white/10 hover:bg-white/20 p-4 rounded-full backdrop-blur-md hover:scale-105 active:scale-95 z-10"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* Image Showcase Wrapper */}
+          <div 
+            className="relative w-[90vw] h-[80vh] flex items-center justify-center animate-in fade-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {filteredItems[selectedItemIndex].src && (
+              <Image
+                src={filteredItems[selectedItemIndex].src}
+                alt={filteredItems[selectedItemIndex].category || "Gallery Image"}
+                fill
+                sizes="90vw"
+                className="object-contain"
+                priority
+              />
+            )}
+          </div>
+
+          {/* Counter & Caption */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-white/60 text-xs tracking-widest uppercase font-bold bg-white/10 px-5 py-2.5 rounded-full backdrop-blur-md">
+            Image <span className="text-white font-extrabold">{selectedItemIndex + 1}</span> of {filteredItems.length} &mdash; {filteredItems[selectedItemIndex].category}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
