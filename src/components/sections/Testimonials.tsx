@@ -16,6 +16,11 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
   const [isChanging, setIsChanging] = useState(false);
 
   const testimonials = Array.isArray(data.testimonials) ? data.testimonials : [];
+  const testimonialImages = Array.isArray(data.testimonialImages) && data.testimonialImages.length > 0
+    ? data.testimonialImages
+    : testimonials.map((t: any) => t.image).filter(Boolean);
+
+  const [currentImgIdx, setCurrentImgIdx] = useState(0);
 
   const changeTestimonial = (index: number) => {
     if (index === active || isChanging) return;
@@ -56,6 +61,7 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
   }, [active]);
 
   useEffect(() => {
+    if (testimonials.length <= 1) return;
     const timer = setInterval(() => {
       if (!isChanging) {
         changeTestimonial((active + 1) % testimonials.length);
@@ -63,6 +69,14 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
     }, 8000);
     return () => clearInterval(timer);
   }, [active, isChanging, testimonials.length]);
+
+  useEffect(() => {
+    if (testimonialImages.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentImgIdx((prev) => (prev + 1) % testimonialImages.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [testimonialImages.length]);
 
   return (
     <section className="bg-[#faf9f6] overflow-hidden min-h-[600px] flex items-center relative border-t border-black/5">
@@ -102,22 +116,24 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
           <div className="absolute left-12 top-0 bottom-0 w-[1px] bg-black/5 hidden lg:block" />
         </div>
 
-        {/* Right Side: Image */}
-        <div className="relative h-[450px] md:h-auto overflow-hidden bg-[#FDFBF7]">
-          {testimonials.map((testimonial: any, i: number) => (
+        {/* Right Side: Image slider */}
+        <div className="relative h-[450px] md:h-auto overflow-hidden bg-[#FDFBF7] group">
+          {testimonialImages.map((src: string, i: number) => (
             <div
               key={i}
-              className={`absolute inset-0 transition-all duration-[1500ms] ease-in-out ${
-                i === active
+              style={{ transitionDuration: "2000ms" }}
+              className={`absolute inset-0 transition-all ease-in-out ${
+                i === currentImgIdx
                   ? "opacity-100 scale-100 z-10"
                   : "opacity-0 scale-110 z-0"
               }`}
             >
               <Image
-                src={testimonial.image}
+                src={src}
                 alt="Boutique Atmosphere"
                 fill
-                className="object-cover contrast-[1.05] brightness-[1.02]"
+                style={{ transitionDuration: "4000ms" }}
+                className="object-cover contrast-[1.05] brightness-[1.02] group-hover:scale-110 transition-transform ease-out"
                 priority={i === 0}
               />
             </div>
