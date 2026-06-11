@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Beer } from "lucide-react";
+import { Download } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -173,32 +173,49 @@ export default function Menu({ data = {} }: { data?: any }) {
     }
   };
 
-  const handleDownload = async (pdfUrl: string, title: string) => {
-    if (!pdfUrl || pdfUrl === "#") {
-      setDownloadToast("No PDF available for this menu section.");
+
+  const handleDownloadAll = async () => {
+    const pdfsToDownload = Array.isArray(data.menuPdfs) && data.menuPdfs.length > 0
+      ? data.menuPdfs.filter((url: string) => url && url !== "#")
+      : menuSections.map((s: MenuSection) => s.pdf).filter((url: string) => url && url !== "#");
+
+    if (pdfsToDownload.length === 0) {
+      setDownloadToast("No PDF menus available for download.");
       setTimeout(() => setDownloadToast(null), 3000);
       return;
     }
 
     setIsDownloading(true);
+
     try {
-      const response = await fetch(pdfUrl, { mode: "cors" });
-      if (!response.ok) throw new Error("Download failed");
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      const filename = pdfUrl.split("/").pop() || `${title || "menu"}.pdf`;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(blobUrl);
-    } catch {
-      // Fallback: open in new tab if fetch/CORS fails
-      window.open(pdfUrl, "_blank");
+      if (pdfsToDownload.length === 1) {
+        setDownloadToast("Downloading menu PDF...");
+        const pdfUrl = pdfsToDownload[0];
+        const downloadUrl = `/api/download?url=${encodeURIComponent(pdfUrl)}`;
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        const filename = pdfUrl.split("/").pop()?.split("?")[0] || "menu.pdf";
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      } else {
+        setDownloadToast(`Zipping and downloading ${pdfsToDownload.length} menu PDFs...`);
+        const encodedUrls = pdfsToDownload.map((url: string) => encodeURIComponent(url)).join(",");
+        const downloadUrl = `/api/download?urls=${encodedUrls}`;
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = "all-menus.zip";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+    } catch (err) {
+      console.error("Download failed:", err);
+      pdfsToDownload.forEach((url: string) => window.open(url, "_blank"));
     } finally {
       setIsDownloading(false);
+      setTimeout(() => setDownloadToast(null), 3000);
     }
   };
 
@@ -268,7 +285,7 @@ export default function Menu({ data = {} }: { data?: any }) {
                     <button
                       key={s.id || i}
                       onClick={() => scrollToSection(i)}
-                      className={`block w-full text-center text-[11px] uppercase tracking-[0.4em] font-bold transition-all relative group py-1 ${sectionIdx === i ? "text-black scale-105" : "text-neutral-400 hover:text-black"}`}
+                      className={`block w-full text-center text-[11px] uppercase tracking-[0.4em] font-bold transition-all relative group py-1 cursor-pointer ${sectionIdx === i ? "text-black scale-105" : "text-neutral-400 hover:text-black"}`}
                     >
                       {s.title}
                       <div
@@ -278,11 +295,22 @@ export default function Menu({ data = {} }: { data?: any }) {
                   ))}
                 </div>
 
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#475DB1]/5 flex items-center justify-center text-[#475DB1]">
-                    <Beer size={24} />
-                  </div>
-                  <div className="w-10 h-[1px] bg-black/10" />
+                <div className="flex flex-col items-center gap-3">
+                  <button
+                    onClick={handleDownloadAll}
+                    disabled={isDownloading}
+                    className="w-12 h-12 rounded-full bg-[#475DB1]/5 hover:bg-[#475DB1]/10 flex items-center justify-center text-[#475DB1] hover:scale-110 active:scale-95 transition-all duration-300 relative z-30 pointer-events-auto cursor-pointer"
+                    title="Download all PDF menus"
+                  >
+                    <Download size={24} className={isDownloading ? "animate-bounce" : ""} />
+                  </button>
+                  <button
+                    onClick={handleDownloadAll}
+                    disabled={isDownloading}
+                    className="text-[10px] tracking-[0.27em] font-bold text-[#475DB1] hover:text-black transition-colors uppercase relative z-30 pointer-events-auto cursor-pointer"
+                  >
+                    Download Menu
+                  </button>
                 </div>
               </div>
             </div>
@@ -334,16 +362,6 @@ export default function Menu({ data = {} }: { data?: any }) {
                     <div className="flex flex-col items-center text-center mb-10 pb-6 relative group">
                       <h4 className="text-[22px] font-bold text-black uppercase tracking-[0.4em] mb-3 flex items-center justify-center gap-4">
                         {section.title}
-                        {section.pdf && section.pdf !== "#" && (
-                          <button
-                            onClick={() => handleDownload(section.pdf, section.title)}
-                            disabled={isDownloading}
-                            title={`Download ${section.title} PDF menu`}
-                            className={`p-1.5 rounded-full text-neutral-400 hover:text-[#475DB1] hover:bg-[#475DB1]/5 transition-all duration-300 md:opacity-0 group-hover:opacity-100 focus:opacity-100 ${isDownloading ? "animate-pulse" : ""}`}
-                          >
-                            <Download size={18} />
-                          </button>
-                        )}
                       </h4>
                       <span className="text-[11px] text-[#475DB1] font-bold uppercase tracking-[0.2em]">
                         {section.subtitle || data.activeSectionSubtitle}
