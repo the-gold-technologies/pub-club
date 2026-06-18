@@ -66,6 +66,18 @@ export default function Navbar() {
       }))
     : [];
 
+  const isLinkActive = (href: string, dropdown?: { href: string }[]) => {
+    if (!href || href === "#") {
+      if (dropdown) {
+        return dropdown.some(
+          (sub) => sub.href && sub.href !== "#" && pathname === sub.href
+        );
+      }
+      return false;
+    }
+    return pathname === href;
+  };
+
   // GSAP entrance — synced with Hero curtain (1s delay so curtain lifts first)
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -111,13 +123,17 @@ export default function Navbar() {
 
           {/* Desktop Pill Nav */}
           <div className="nav-pill hidden lg:flex flex-1 justify-center">
-            <div className="flex items-center p-1 rounded-full bg-black/30 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-500">
+            <div className="flex items-center p-1 rounded-full bg-[#0a192f]/90 backdrop-blur-md border border-[#475DB1]/30 shadow-xl transition-all duration-500">
               {items.map((item) =>
                 item.dropdown ? (
                   <div key={item.name} className="relative group">
                     <Link
                       href={item.href || "#"}
-                      className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300 flex items-center"
+                      className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 flex items-center ${
+                        isLinkActive(item.href, item.dropdown)
+                          ? "bg-[#475DB1] text-white shadow-md shadow-[#475DB1]/20 font-semibold"
+                          : "text-slate-300 hover:text-white hover:bg-white/10"
+                      }`}
                     >
                       {item.name}
                       <svg
@@ -135,16 +151,23 @@ export default function Navbar() {
                       </svg>
                     </Link>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 w-56">
-                      <div className="py-2 bg-[#0a192f]/90 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-                        {item.dropdown.map((subItem) => (
-                          <Link
-                            key={subItem.name}
-                            href={subItem.href || "#"}
-                            className="px-5 py-2.5 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
+                      <div className="py-2 bg-[#0a192f]/95 backdrop-blur-md border border-[#475DB1]/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+                        {item.dropdown.map((subItem) => {
+                          const isSubActive = pathname === subItem.href;
+                          return (
+                            <Link
+                              key={subItem.name}
+                              href={subItem.href || "#"}
+                              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
+                                isSubActive
+                                  ? "bg-[#475DB1] text-white font-semibold"
+                                  : "text-slate-300 hover:text-white hover:bg-[#475DB1]/25"
+                              }`}
+                            >
+                              {subItem.name}
+                            </Link>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -152,7 +175,11 @@ export default function Navbar() {
                   <Link
                     key={item.name}
                     href={item.href || "#"}
-                    className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+                    className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                      isLinkActive(item.href)
+                        ? "bg-[#475DB1] text-white shadow-md shadow-[#475DB1]/20 font-semibold"
+                        : "text-slate-300 hover:text-white hover:bg-white/10"
+                    }`}
                   >
                     {item.name}
                   </Link>
@@ -183,7 +210,7 @@ export default function Navbar() {
             <div className="flex items-center space-x-2">
               <Link
                 href={"/contact"}
-                className="relative group p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center"
+                className="relative group p-2.5 rounded-full bg-[#0a192f]/90 backdrop-blur-md border border-[#475DB1]/30 text-slate-300 hover:text-white hover:bg-[#475DB1]/20 transition-colors duration-300 flex items-center justify-center"
               >
                 <Contact size={18} />
                 <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-white/10 backdrop-blur-sm shadow-lg">
@@ -197,7 +224,7 @@ export default function Navbar() {
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-nav-menu"
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-                className="p-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white hover:bg-white/20 transition-colors duration-300 flex items-center justify-center lg:hidden"
+                className="p-2.5 rounded-full bg-[#0a192f]/90 backdrop-blur-md border border-[#475DB1]/30 text-slate-300 hover:text-white hover:bg-[#475DB1]/20 transition-colors duration-300 flex items-center justify-center lg:hidden"
               >
                 {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
@@ -238,7 +265,11 @@ export default function Navbar() {
                         current === item.name ? null : item.name,
                       )
                     }
-                    className="w-full flex items-center justify-between py-4 text-base font-medium text-gray-200 hover:text-white transition-colors"
+                    className={`w-full flex items-center justify-between py-4 text-base font-medium transition-colors ${
+                      isLinkActive(item.href, item.dropdown)
+                        ? "text-[#475DB1] font-semibold"
+                        : "text-gray-200 hover:text-white"
+                    }`}
                     aria-expanded={openDropdown === item.name}
                   >
                     {item.name}
@@ -261,7 +292,11 @@ export default function Navbar() {
                         key={subItem.name}
                         href={subItem.href || "#"}
                         onClick={closeMobileMenu}
-                        className="block py-2.5 pl-4 text-sm text-gray-400 hover:text-white transition-colors"
+                        className={`block py-2.5 pl-4 text-sm transition-colors ${
+                          pathname === subItem.href
+                            ? "text-[#475DB1] font-semibold"
+                            : "text-gray-400 hover:text-white"
+                        }`}
                       >
                         {subItem.name}
                       </Link>
@@ -273,7 +308,11 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href || "#"}
                   onClick={closeMobileMenu}
-                  className="py-4 text-base font-medium text-gray-200 hover:text-white border-b border-white/5 transition-colors"
+                  className={`py-4 text-base font-medium border-b border-white/5 transition-colors ${
+                    isLinkActive(item.href)
+                      ? "text-[#475DB1] font-semibold"
+                      : "text-gray-200 hover:text-white"
+                  }`}
                 >
                   {item.name}
                 </Link>
