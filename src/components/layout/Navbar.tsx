@@ -67,15 +67,32 @@ export default function Navbar() {
     : [];
 
   const isLinkActive = (href: string, dropdown?: { href: string }[]) => {
-    if (!href || href === "#") {
-      if (dropdown) {
-        return dropdown.some(
-          (sub) => sub.href && sub.href !== "#" && pathname === sub.href
-        );
-      }
-      return false;
+    if (href && href !== "#" && pathname === href) return true;
+    if (dropdown) {
+      return dropdown.some(
+        (sub) => sub.href && sub.href !== "#" && pathname === sub.href
+      );
     }
-    return pathname === href;
+    return false;
+  };
+
+  const getDisplayName = (item: {
+    name: string;
+    href: string;
+    dropdown?: { name: string; href: string }[];
+  }) => {
+    if (item.dropdown) {
+      const activeSub = item.dropdown.find(
+        (sub) => sub.href && sub.href !== "#" && pathname === sub.href
+      );
+      if (activeSub) {
+        if (activeSub.name === "Our Story & Community") {
+          return "Our Story";
+        }
+        return activeSub.name;
+      }
+    }
+    return item.name;
   };
 
   // GSAP entrance — synced with Hero curtain (1s delay so curtain lifts first)
@@ -135,7 +152,7 @@ export default function Navbar() {
                           : "text-slate-300 hover:text-white hover:bg-white/10"
                       }`}
                     >
-                      {item.name}
+                      {getDisplayName(item)}
                       <svg
                         className="w-3.5 h-3.5 ml-1 transition-transform duration-300 group-hover:rotate-180"
                         fill="none"
@@ -272,7 +289,7 @@ export default function Navbar() {
                     }`}
                     aria-expanded={openDropdown === item.name}
                   >
-                    {item.name}
+                    {getDisplayName(item)}
                     <ChevronDown
                       size={18}
                       className={`transition-transform duration-300 ${
