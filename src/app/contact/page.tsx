@@ -20,6 +20,10 @@ const ContactInfo = dynamic(
   () => import("@/app/contact/components/ContactInfo"),
   { ssr: false },
 );
+const MapSection = dynamic(
+  () => import("@/components/sections/MapSection"),
+  { ssr: false },
+);
 
 export default function ContactPage() {
   const { fetchPage, pages, isLoading } = useCMSStore();
@@ -32,12 +36,15 @@ export default function ContactPage() {
   const sections = pageData.sections || {};
   const loading = isLoading["contact"] ?? true;
 
+  const contactData = sections["ContactInfo"] || {};
+
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
       <PageLoader isLoading={loading} />
       <Navbar />
       <ContactHero data={sections["ContactHero"] || {}} />
       <ContactInfo data={sections["ContactInfo"] || {}} />
+      <MapSection data={contactData} />
       <Footer />
     </div>
   );

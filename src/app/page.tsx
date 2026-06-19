@@ -16,6 +16,7 @@ const FeatureTiles = dynamic(() => import("@/components/sections/FeatureTiles"),
 // const Gallery = dynamic(() => import("@/components/sections/Gallery"), { ssr: false });
 const ReadyToVisit = dynamic(() => import("@/components/sections/ReadyToVisit"), { ssr: false });
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"), { ssr: false });
+const MapSection = dynamic(() => import("@/components/sections/MapSection"), { ssr: false });
 
 
 export default function Home() {
@@ -23,12 +24,14 @@ export default function Home() {
 
   useEffect(() => {
     fetchPage("home").catch(console.error);
+    fetchPage("contact").catch(console.error);
   }, [fetchPage]);
 
   const pageData = pages["home"] || {};
   const sections = pageData.sections || {};
   const loading = isLoading["home"] ?? true;
 
+  const contactData = pages["contact"]?.sections?.["ContactInfo"] || {};
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-primary-500 selection:text-white overflow-x-hidden">
@@ -43,6 +46,7 @@ export default function Home() {
       {/* <Gallery data={sections["Gallery"] || {}} /> */}
       <Testimonials data={sections["Testimonials"] || {}} />
       <ReadyToVisit data={sections["ReadyToVisit"] || {}} />
+      <MapSection data={contactData} />
       <Footer />
     </div>
   );

@@ -70,7 +70,7 @@ export default function Navbar() {
     if (href && href !== "#" && pathname === href) return true;
     if (dropdown) {
       return dropdown.some(
-        (sub) => sub.href && sub.href !== "#" && pathname === sub.href
+        (sub) => sub.href && sub.href !== "#" && pathname === sub.href,
       );
     }
     return false;
@@ -83,7 +83,7 @@ export default function Navbar() {
   }) => {
     if (item.dropdown) {
       const activeSub = item.dropdown.find(
-        (sub) => sub.href && sub.href !== "#" && pathname === sub.href
+        (sub) => sub.href && sub.href !== "#" && pathname === sub.href,
       );
       if (activeSub) {
         if (activeSub.name === "Our Story & Community") {
@@ -155,7 +155,9 @@ export default function Navbar() {
                       {getDisplayName(item)}
                       <svg
                         className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 group-hover:rotate-180 ${
-                          isLinkActive(item.href, item.dropdown) ? "text-[#475DB1]" : "text-white/80"
+                          isLinkActive(item.href, item.dropdown)
+                            ? "text-[#475DB1]"
+                            : "text-white/80"
                         }`}
                         fill="none"
                         stroke="currentColor"
@@ -228,12 +230,12 @@ export default function Navbar() {
             {/* Icon buttons */}
             <div className="flex items-center space-x-2">
               <Link
-                href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+                href="/contact"
                 className="relative group w-12 h-12 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 text-white hover:bg-[#475DB1] hover:text-white transition-all duration-300 flex items-center justify-center shadow-lg"
               >
-                <Calendar size={20} />
+                <Contact size={20} />
                 <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-white/10 backdrop-blur-sm shadow-lg">
-                  Book Table
+                  Contact Us
                 </span>
               </Link>
 

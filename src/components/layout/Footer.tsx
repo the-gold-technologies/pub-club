@@ -39,11 +39,28 @@ export default function Footer() {
   const sections = pageData?.sections || {};
   const footerCMS = sections["FooterCMS"] || {};
 
-  const openingHours = Array.isArray(footerCMS.openingHours) ? footerCMS.openingHours : [];
+  const openingHours = Array.isArray(footerCMS.openingHours)
+    ? footerCMS.openingHours
+    : [];
 
-  const displayNavLinks = Array.isArray(navLinks) && navLinks.length > 0
-    ? navLinks.map(link => ({ label: link.title, href: link.link }))
-    : defaultNavLinks;
+  let displayNavLinks =
+    Array.isArray(navLinks) && navLinks.length > 0
+      ? navLinks.map((link) => ({ label: link.title, href: link.link }))
+      : defaultNavLinks;
+
+  if (
+    displayNavLinks.length > 0 &&
+    !displayNavLinks.some(
+      (link) =>
+        link.href === "/contact" ||
+        link.label.toLowerCase().includes("contact")
+    )
+  ) {
+    displayNavLinks = [
+      ...displayNavLinks,
+      { label: "Contact Us", href: "/contact" },
+    ];
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -154,9 +171,7 @@ export default function Footer() {
       </div>
 
       {/* Large watermark word */}
-      <div
-        className="footer-watermark absolute bottom-0 left-1/2 -translate-x-1/2 text-[15rem] md:text-[22rem] font-serif text-white/[0.03] select-none pointer-events-none leading-none tracking-tighter whitespace-nowrap z-0"
-      >
+      <div className="footer-watermark absolute bottom-0 left-1/2 -translate-x-1/2 text-[15rem] md:text-[22rem] font-serif text-white/[0.03] select-none pointer-events-none leading-none tracking-tighter whitespace-nowrap z-0">
         {footerCMS.watermark}
       </div>
 
@@ -245,7 +260,7 @@ export default function Footer() {
               Hours
             </span>
             <ul className="space-y-4">
-              {openingHours.map((item: { day: string, hours: string }) => (
+              {openingHours.map((item: { day: string; hours: string }) => (
                 <li key={item.day} className="flex flex-col gap-1">
                   <span className="text-[10px] uppercase tracking-widest text-primary-300/60">
                     {item.day}
@@ -268,12 +283,15 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin size={14} className="text-primary-400 mt-1 shrink-0" />
                 <span className="text-white/90 text-sm font-light leading-relaxed">
-                  {footerCMS.address && footerCMS.address.split("\n").map((line: string, i: number) => (
-                    <span key={i}>
-                      {line}
-                      <br />
-                    </span>
-                  ))}
+                  {footerCMS.address &&
+                    footerCMS.address
+                      .split("\n")
+                      .map((line: string, i: number) => (
+                        <span key={i}>
+                          {line}
+                          <br />
+                        </span>
+                      ))}
                 </span>
               </li>
               <li className="flex items-center gap-3">
