@@ -81,7 +81,7 @@ function FeatureTile({ feature, index }: { feature: any; index: number }) {
         ))}
       </div>
 
-      {/* Boutique Border Overlay */}
+      {/* Elegant Border Overlay */}
       <div className="absolute inset-4 border border-white/10 rounded-xl pointer-events-none group-hover:inset-6 group-hover:border-white/20 transition-all duration-700" />
     </div>
   );

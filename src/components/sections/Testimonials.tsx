@@ -130,7 +130,7 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
             >
               <Image
                 src={src}
-                alt="Boutique Atmosphere"
+                alt="Cozy Atmosphere"
                 fill
                 style={{ transitionDuration: "4000ms" }}
                 className="object-cover contrast-[1.05] brightness-[1.02] group-hover:scale-110 transition-transform ease-out"

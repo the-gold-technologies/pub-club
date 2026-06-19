@@ -77,7 +77,7 @@ export default function PageLoader({ isLoading }: PageLoaderProps) {
           <div className="flex items-center justify-center gap-3">
             <div className="w-6 h-[1px] bg-[#475DB1] opacity-50" />
             <p className="text-[9px] tracking-[0.4em] text-[#475DB1] uppercase font-black">
-              Boutique Club & Gastropub
+              Club & Gastropub
             </p>
             <div className="w-6 h-[1px] bg-[#475DB1] opacity-50" />
           </div>
