@@ -107,6 +107,44 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
                   <p className="text-[11px] tracking-[0.3em] text-[#475DB1] uppercase font-bold opacity-80">
                     {testimonials[active].role}
                   </p>
+                  <div className="flex justify-center items-center gap-2.5 pt-2">
+                    <span className="text-sm font-bold text-neutral-800 pt-0.5">
+                      {parseFloat(testimonials[active].rating || "5").toFixed(1)}
+                    </span>
+                    <div className="flex items-center gap-0.5">
+                      {Array.from({ length: 5 }).map((_, index) => {
+                        const ratingVal = parseFloat(testimonials[active].rating || "5");
+                        const fillPercentage = Math.max(
+                          0,
+                          Math.min(100, (ratingVal - index) * 100),
+                        );
+
+                        return (
+                          <div key={index} className="relative w-4 h-4">
+                            <svg
+                              className="w-full h-full text-neutral-200"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            </svg>
+                            <div
+                              className="absolute top-0 left-0 overflow-hidden h-full"
+                              style={{ width: `${fillPercentage}%` }}
+                            >
+                              <svg
+                                className="w-4 h-4 text-amber-400"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                              </svg>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
