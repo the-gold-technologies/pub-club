@@ -17,6 +17,7 @@ const FeatureTiles = dynamic(() => import("@/components/sections/FeatureTiles"),
 const ReadyToVisit = dynamic(() => import("@/components/sections/ReadyToVisit"), { ssr: false });
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"), { ssr: false });
 const MapSection = dynamic(() => import("@/components/sections/MapSection"), { ssr: false });
+const FirstTimePopupModal = dynamic(() => import("@/components/sections/FirstTimePopupModal"), { ssr: false });
 
 
 export default function Home() {
@@ -47,6 +48,7 @@ export default function Home() {
       <Testimonials data={sections["Testimonials"] || {}} />
       <ReadyToVisit data={sections["ReadyToVisit"] || {}} />
       <MapSection data={contactData} />
+      <FirstTimePopupModal />
       <Footer />
     </div>
   );
