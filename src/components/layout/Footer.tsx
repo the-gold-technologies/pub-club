@@ -22,6 +22,7 @@ const defaultNavLinks = [
   { label: "About Us", href: "/about" },
   { label: "Dining", href: "/dining" },
   { label: "Events", href: "/events" },
+  { label: "Christmas", href: "/christmas" },
   { label: "Gallery", href: "/gallery" },
   { label: "Menu", href: "/menu" },
   { label: "Contact", href: "/contact" },
@@ -47,6 +48,15 @@ export default function Footer() {
     Array.isArray(navLinks) && navLinks.length > 0
       ? navLinks.map((link) => ({ label: link.title, href: link.link }))
       : defaultNavLinks;
+
+  if (!displayNavLinks.some((link) => link.href === "/christmas")) {
+    const contactIndex = displayNavLinks.findIndex((link) => link.href === "/contact" || link.label.toLowerCase().includes("contact"));
+    if (contactIndex !== -1) {
+      displayNavLinks.splice(contactIndex, 0, { label: "Christmas", href: "/christmas" });
+    } else {
+      displayNavLinks.push({ label: "Christmas", href: "/christmas" });
+    }
+  }
 
   if (
     displayNavLinks.length > 0 &&
