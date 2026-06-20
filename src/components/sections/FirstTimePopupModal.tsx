@@ -154,6 +154,9 @@ export default function FirstTimePopupModal() {
   const popupDesc =
     popupConfig.description ||
     "We aim to respond to all enquiries within 24 hours.";
+  const popupWelcome = popupConfig.welcomeText || "Welcome";
+  const popupImageTitle = popupConfig.imageTitle || "Seven Stars";
+  const popupImageSubtitle = popupConfig.imageSubtitle || "Marsh Baldon, Oxford";
 
   if (!isOpen) return null;
 
@@ -191,13 +194,13 @@ export default function FirstTimePopupModal() {
                 className="w-3 h-3 text-blue-200 animate-spin"
                 style={{ animationDuration: "6s" }}
               />{" "}
-              Welcome
+              {popupWelcome}
             </div>
             <h4 className="font-serif text-3xl tracking-wide leading-tight drop-shadow-md">
-              Seven Stars
+              {popupImageTitle}
             </h4>
             <p className="text-[10px] uppercase tracking-widest text-neutral-300 mt-1.5 drop-shadow-sm font-bold">
-              Marsh Baldon, Oxford
+              {popupImageSubtitle}
             </p>
           </div>
         </div>
