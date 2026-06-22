@@ -111,15 +111,196 @@ const GiftIcon = () => (
   </svg>
 );
 
+const menus = [
+  {
+    title: "Festive Party Menu",
+    subtitle: "Corporate Events & Gatherings",
+    description:
+      "Our Festive Menu Is Here! Book Your Table and Enjoy Holiday Favorites! Don’t forget if you book your Christmas Party before the end of October 2025 you will receive a £20 voucher to use towards your booking. Minimum of 8 people dining and booking made before end of October 2025.",
+    link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Festive-Christmas-Menu.pdf",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-celebration-2.webp",
+    highlights: [
+      "Smoked Salmon Starter",
+      "Traditional Roast Turkey",
+      "Spiced Plum Pudding",
+    ],
+  },
+  {
+    title: "Christmas Day Menu",
+    subtitle: "The Main Event on December 25th",
+    description:
+      "Indulge in our Special Christmas Menu: From Turkey to Truffles! Why Cook on Christmas Day when we can do it for you? Book your Christmas Lunch with us here at Seven Stars instead.",
+    link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Christmas-Day-Menu.pdf",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/25-dec.webp",
+    highlights: [
+      "Pan-Seared Scallops",
+      "Aged Beef Wellington",
+      "Decadent Chocolate Delice",
+    ],
+  },
+  {
+    title: "Children's Festive Menu",
+    subtitle: "Special Treats for Younger Guests",
+    description:
+      "To make Christmas extra special for families, we’ve prepared a dedicated children’s menu — light, delicious, and perfect for younger guests.",
+    link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Childrens-Christmas-Menu-2.pdf",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/children-christmas.webp",
+    highlights: [
+      "Mini Roast Turkey Dinner",
+      "Festive Mac & Cheese",
+      "Ice Cream Sundae",
+    ],
+  },
+];
+
+const dishes = [
+  {
+    name: "Festive Starters",
+    tagline: "Begin the Celebration",
+    description:
+      "A selection of beautiful, chef-prepared seasonal appetizers to kick off your Christmas meal.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp",
+  },
+  {
+    name: "Traditional Mains",
+    tagline: "The Heart of Christmas",
+    description:
+      "Hearty, classic holiday main courses prepared using the finest locally sourced ingredients.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish2.webp",
+  },
+  {
+    name: "Decadent Desserts",
+    tagline: "A Sweet Finale",
+    description:
+      "Indulgent treats and festive showstoppers to end your celebration on a sweet note.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish3.webp",
+  },
+  {
+    name: "Festive Canapés",
+    tagline: "Perfect for Parties",
+    description:
+      "Bite-sized delights crafted to complement your festive drinks and social gatherings.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish4.webp",
+  },
+  {
+    name: "Gourmet Selections",
+    tagline: "Chef's Handcrafted Specialties",
+    description:
+      "Unique, seasonal creations highlighting the best of winter game and local produce.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish5.webp",
+  },
+  {
+    name: "Festive Roast Sides",
+    tagline: "The Perfect Accompaniments",
+    description:
+      "Crispy roast potatoes, honey-glazed root veg, and all the classic trimmings.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish6.webp",
+  },
+  {
+    name: "Artisan Cheeseboard",
+    tagline: "Savory Indulgence",
+    description:
+      "A curated selection of British cheeses served with crackers, seasonal chutney, and grapes.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish7.webp",
+  },
+  {
+    name: "Holiday Treats",
+    tagline: "Festive Sweet Treats",
+    description:
+      "Homemade mince pies, truffles, and warm festive cookies served alongside your coffee.",
+    image:
+      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish8.webp",
+  },
+];
+
 export default function ChristmasPage() {
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Carousel State for Dishes
   const [activeDishIdx, setActiveDishIdx] = useState(0);
+  const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
+  const dishContentRef = useRef<HTMLDivElement>(null);
+  const slideDirectionRef = useRef<"next" | "prev">("next");
 
   // Tab State for Menus
   const [activeMenuTab, setActiveMenuTab] = useState(0);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const menuContentRef = useRef<HTMLDivElement>(null);
+
+  // Autoplay effect for dishes carousel
+  useEffect(() => {
+    if (loading || isAutoplayPaused) return;
+
+    const interval = setInterval(() => {
+      slideDirectionRef.current = "next";
+      const nextIdx = (activeDishIdx + 1) % dishes.length;
+      // Animate out first, then set index
+      if (dishContentRef.current) {
+        gsap.to(dishContentRef.current, {
+          opacity: 0,
+          x: -35,
+          duration: 0.25,
+          ease: "power2.in",
+          onComplete: () => {
+            setActiveDishIdx(nextIdx);
+          },
+        });
+      }
+    }, 4500);
+
+    return () => clearInterval(interval);
+  }, [activeDishIdx, loading, isAutoplayPaused]);
+
+  const handleMenuTabChange = (idx: number) => {
+    if (idx === activeMenuTab || !menuContentRef.current) return;
+
+    // Animate out
+    gsap.to(menuContentRef.current, {
+      opacity: 0,
+      y: -10,
+      duration: 0.2,
+      ease: "power2.in",
+      onComplete: () => {
+        setActiveMenuTab(idx);
+      },
+    });
+  };
+
+  const handleDishChange = (newIdx: number) => {
+    if (newIdx === activeDishIdx || !dishContentRef.current) return;
+
+    // Determine direction based on index diff
+    if (newIdx > activeDishIdx) {
+      slideDirectionRef.current = "next";
+    } else {
+      slideDirectionRef.current = "prev";
+    }
+
+    const outX = slideDirectionRef.current === "next" ? -35 : 35;
+
+    // Animate out
+    gsap.to(dishContentRef.current, {
+      opacity: 0,
+      x: outX,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => {
+        setActiveDishIdx(newIdx);
+      },
+    });
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -127,6 +308,60 @@ export default function ChristmasPage() {
     }, 800);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const updateIndicator = () => {
+      if (!tabsRef.current || !indicatorRef.current) return;
+      const activeTabEl = tabsRef.current.children[
+        activeMenuTab + 1
+      ] as HTMLElement; // +1 to account for the absolute span at index 0
+      if (activeTabEl) {
+        gsap.to(indicatorRef.current, {
+          left: activeTabEl.offsetLeft,
+          width: activeTabEl.offsetWidth,
+          duration: 0.35,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+
+    // Quick delay to ensure initial element layout is calculated properly
+    const layoutTimer = setTimeout(updateIndicator, 50);
+
+    return () => {
+      window.removeEventListener("resize", updateIndicator);
+      clearTimeout(layoutTimer);
+    };
+  }, [activeMenuTab, loading]);
+
+  // Animate Menu Tab details in
+  useEffect(() => {
+    if (loading || !menuContentRef.current) return;
+
+    gsap.fromTo(
+      menuContentRef.current,
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+    );
+  }, [activeMenuTab, loading]);
+
+  // Animate Dish details in (slides right-to-left or left-to-right)
+  useEffect(() => {
+    if (loading || !dishContentRef.current) return;
+
+    const inX = slideDirectionRef.current === "next" ? 35 : -35;
+
+    gsap.fromTo(
+      dishContentRef.current,
+      { opacity: 0, x: inX },
+      { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" },
+    );
+  }, [activeDishIdx, loading]);
 
   useEffect(() => {
     if (loading) return;
@@ -185,78 +420,14 @@ export default function ChristmasPage() {
     return () => ctx.revert();
   }, [loading]);
 
-  const menus = [
-    {
-      title: "Festive Party Menu",
-      subtitle: "Corporate Events & Gatherings",
-      description:
-        "Savor the holiday spirit with classic favourites. Ideal for friends, families, and larger work celebrations.",
-      link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Festive-Christmas-Menu.pdf",
-      image: "/dish-wellington.png",
-      highlights: [
-        "Smoked Salmon Starter",
-        "Traditional Roast Turkey",
-        "Spiced Plum Pudding",
-      ],
-    },
-    {
-      title: "Christmas Day Menu",
-      subtitle: "The Main Event on December 25th",
-      description:
-        "An exceptional, chef-curated banquet. Let us cook while you indulge in gourmet meats, truffles, and fine wine.",
-      link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Christmas-Day-Menu.pdf",
-      image: "/dish-turkey.png",
-      highlights: [
-        "Pan-Seared Scallops",
-        "Aged Beef Wellington",
-        "Decadent Chocolate Delice",
-      ],
-    },
-    {
-      title: "Children's Festive Menu",
-      subtitle: "Special Treats for Younger Guests",
-      description:
-        "A delightful, child-friendly feast crafted to make the holidays magical and tasty for the little ones.",
-      link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Childrens-Christmas-Menu-2.pdf",
-      image: "/dish-pudding.png",
-      highlights: [
-        "Mini Roast Turkey Dinner",
-        "Festive Mac & Cheese",
-        "Ice Cream Sundae",
-      ],
-    },
-  ];
-
-  const dishes = [
-    {
-      name: "Gourmet Beef Wellington",
-      tagline: "Pastry-wrapped Excellence",
-      description:
-        "Tender aged beef tenderloin coated with rich mushroom Duxelles, wrapped in delicate Parma ham and golden, flaky puff pastry, served with red wine jus.",
-      image: "/dish-wellington.png",
-    },
-    {
-      name: "Traditional Roast Turkey",
-      tagline: "A Festive Feast Classic",
-      description:
-        "Perfectly roasted, herb-infused local turkey served with golden roast potatoes, honey-glazed parsnips, pigs in blankets, and rich homemade cranberry gravy.",
-      image: "/dish-turkey.png",
-    },
-    {
-      name: "Flaming Christmas Pudding",
-      tagline: "Spectacular Dessert Showstopper",
-      description:
-        "Rich, spiced holiday pudding bursting with dark dried fruits and brandy, served flaming at your table with premium whipped brandy butter.",
-      image: "/dish-pudding.png",
-    },
-  ];
-
   const nextDish = () => {
-    setActiveDishIdx((prev) => (prev + 1) % dishes.length);
+    const nextIdx = (activeDishIdx + 1) % dishes.length;
+    handleDishChange(nextIdx);
   };
 
   const prevDish = () => {
-    setActiveDishIdx((prev) => (prev - 1 + dishes.length) % dishes.length);
+    const prevIdx = (activeDishIdx - 1 + dishes.length) % dishes.length;
+    handleDishChange(prevIdx);
   };
 
   return (
@@ -267,172 +438,273 @@ export default function ChristmasPage() {
       <PageLoader isLoading={loading} />
       <Navbar />
 
-      {/* SECTION 1: HERO SECTION */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-stone-900">
+      {/* SECTION 1: HERO SECTION - Custom Full-Backdrop split layout */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0A192F] py-16 sm:py-24">
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/christmas-hero.png"
             alt="Cozy Christmas interior at Seven Stars"
             fill
-            className="object-cover opacity-75 contrast-[1.05]"
+            className="object-cover object-center opacity-90"
             priority
           />
-          {/* Main photographic dark overlay for high text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/40" />
-          {/* Seamless blend into the page's light cream background at the bottom */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#faf9f6] via-[#faf9f6]/10 to-transparent h-1/2 bottom-0 top-auto z-10" />
+          {/* Layer of brand color tint overlay on top of background image */}
+          <div className="absolute inset-0 bg-[#0A192F]/50 mix-blend-multiply z-10" />
+          {/* Readability Vignette Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F]/70 via-transparent to-[#0A192F]/90 z-10" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 mt-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-xs uppercase tracking-[0.25em] font-medium text-white mb-6 animate-pulse">
-            <Snowflake className="w-4 h-4 text-blue-200" /> Christmas 2026 at
-            Seven Stars
+        {/* Content Layer floating on top */}
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Text and CTAs */}
+            <div className="lg:col-span-7 space-y-6 lg:text-left text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#8fa2f4]/30 bg-[#8fa2f4]/10 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-bold text-[#8fa2f4] w-fit lg:mx-0 mx-auto animate-pulse">
+                <span>❄</span> Festive Season 2026
+              </div>
+
+              <h1 className="christmas-hero-title text-4xl sm:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1]">
+                Celebrate
+                <span className="italic font-light text-[#8fa2f4]">
+                  Christmas
+                </span>{" "}
+                <br />
+                at Seven Stars
+              </h1>
+
+              <div className="w-16 h-px bg-white/20 lg:mx-0 mx-auto" />
+
+              <p className="christmas-hero-desc text-base sm:text-lg text-slate-300 font-serif font-light leading-relaxed max-w-lg lg:mx-0 mx-auto">
+                Step into the warmth of our decorated countryside pub in Marsh
+                Baldon, Oxford. Savor award-winning festive menus, cozy up next
+                to glowing fireplaces, and celebrate the season in style.
+              </p>
+
+              <div className="christmas-hero-cta flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start">
+                <a
+                  href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-widest text-xs font-bold rounded-full transition-all shadow-lg hover:shadow-xl text-center"
+                >
+                  Reserve Your Table
+                </a>
+                <a
+                  href="#menus"
+                  className="px-8 py-4 border border-white/40 text-white hover:bg-white/10 uppercase tracking-widest text-xs font-bold rounded-full transition-all text-center"
+                >
+                  Discover Menus
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: Santa Claus Standalone Picture with Floating Glowing Snow Star */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end relative py-8">
+              {/* Single glowing snow star (snowflake) next to Santa */}
+              <div className="absolute top-[10%] right-[-5%] z-30 text-white/90 animate-pulse pointer-events-none">
+                <Snowflake className="w-8 h-8 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+              </div>
+
+              {/* Standalone Santa image - no card border/background/vignette */}
+              <div className="relative w-full max-w-[340px] aspect-[4/5] group flex items-center justify-center z-20 rounded-3xl  overflow-hidden">
+                <Image
+                  src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-santaclaus.webp"
+                  alt="Santa Claus at Seven Stars"
+                  fill
+                  className="object-contain drop-shadow-[0_15px_30px_rgba(255,255,255,0.15)] group-hover:scale-105 transition-transform duration-700 ease-out"
+                  unoptimized
+                />
+              </div>
+            </div>
           </div>
-          <h1 className="christmas-hero-title text-4xl sm:text-6xl md:text-8xl font-serif text-white tracking-tight leading-[1.02] drop-shadow-xl mb-8">
-            A Magical{" "}
-            <span className="italic font-light text-[#475DB1]">Christmas</span>{" "}
-            <HollyIcon />
-          </h1>
-          <p className="christmas-hero-desc text-lg sm:text-xl md:text-2xl text-stone-100 font-serif font-light max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
-            Step into the warmth of our decorated countryside pub in Marsh
-            Baldon, Oxford. Unforgettable menus, glowing fireplaces, and festive
-            cheer.
-          </p>
-          <div className="christmas-hero-cta flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-lg hover:shadow-xl text-center"
-            >
-              Book Your Table
-            </a>
-            <a
-              href="#menus"
-              className="w-full sm:w-auto px-8 py-4 border border-white/60 text-white hover:bg-white/10 uppercase tracking-widest text-xs font-bold rounded-full transition-all text-center"
-            >
-              Discover Menus
-            </a>
+        </div>
+
+        {/* Decorative snowflakes and lines at the bottom */}
+        <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center justify-center gap-2 px-8 opacity-60">
+          <div className="flex items-center justify-center gap-4 w-full max-w-4xl">
+            <div className="h-[1px] bg-white/10 flex-grow" />
+            <div className="flex gap-3 text-[#8fa2f4] items-center">
+              <Snowflake
+                className="w-3.5 h-3.5 animate-spin"
+                style={{ animationDuration: "20s" }}
+              />
+              <Snowflake className="w-4 h-4 animate-pulse" />
+              <span className="text-[9px] uppercase tracking-[0.35em] font-serif font-light text-white/80">
+                Seven Stars Christmas
+              </span>
+              <Snowflake className="w-4 h-4 animate-pulse" />
+              <Snowflake
+                className="w-3.5 h-3.5 animate-spin"
+                style={{ animationDuration: "20s" }}
+              />
+            </div>
+            <div className="h-[1px] bg-white/10 flex-grow" />
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: FESTIVE ATMOSPHERE (Intro with Split Layout & Images) */}
+      {/* SECTION 2A: INTRO & WHY CHOOSE US (Light background) */}
       <section className="reveal-section py-24 bg-[#FDFBF7] border-b border-black/5 relative overflow-hidden">
         {/* Paper texture overlay */}
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            {/* Left Column: Elegant Copy */}
-            <div className="lg:col-span-5 space-y-8">
+            {/* Left Column: Intro Copy */}
+            <div className="lg:col-span-7 space-y-8">
               <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-2">
-                Warmth & Hospitality <ReindeerIcon />
+                Warmth & Festive Cheer <ReindeerIcon />
               </span>
-              <h2 className="text-3xl sm:text-5xl font-serif tracking-tight text-neutral-900 leading-[1.1]">
-                Cosy Pub, <br />
+              <h2 className="text-3xl sm:text-5xl font-serif tracking-tight text-neutral-900 leading-[1.15]">
+                Celebrate Christmas at <br />
                 <span className="italic font-light text-[#475DB1]">
-                  Brilliant Food
+                  Seven Stars in Marsh Baldon!
                 </span>
               </h2>
               <div className="w-16 h-[1px] bg-[#475DB1] opacity-50" />
+
               <p className="text-lg text-neutral-600 leading-relaxed font-serif font-light">
-                Whether you’re planning an intimate family lunch or a lively
-                Christmas party with friends, Seven Stars is the perfect place
-                to celebrate.
-              </p>
-              <p className="text-base text-neutral-500 leading-relaxed font-serif font-light">
-                With glowing candles, rustic decor, beautiful Christmas wreaths,
-                and seasonal drinks, we make sure your Christmas gathering is
-                full of laughter, warmth, and cheer.
+                Are you looking for the perfect place to celebrate Christmas
+                with your loved ones? Seven Stars located in Marsh Baldon,
+                Oxford, is here to make your Christmas Day magical!
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#475DB1]/5 flex items-center justify-center text-[#475DB1]">
-                    <Flame size={18} />
-                  </div>
-                  <span className="text-xs tracking-wider uppercase font-bold text-neutral-800">
-                    Glowing Fireplaces
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#475DB1]/5 flex items-center justify-center text-[#475DB1]">
-                    <GlassWater size={18} />
-                  </div>
-                  <span className="text-xs tracking-wider uppercase font-bold text-neutral-800">
-                    Seasonal Drinks
-                  </span>
-                </div>
+              <div className="space-y-4 pt-4">
+                <h3 className="text-sm tracking-wider uppercase font-bold text-[#475DB1] flex items-center gap-2">
+                  <HollyIcon /> Why Choose Seven Stars:
+                </h3>
+                <ul className="space-y-3 text-sm text-neutral-600 font-serif font-light">
+                  <li className="flex gap-3 items-start">
+                    <span className="text-[#475DB1] font-bold mt-0.5">✓</span>
+                    <span>
+                      Cosy Pub with beautiful Christmas décor, spreading warmth
+                      and festive cheer.
+                    </span>
+                  </li>
+                  <li className="flex gap-3 items-start">
+                    <span className="text-[#475DB1] font-bold mt-0.5">✓</span>
+                    <span>
+                      Savor festive Christmas dishes prepared by our chefs for
+                      the occasion.
+                    </span>
+                  </li>
+                  <li className="flex gap-3 items-start">
+                    <span className="text-[#475DB1] font-bold mt-0.5">✓</span>
+                    <span>
+                      Our Pub serves wine, cocktails, and seasonal drinks to
+                      enhance Christmas joy.
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            {/* Right Column: Premium Image Grid Showcase */}
-            <div className="lg:col-span-7 grid grid-cols-12 gap-4 items-stretch">
-              <div className="col-span-8 relative rounded-3xl overflow-hidden shadow-lg h-[400px]">
-                <Image
-                  src="/christmas-hero.png"
-                  alt="Christmas dinner table"
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-[4000ms] ease-out"
-                />
-              </div>
-              <div className="col-span-4 flex flex-col gap-4">
-                <div className="relative flex-1 rounded-2xl overflow-hidden shadow-md min-h-[190px]">
-                  <Image
-                    src="/dish-wellington.png"
-                    alt="Beef Wellington Close-up"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="relative flex-1 rounded-2xl overflow-hidden shadow-md min-h-[190px]">
-                  <Image
-                    src="/dish-turkey.png"
-                    alt="Roast Turkey Platter"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
+            {/* Right Column: Santa Claus Image Showcase */}
+            <div className="lg:col-span-5 relative rounded-3xl overflow-hidden shadow-2xl h-[450px]">
+              <Image
+                src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-santaclaus.webp"
+                alt="Santa Claus at Seven Stars"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-[4000ms] ease-out"
+                unoptimized
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 3: EARLY BOOKING OFFER (Incentive Page Banner) */}
-      <section className="reveal-section py-20 bg-[#eef2ff] border-y border-[#475DB1]/15 relative">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(71,93,177,0.03),transparent_70%)]" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8 relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#475DB1]/10 text-[#475DB1] text-xs font-bold uppercase tracking-widest">
-            Christmas Party Incentive
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-serif tracking-tight text-neutral-900 leading-tight">
-            Book Early to Receive a <br className="hidden sm:inline" />
-            <span className="italic font-light text-[#475DB1] flex items-center justify-center gap-3">
-              £20 Thank-You Voucher <GiftIcon />
-            </span>
-          </h2>
-          <p className="text-lg text-neutral-600 font-serif font-light max-w-2xl mx-auto leading-relaxed">
-            Reserve your party space before the end of{" "}
-            <strong className="text-neutral-900 font-bold">October 2026</strong>{" "}
-            for a party of 8 or more dining, and receive a £20 voucher to redeem
-            in the New Year.
-          </p>
-          <div className="text-[10px] text-neutral-400 uppercase tracking-widest max-w-md mx-auto">
-            *Terms and conditions apply. Vouchers are valid for dining in
-            January and February 2027.
-          </div>
-          <div className="pt-4">
-            <a
-              href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-md hover:shadow-lg"
-            >
-              Secure Table Now
-            </a>
+      {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
+      <section className="reveal-section py-20 bg-[#0a192f] text-white border-y border-white/5 relative overflow-hidden">
+        {/* Soft radial glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(71,93,177,0.15),transparent_60%)]" />
+        {/* Paper texture overlay */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Special features */}
+            <div className="lg:col-span-7 space-y-6">
+              <span className="text-[10px] tracking-[0.4em] text-[#8fa2f4] uppercase font-bold flex items-center gap-2">
+                Exclusive Experiences <GiftIcon />
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-white leading-tight">
+                Special Christmas <br />
+                <span className="italic font-light text-[#8fa2f4]">
+                  Party Features
+                </span>
+              </h2>
+              <div className="w-12 h-[1px] bg-[#8fa2f4] opacity-50" />
+
+              <ul className="space-y-4 text-base text-slate-300 font-serif font-light pt-2">
+                <li className="flex gap-3 items-start">
+                  <span className="text-[#8fa2f4] font-bold mt-0.5">✦</span>
+                  <span>
+                    Special Seating arrangements tailored for families and group
+                    bookings.
+                  </span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-[#8fa2f4] font-bold mt-0.5">✦</span>
+                  <span>
+                    Elegant options for Private Celebrations and large
+                    corporate/friend gatherings.
+                  </span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-[#8fa2f4] font-bold mt-0.5">✦</span>
+                  <span>
+                    Book Before October to secure a £20 Voucher reward.
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Right Column: Early Booking Card & CTA */}
+            <div className="lg:col-span-5 bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 space-y-6 shadow-xl">
+              <div className="space-y-2">
+                <div className="inline-block px-3 py-1 rounded-full bg-[#8fa2f4]/15 text-[#8fa2f4] text-[10px] font-bold uppercase tracking-widest">
+                  Early Booking Reward
+                </div>
+                <h3 className="text-xl font-serif text-white">
+                  Secure a{" "}
+                  <span className="text-[#8fa2f4] italic font-semibold">
+                    £20 Voucher
+                  </span>
+                </h3>
+                <p
+                  className="text-sm text-slate-300 font-serif font-light leading-relaxed"
+                  style={{ color: "#cbd5e1" }}
+                >
+                  Book your party of 8 or more before the end of October to
+                  receive a thank-you voucher redeemable in the New Year.
+                </p>
+                <div
+                  className="text-[10px] text-slate-400 italic"
+                  style={{ color: "#94a3b8" }}
+                >
+                  *Terms & Conditions apply.
+                </div>
+              </div>
+
+              <div className="space-y-4 pt-4 border-t border-white/10">
+                <p
+                  className="text-xs text-slate-400 font-serif font-light"
+                  style={{ color: "#94a3b8" }}
+                >
+                  Tables are filling fast – don&apos;t miss your chance to make
+                  this Christmas unforgettable!
+                </p>
+                <a
+                  href="https://sevenstarsatmarshbaldon.co.uk/book-a-table/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full px-6 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-md hover:shadow-lg text-center"
+                >
+                  Book your Christmas Party Now!
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -509,12 +781,21 @@ export default function ChristmasPage() {
 
           {/* Tab buttons */}
           <div className="flex justify-center border-b border-black/5 mb-12">
-            <div className="flex gap-4 sm:gap-8 overflow-x-auto pb-px">
+            <div
+              ref={tabsRef}
+              className="flex gap-4 sm:gap-8 overflow-x-auto pb-px relative"
+            >
+              {/* Sliding Indicator */}
+              <span
+                ref={indicatorRef}
+                className="absolute bottom-0 h-[2px] bg-[#475DB1] rounded-full z-10 pointer-events-none"
+                style={{ left: 0, width: 0 }}
+              />
               {menus.map((menu, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setActiveMenuTab(idx)}
-                  className={`pb-4 text-xs sm:text-sm font-bold uppercase tracking-widest transition-all whitespace-nowrap cursor-pointer relative flex items-center gap-2 ${
+                  onClick={() => handleMenuTabChange(idx)}
+                  className={`pb-4 text-xs sm:text-sm font-bold uppercase tracking-widest transition-colors duration-300 whitespace-nowrap cursor-pointer relative flex items-center gap-2 ${
                     activeMenuTab === idx
                       ? "text-[#475DB1] font-extrabold"
                       : "text-neutral-400 hover:text-neutral-600"
@@ -524,9 +805,6 @@ export default function ChristmasPage() {
                   {idx === 1 && <ReindeerIcon />}
                   {idx === 2 && <SantaHatIcon />}
                   {menu.title}
-                  {activeMenuTab === idx && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#475DB1] rounded-full" />
-                  )}
                 </button>
               ))}
             </div>
@@ -537,7 +815,10 @@ export default function ChristmasPage() {
             {/* Natural paper texture overlay */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div
+              ref={menuContentRef}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10"
+            >
               {/* Menu Details */}
               <div className="lg:col-span-7 space-y-6">
                 <span className="text-[10px] uppercase font-bold text-[#475DB1] tracking-widest flex items-center gap-2">
@@ -593,6 +874,48 @@ export default function ChristmasPage() {
         </div>
       </section>
 
+      {/* SECTION 2C: TRANSITION BANNER (Make This Christmas Unforgettable - Dark Theme) */}
+      <section className="reveal-section py-24 bg-[#0A192F] text-white relative overflow-hidden">
+        {/* Soft decorative floating snowflakes and borders */}
+        <div className="absolute inset-0 opacity-15 pointer-events-none">
+          <div className="absolute top-0 left-0 w-72 h-72 border-2 border-white rounded-full -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 border-2 border-white rounded-full translate-x-1/2 translate-y-1/2" />
+          <div
+            className="absolute top-1/4 right-12 animate-pulse"
+            style={{ animationDuration: "6s" }}
+          >
+            <Snowflake className="w-20 h-20 text-white" />
+          </div>
+          <div
+            className="absolute bottom-1/4 left-12 animate-pulse"
+            style={{ animationDuration: "8s" }}
+          >
+            <Snowflake className="w-16 h-16 text-white" />
+          </div>
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center space-y-8">
+          <div className="inline-flex justify-center items-center w-16 h-16 rounded-full bg-white/10 backdrop-blur-md mb-2">
+            <HollyIcon />
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-serif tracking-tight text-white leading-tight">
+            Make This Christmas <br className="sm:hidden" />
+            <span className="italic font-light text-[#8fa2f4]">
+              Unforgettable at Seven Stars
+            </span>
+          </h2>
+          <div className="w-20 h-[1px] bg-white/40 mx-auto" />
+          <p className="text-lg sm:text-xl text-white/95 font-serif font-light leading-relaxed max-w-3xl mx-auto">
+            Step into the festive spirit at our cosy pub in Marsh Baldon,
+            Oxford. Whether you’re planning an intimate family lunch or a lively
+            Christmas party with friends, Seven Stars is the perfect place to
+            celebrate. With glowing décor, hearty festive dishes, and seasonal
+            drinks, we’ll make sure your Christmas gathering is full of warmth,
+            laughter, and cheer.
+          </p>
+        </div>
+      </section>
+
       {/* SECTION 5: SPECIAL DISHES CAROUSEL */}
       <section className="reveal-section py-24 bg-[#FDFBF7] border-t border-black/5 relative overflow-hidden">
         {/* Decorative accent */}
@@ -610,6 +933,10 @@ export default function ChristmasPage() {
                   Special Dishes
                 </span>
                 <HollyIcon />
+                <Snowflake
+                  className="w-5 h-5 text-[#475DB1] animate-spin"
+                  style={{ animationDuration: "12s" }}
+                />
               </h2>
             </div>
 
@@ -633,46 +960,55 @@ export default function ChristmasPage() {
           </div>
 
           {/* Dish Detail Carousel Item */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-white rounded-3xl p-8 sm:p-12 border border-black/5 shadow-sm">
-            {/* Image Side */}
-            <div className="lg:col-span-6 relative rounded-2xl overflow-hidden h-[300px] sm:h-[400px] shadow-inner">
-              <Image
-                src={dishes[activeDishIdx].image}
-                alt={dishes[activeDishIdx].name}
-                fill
-                className="object-cover transition-opacity duration-500 ease-in-out"
-              />
-            </div>
+          <div
+            className="bg-white rounded-3xl p-8 sm:p-12 border border-black/5 shadow-sm overflow-hidden relative"
+            onMouseEnter={() => setIsAutoplayPaused(true)}
+            onMouseLeave={() => setIsAutoplayPaused(false)}
+          >
+            <div
+              ref={dishContentRef}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+            >
+              {/* Image Side */}
+              <div className="lg:col-span-6 relative rounded-2xl overflow-hidden h-[300px] sm:h-[400px] shadow-inner">
+                <Image
+                  src={dishes[activeDishIdx].image}
+                  alt={dishes[activeDishIdx].name}
+                  fill
+                  className="object-cover transition-opacity duration-500 ease-in-out"
+                />
+              </div>
 
-            {/* Description Side */}
-            <div className="lg:col-span-6 space-y-6">
-              <span className="text-[10px] uppercase font-bold text-[#475DB1] tracking-widest flex items-center gap-2">
-                {activeDishIdx === 0 && <SleighIcon />}
-                {activeDishIdx === 1 && <ReindeerIcon />}
-                {activeDishIdx === 2 && <SantaHatIcon />}
-                {dishes[activeDishIdx].tagline}
-              </span>
-              <h3 className="text-3xl sm:text-4xl font-serif text-neutral-900 tracking-tight transition-all duration-300">
-                {dishes[activeDishIdx].name}
-              </h3>
-              <div className="w-12 h-[1px] bg-[#475DB1]/30" />
-              <p className="text-base text-neutral-600 leading-relaxed font-serif font-light">
-                {dishes[activeDishIdx].description}
-              </p>
+              {/* Description Side */}
+              <div className="lg:col-span-6 space-y-6">
+                <span className="text-[10px] uppercase font-bold text-[#475DB1] tracking-widest flex items-center gap-2">
+                  {activeDishIdx === 0 && <SleighIcon />}
+                  {activeDishIdx === 1 && <ReindeerIcon />}
+                  {activeDishIdx === 2 && <SantaHatIcon />}
+                  {dishes[activeDishIdx].tagline}
+                </span>
+                <h3 className="text-3xl sm:text-4xl font-serif text-neutral-900 tracking-tight transition-all duration-300">
+                  {dishes[activeDishIdx].name}
+                </h3>
+                <div className="w-12 h-[1px] bg-[#475DB1]/30" />
+                <p className="text-base text-neutral-600 leading-relaxed font-serif font-light">
+                  {dishes[activeDishIdx].description}
+                </p>
 
-              {/* Stots/Indicators */}
-              <div className="flex gap-2.5 pt-4">
-                {dishes.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveDishIdx(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      activeDishIdx === idx
-                        ? "w-8 bg-[#475DB1]"
-                        : "w-1.5 bg-neutral-200"
-                    }`}
-                  />
-                ))}
+                {/* Stots/Indicators */}
+                <div className="flex gap-2.5 pt-4">
+                  {dishes.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleDishChange(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        activeDishIdx === idx
+                          ? "w-8 bg-[#475DB1]"
+                          : "w-1.5 bg-neutral-200"
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
