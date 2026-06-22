@@ -16,6 +16,40 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/pub-in-abingdon",
+        destination: "/blog/pub-in-abingdon",
+        permanent: true,
+      },
+      {
+        source: "/best-pub-in-wallingford",
+        destination: "/blog/best-pub-in-wallingford",
+        permanent: true,
+      },
+      {
+        source: "/pub-in-kennington",
+        destination: "/blog/pub-in-kennington",
+        permanent: true,
+      },
+      {
+        source: "/pub-in-berinsfield",
+        destination: "/blog/pub-in-berinsfield",
+        permanent: true,
+      },
+      {
+        source: "/pub-in-stadhampton",
+        destination: "/blog/pub-in-stadhampton",
+        permanent: true,
+      },
+      {
+        source: "/pub-in-dorchester",
+        destination: "/blog/pub-in-dorchester",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

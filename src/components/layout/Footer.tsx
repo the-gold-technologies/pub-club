@@ -58,6 +58,15 @@ export default function Footer() {
     }
   }
 
+  if (!displayNavLinks.some((link) => link.href === "/blog")) {
+    const contactIndex = displayNavLinks.findIndex((link) => link.href === "/contact" || link.label.toLowerCase().includes("contact"));
+    if (contactIndex !== -1) {
+      displayNavLinks.splice(contactIndex, 0, { label: "Blog", href: "/blog" });
+    } else {
+      displayNavLinks.push({ label: "Blog", href: "/blog" });
+    }
+  }
+
   if (
     displayNavLinks.length > 0 &&
     !displayNavLinks.some(
