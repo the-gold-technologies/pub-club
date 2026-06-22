@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import PageLoader from "@/components/layout/PageLoader";
+import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -226,6 +227,9 @@ const dishes = [
 export default function ChristmasPage() {
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const heroBgRef = useRef<HTMLDivElement>(null);
+  const santaRef = useRef<HTMLDivElement>(null);
 
   // Carousel State for Dishes
   const [activeDishIdx, setActiveDishIdx] = useState(0);
@@ -366,7 +370,56 @@ export default function ChristmasPage() {
   useEffect(() => {
     if (loading) return;
 
+    // Initialize smooth scrolling using Lenis locally on this page
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease-out
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.5,
+    });
+
+    // Update ScrollTrigger on scroll
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // Synchronize GSAP ticker frame updates with Lenis
+    const rafCallback = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(rafCallback);
+    gsap.ticker.lagSmoothing(0);
+
     const ctx = gsap.context(() => {
+      // Parallax Background for Hero
+      if (heroBgRef.current && heroRef.current) {
+        gsap.to(heroBgRef.current, {
+          yPercent: 12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
+
+      // Parallax effect on Santa image
+      if (santaRef.current && heroRef.current) {
+        gsap.to(santaRef.current, {
+          y: -40,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
+
       // Hero Animations
       gsap.fromTo(
         ".christmas-hero-title",
@@ -417,7 +470,11 @@ export default function ChristmasPage() {
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      gsap.ticker.remove(rafCallback);
+      lenis.destroy();
+    };
   }, [loading]);
 
   const nextDish = () => {
@@ -439,9 +496,9 @@ export default function ChristmasPage() {
       <Navbar />
 
       {/* SECTION 1: HERO SECTION - Custom Full-Backdrop split layout */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0A192F] py-16 sm:py-24">
+      <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0A192F] py-16 sm:py-24">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        <div ref={heroBgRef} className="absolute inset-0 z-0">
           <Image
             src="/christmas-hero.png"
             alt="Cozy Christmas interior at Seven Stars"
@@ -500,7 +557,7 @@ export default function ChristmasPage() {
             </div>
 
             {/* Right Column: Santa Claus Standalone Picture with Floating Glowing Snow Star */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end relative py-8">
+            <div ref={santaRef} className="lg:col-span-5 flex justify-center lg:justify-end relative py-8">
               {/* Single glowing snow star (snowflake) next to Santa */}
               <div className="absolute top-[10%] right-[-5%] z-30 text-white/90 animate-pulse pointer-events-none">
                 <Snowflake className="w-8 h-8 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
