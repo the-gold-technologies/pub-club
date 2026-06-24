@@ -839,10 +839,65 @@ const dishes = [
 
 export default function ChristmasPage() {
   const [loading, setLoading] = useState(true);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const heroBgRef = useRef<HTMLDivElement>(null);
   const santaRef = useRef<HTMLDivElement>(null);
+
+  // Audio setup effect
+  useEffect(() => {
+    const audio = new Audio("/christmas-tune.mp3");
+    audio.loop = true;
+    audio.volume = 0.35; // Soft ambient volume
+    audioRef.current = audio;
+
+    const playAudio = () => {
+      audio.play()
+        .then(() => {
+          setIsAudioPlaying(true);
+        })
+        .catch(() => {
+          const startPlayOnInteract = () => {
+            audio.play()
+              .then(() => {
+                setIsAudioPlaying(true);
+              })
+              .catch(err => console.log("Autoplay failed after interaction:", err));
+            window.removeEventListener("click", startPlayOnInteract);
+            window.removeEventListener("touchstart", startPlayOnInteract);
+          };
+          window.addEventListener("click", startPlayOnInteract);
+          window.addEventListener("touchstart", startPlayOnInteract);
+        });
+    };
+
+    const audioTimer = setTimeout(playAudio, 1000);
+
+    return () => {
+      clearTimeout(audioTimer);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
+    if (isAudioPlaying) {
+      audioRef.current.pause();
+      setIsAudioPlaying(false);
+    } else {
+      audioRef.current.play()
+        .then(() => {
+          setIsAudioPlaying(true);
+        })
+        .catch(err => console.log("Play failed:", err));
+    }
+  };
 
   // Carousel State for Dishes
   const [activeDishIdx, setActiveDishIdx] = useState(0);
@@ -1859,6 +1914,55 @@ export default function ChristmasPage() {
           </div>
         </div>
       </section>
+
+      {/* Floating Music Control Button */}
+      <button
+        onClick={toggleMusic}
+        className={`fixed bottom-6 right-6 z-[100] flex items-center gap-2.5 px-4 py-2.5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-105 active:scale-95 ${
+          isAudioPlaying
+            ? "bg-[#B91C1C]/25 border-[#B91C1C]/40 text-red-200 shadow-[0_0_15px_rgba(185,28,28,0.3)] hover:bg-[#B91C1C]/35"
+            : "bg-white/10 border-white/20 text-slate-300 hover:bg-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
+        }`}
+        aria-label={isAudioPlaying ? "Mute Christmas music" : "Play Christmas music"}
+      >
+        <div className="flex items-end gap-[3px] h-3.5 w-4 overflow-hidden">
+          <span
+            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+              isAudioPlaying ? "animate-[soundWave_1.2s_ease-in-out_infinite]" : "h-1"
+            }`}
+            style={{ animationDelay: "0.1s" }}
+          />
+          <span
+            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+              isAudioPlaying ? "animate-[soundWave_0.8s_ease-in-out_infinite]" : "h-1.5"
+            }`}
+            style={{ animationDelay: "0.3s" }}
+          />
+          <span
+            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+              isAudioPlaying ? "animate-[soundWave_1.0s_ease-in-out_infinite]" : "h-0.5"
+            }`}
+            style={{ animationDelay: "0.0s" }}
+          />
+          <span
+            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+              isAudioPlaying ? "animate-[soundWave_0.9s_ease-in-out_infinite]" : "h-2"
+            }`}
+            style={{ animationDelay: "0.5s" }}
+          />
+        </div>
+
+        <span className="text-[10px] tracking-widest uppercase font-bold select-none">
+          {isAudioPlaying ? "Music On" : "Music Off"}
+        </span>
+      </button>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes soundWave {
+          0%, 100% { height: 4px; }
+          50% { height: 14px; }
+        }
+      `}} />
 
       <Footer />
     </div>
