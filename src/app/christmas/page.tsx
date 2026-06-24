@@ -27,13 +27,22 @@ const Navbar = dynamic(() => import("@/components/layout/Navbar"), {
 const Footer = dynamic(() => import("@/components/layout/Footer"), {
   ssr: true,
 });
+const ThreeDChristmasTree = dynamic(
+  () => import("@/components/sections/ThreeDChristmasTree"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-full min-h-[400px] sm:min-h-[500px]" />
+    ),
+  },
+);
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Custom Christmas Vector Icons
 const SleighIcon = () => (
   <svg
-    className="w-4 h-4 text-[#475DB1] inline-block shrink-0"
+    className="w-4 h-4 text-[#B91C1C] inline-block shrink-0"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -49,7 +58,7 @@ const SleighIcon = () => (
 
 const ReindeerIcon = () => (
   <svg
-    className="w-4 h-4 text-[#475DB1] inline-block shrink-0"
+    className="w-4 h-4 text-[#B91C1C] inline-block shrink-0"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -98,7 +107,7 @@ const HollyIcon = () => (
 
 const GiftIcon = () => (
   <svg
-    className="w-5 h-5 text-[#475DB1] inline-block shrink-0"
+    className="w-5 h-5 text-[#B91C1C] inline-block shrink-0"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -108,6 +117,610 @@ const GiftIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
       d="M20 12v8H4v-8M22 7H2v5h20V7z M12 7V4a2 2 0 00-2-2H8a2 2 0 00-2 2v3 M12 7V4a2 2 0 012-2h2a2 2 0 012 2v3 M12 22V7"
+    />
+  </svg>
+);
+
+// Canvas-based interactive falling snow effect
+const SnowEffect = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    const numFlakes = 80;
+    const flakes = Array.from({ length: numFlakes }).map(() => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 2.5 + 0.8,
+      vy: Math.random() * 1.2 + 0.4,
+      vx: Math.random() * 0.8 - 0.4,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+      ctx.beginPath();
+      for (let i = 0; i < numFlakes; i++) {
+        const f = flakes[i];
+        ctx.moveTo(f.x, f.y);
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+
+        f.y += f.vy;
+        f.x += f.vx;
+
+        if (f.y > height) {
+          flakes[i] = {
+            x: Math.random() * width,
+            y: -10,
+            r: f.r,
+            vy: f.vy,
+            vx: f.vx,
+          };
+        }
+        if (f.x > width) {
+          f.x = 0;
+        } else if (f.x < 0) {
+          f.x = width;
+        }
+      }
+      ctx.fill();
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none fixed inset-0 z-40 w-full h-full"
+    />
+  );
+};
+
+// Hanging Ornament Parts
+const ReindeerOrnament = ({ x, y }: { x: number; y: number }) => (
+  <g
+    transform={`translate(${x - 15}, ${y})`}
+    className="text-[#D4AF37] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]"
+  >
+    <line
+      x1="15"
+      y1="-120"
+      x2="15"
+      y2="0"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeDasharray="3 3"
+    />
+    <ellipse
+      cx="15"
+      cy="20"
+      rx="10"
+      ry="7"
+      fill="#8B5A2B"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <circle cx="15" cy="22" r="3" fill="#B91C1C" />
+    <circle cx="11" cy="18" r="1.2" fill="#FFFFFF" />
+    <circle cx="19" cy="18" r="1.2" fill="#FFFFFF" />
+    <path
+      d="M7 14 Q3 5 9 8 M7 11 Q1 9 5 6"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      fill="none"
+    />
+    <path
+      d="M23 14 Q27 5 21 8 M23 11 Q29 9 25 6"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      fill="none"
+    />
+  </g>
+);
+
+const SantaHatOrnament = ({ x, y }: { x: number; y: number }) => (
+  <g
+    transform={`translate(${x - 15}, ${y})`}
+    className="text-[#B91C1C] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]"
+  >
+    <line
+      x1="15"
+      y1="-120"
+      x2="15"
+      y2="0"
+      stroke="#D4AF37"
+      strokeWidth="1.5"
+      strokeDasharray="3 3"
+    />
+    <path
+      d="M5 22 L15 5 L25 22 Z"
+      fill="#B91C1C"
+      stroke="#D4AF37"
+      strokeWidth="1.5"
+    />
+    <rect
+      x="3"
+      y="21"
+      width="24"
+      height="4"
+      fill="#FFFFFF"
+      rx="1"
+      stroke="#D4AF37"
+      strokeWidth="1"
+    />
+    <circle
+      cx="15"
+      cy="4"
+      r="3"
+      fill="#FFFFFF"
+      stroke="#D4AF37"
+      strokeWidth="1"
+    />
+  </g>
+);
+
+const SnowmanOrnament = ({ x, y }: { x: number; y: number }) => (
+  <g
+    transform={`translate(${x - 15}, ${y})`}
+    className="text-[#D4AF37] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]"
+  >
+    <line
+      x1="15"
+      y1="-120"
+      x2="15"
+      y2="0"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeDasharray="3 3"
+    />
+    <circle
+      cx="15"
+      cy="10"
+      r="7"
+      fill="#FFFFFF"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <circle
+      cx="15"
+      cy="24"
+      r="10"
+      fill="#FFFFFF"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M10 16 L20 16"
+      stroke="#B91C1C"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+    />
+    <rect x="10" y="0" width="10" height="4" fill="#1A1A1A" />
+    <line x1="7" y1="4" x2="23" y2="4" stroke="#1A1A1A" strokeWidth="1.5" />
+  </g>
+);
+
+const StarOrnament = ({ x, y }: { x: number; y: number }) => (
+  <g
+    transform={`translate(${x - 15}, ${y})`}
+    className="text-[#D4AF37] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]"
+  >
+    <line
+      x1="15"
+      y1="-120"
+      x2="15"
+      y2="0"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeDasharray="3 3"
+    />
+    <path
+      d="M15 2 L18 10 L27 10 L20 15 L23 23 L15 18 L7 23 L10 15 L3 10 L12 10 Z"
+      fill="#D4AF37"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+  </g>
+);
+
+const BellOrnament = ({ x, y }: { x: number; y: number }) => (
+  <g
+    transform={`translate(${x - 15}, ${y})`}
+    className="text-[#D4AF37] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]"
+  >
+    <line
+      x1="15"
+      y1="-120"
+      x2="15"
+      y2="0"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeDasharray="3 3"
+    />
+    <path
+      d="M10 8 Q15 2 20 8 Q23 15 24 20 L6 20 Q7 15 10 8 Z"
+      fill="#D4AF37"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <rect
+      x="4"
+      y="19"
+      width="22"
+      height="3"
+      fill="#D4AF37"
+      rx="1"
+      stroke="currentColor"
+      strokeWidth="1"
+    />
+    <circle cx="15" cy="23" r="2.5" fill="#B91C1C" />
+  </g>
+);
+
+const CandyCaneOrnament = ({ x, y }: { x: number; y: number }) => (
+  <g
+    transform={`translate(${x - 15}, ${y})`}
+    className="text-[#B91C1C] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]"
+  >
+    <line
+      x1="15"
+      y1="-120"
+      x2="15"
+      y2="0"
+      stroke="#D4AF37"
+      strokeWidth="1.5"
+      strokeDasharray="3 3"
+    />
+    <path
+      d="M10 25 L10 10 A5 5 0 0 1 20 10 L20 13"
+      fill="none"
+      stroke="#B91C1C"
+      strokeWidth="4.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M10 25 L10 10 A5 5 0 0 1 20 10 L20 13"
+      fill="none"
+      stroke="#FFFFFF"
+      strokeWidth="4.5"
+      strokeLinecap="round"
+      strokeDasharray="3 3"
+    />
+  </g>
+);
+
+const StockingOrnament = ({ x, y }: { x: number; y: number }) => (
+  <g
+    transform={`translate(${x - 15}, ${y})`}
+    className="text-[#B91C1C] drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]"
+  >
+    <line
+      x1="15"
+      y1="-120"
+      x2="15"
+      y2="0"
+      stroke="#D4AF37"
+      strokeWidth="1.5"
+      strokeDasharray="3 3"
+    />
+    <path
+      d="M10 6 L18 6 L18 16 L24 22 L17 25 L9 18 Z"
+      fill="#B91C1C"
+      stroke="#D4AF37"
+      strokeWidth="1.5"
+    />
+    <rect
+      x="8"
+      y="4"
+      width="12"
+      height="4"
+      rx="1"
+      fill="#FFFFFF"
+      stroke="#D4AF37"
+      strokeWidth="1"
+    />
+  </g>
+);
+
+// Interactive 3D Parallax Stacked Christmas Tree Component
+const Christmas3DTree = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((centerY - y) / centerY) * 20;
+    const rotateY = ((x - centerX) / centerX) * 20;
+
+    gsap.to(container, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transformPerspective: 800,
+      ease: "power2.out",
+      duration: 0.3,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    gsap.to(container, {
+      rotateX: 0,
+      rotateY: 0,
+      ease: "power2.out",
+      duration: 0.5,
+    });
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative w-full max-w-[360px] aspect-[4/5] flex items-center justify-center cursor-pointer py-12"
+      style={{ transformStyle: "preserve-3d" }}
+    >
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
+        {/* Layer 0: Ground/Glow Shadow */}
+        <div
+          className="absolute bottom-10 w-48 h-8 rounded-full bg-red-600/20 blur-xl filter"
+          style={{ transform: "translateZ(-40px) rotateX(90deg)" }}
+        />
+
+        {/* Layer 1: Golden Star on Top */}
+        <div
+          className="w-16 h-16 text-[#D4AF37] mb-2 animate-bounce"
+          style={{ transform: "translateZ(80px)" }}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-full h-full drop-shadow-[0_0_15px_rgba(212,175,55,0.8)]"
+          >
+            <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.786 1.4 8.168L12 18.896l-7.334 3.857 1.4-8.168L.132 9.21l8.2-1.192L12 .587z" />
+          </svg>
+        </div>
+
+        {/* Layer 2: Top green tier */}
+        <div
+          className="w-24 h-20 bg-gradient-to-b from-[#1E3F20] to-[#15803D] border border-white/20 shadow-lg"
+          style={{
+            clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+            transform: "translateZ(60px) translateY(-10px)",
+            backdropFilter: "blur(4px)",
+          }}
+        />
+
+        {/* Layer 3: Middle green tier */}
+        <div
+          className="w-40 h-28 bg-gradient-to-b from-[#1E3F20]/90 to-[#15803D]/90 border border-white/20 shadow-xl -mt-6"
+          style={{
+            clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+            transform: "translateZ(40px) translateY(-5px)",
+            backdropFilter: "blur(4px)",
+          }}
+        />
+
+        {/* Layer 4: Bottom green tier */}
+        <div
+          className="w-56 h-36 bg-gradient-to-b from-[#1E3F20]/80 to-[#15803D]/80 border border-white/20 shadow-2xl -mt-10"
+          style={{
+            clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+            transform: "translateZ(20px) translateY(0px)",
+            backdropFilter: "blur(4px)",
+          }}
+        />
+
+        {/* Layer 5: Trunk */}
+        <div
+          className="w-12 h-14 bg-gradient-to-b from-amber-800 to-amber-950 border border-white/10 shadow-inner -mt-1"
+          style={{
+            transform: "translateZ(10px) translateY(5px)",
+          }}
+        />
+
+        {/* Floating 3D Ornaments / Balls */}
+        <div
+          className="absolute w-5 h-5 rounded-full bg-red-600 shadow-[0_0_10px_rgba(239,68,68,0.6)]"
+          style={{
+            transform: "translateZ(90px) translateX(-20px) translateY(-20px)",
+          }}
+        />
+        <div
+          className="absolute w-4 h-4 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]"
+          style={{
+            transform: "translateZ(70px) translateX(30px) translateY(20px)",
+          }}
+        />
+        <div
+          className="absolute w-6 h-6 rounded-full bg-[#D4AF37] shadow-[0_0_12px_rgba(212,175,55,0.6)]"
+          style={{
+            transform: "translateZ(50px) translateX(-45px) translateY(50px)",
+          }}
+        />
+        <div
+          className="absolute w-5 h-5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.6)]"
+          style={{
+            transform: "translateZ(30px) translateX(55px) translateY(80px)",
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Hanging Christmas Ornaments Components
+const HangingOrnamentsHero = () => (
+  <div className="absolute top-0 right-10 left-10 z-30 pointer-events-none flex justify-between opacity-80 h-36">
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <ReindeerOrnament x={15} y={60} />
+    </svg>
+    <svg
+      className="w-16 h-full hidden sm:block"
+      viewBox="0 0 30 120"
+      fill="none"
+    >
+      <SantaHatOrnament x={15} y={45} />
+    </svg>
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <SnowmanOrnament x={15} y={70} />
+    </svg>
+  </div>
+);
+
+const HangingOrnamentsFeatures = () => (
+  <div className="absolute top-0 right-10 left-10 z-30 pointer-events-none flex justify-between opacity-80 h-36">
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <StarOrnament x={15} y={65} />
+    </svg>
+    <svg
+      className="w-16 h-full hidden sm:block"
+      viewBox="0 0 30 120"
+      fill="none"
+    >
+      <BellOrnament x={15} y={50} />
+    </svg>
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <CandyCaneOrnament x={15} y={75} />
+    </svg>
+  </div>
+);
+
+const HangingOrnamentsMenus = () => (
+  <div className="absolute top-0 right-10 left-10 z-30 pointer-events-none flex justify-between opacity-80 h-36">
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <StockingOrnament x={15} y={60} />
+    </svg>
+    <svg
+      className="w-16 h-full hidden sm:block"
+      viewBox="0 0 30 120"
+      fill="none"
+    >
+      <StarOrnament x={15} y={45} />
+    </svg>
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <ReindeerOrnament x={15} y={70} />
+    </svg>
+  </div>
+);
+
+const HangingOrnamentsTransition = () => (
+  <div className="absolute top-0 right-10 left-10 z-30 pointer-events-none flex justify-between opacity-80 h-36">
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <SnowmanOrnament x={15} y={65} />
+    </svg>
+    <svg
+      className="w-16 h-full hidden sm:block"
+      viewBox="0 0 30 120"
+      fill="none"
+    >
+      <BellOrnament x={15} y={50} />
+    </svg>
+    <svg className="w-16 h-full" viewBox="0 0 30 120" fill="none">
+      <SantaHatOrnament x={15} y={75} />
+    </svg>
+  </div>
+);
+
+// Interactive Snowman Component
+const Snowman = () => (
+  <svg
+    className="w-20 h-28 text-slate-100 drop-shadow-[0_10px_15px_rgba(0,0,0,0.15)] inline-block shrink-0 animate-bounce"
+    fill="currentColor"
+    viewBox="0 0 60 80"
+    style={{ animationDuration: "4s" }}
+  >
+    {/* Hat */}
+    <rect x="20" y="2" width="20" height="12" fill="#1A1A1A" rx="1" />
+    <ellipse cx="30" cy="14" rx="16" ry="3" fill="#1A1A1A" />
+    {/* Head */}
+    <circle
+      cx="30"
+      cy="28"
+      r="11"
+      fill="#FFFFFF"
+      stroke="#E2E8F0"
+      strokeWidth="1.5"
+    />
+    {/* Eyes */}
+    <circle cx="26" cy="26" r="1.5" fill="#1A1A1A" />
+    <circle cx="34" cy="26" r="1.5" fill="#1A1A1A" />
+    {/* Nose (Carrot) */}
+    <polygon points="30,28 39,30 30,32" fill="#F97316" />
+    {/* Smile */}
+    <circle cx="26" cy="33" r="0.8" fill="#1A1A1A" />
+    <circle cx="28" cy="34" r="0.8" fill="#1A1A1A" />
+    <circle cx="30" cy="35" r="0.8" fill="#1A1A1A" />
+    <circle cx="32" cy="34" r="0.8" fill="#1A1A1A" />
+    <circle cx="34" cy="33" r="0.8" fill="#1A1A1A" />
+    {/* Scarf */}
+    <path d="M20 37 Q30 42 40 37 L38 41 Q30 46 22 41 Z" fill="#B91C1C" />
+    <path d="M33 39 L35 50 L30 49 L30 39" fill="#B91C1C" />
+    {/* Body */}
+    <circle
+      cx="30"
+      cy="54"
+      r="17"
+      fill="#FFFFFF"
+      stroke="#E2E8F0"
+      strokeWidth="1.5"
+    />
+    {/* Buttons */}
+    <circle cx="30" cy="46" r="2" fill="#1A1A1A" />
+    <circle cx="30" cy="54" r="2" fill="#1A1A1A" />
+    <circle cx="30" cy="62" r="2" fill="#1A1A1A" />
+    {/* Sticks (Arms) */}
+    <line
+      x1="14"
+      y1="46"
+      x2="3"
+      y2="40"
+      stroke="#78350F"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <line
+      x1="46"
+      y1="46"
+      x2="57"
+      y2="40"
+      stroke="#78350F"
+      strokeWidth="2"
+      strokeLinecap="round"
     />
   </svg>
 );
@@ -490,13 +1103,20 @@ export default function ChristmasPage() {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen bg-[#faf9f6] text-neutral-800 overflow-x-hidden"
+      className="min-h-screen bg-[#faf9f6] text-neutral-800 overflow-x-hidden relative"
     >
       <PageLoader isLoading={loading} />
+      <SnowEffect />
       <Navbar />
 
       {/* SECTION 1: HERO SECTION - Custom Full-Backdrop split layout */}
-      <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0A192F] py-16 sm:py-24">
+      <section
+        ref={heroRef}
+        className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#0A192F] py-16 sm:py-24"
+      >
+        {/* Hanging Ornaments */}
+        <HangingOrnamentsHero />
+
         {/* Background Image */}
         <div ref={heroBgRef} className="absolute inset-0 z-0">
           <Image
@@ -517,14 +1137,15 @@ export default function ChristmasPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Column: Text and CTAs */}
             <div className="lg:col-span-7 space-y-6 lg:text-left text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#8fa2f4]/30 bg-[#8fa2f4]/10 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-bold text-[#8fa2f4] w-fit lg:mx-0 mx-auto animate-pulse">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-bold text-[#E6C653] w-fit lg:mx-0 mx-auto animate-pulse">
                 <span>❄</span> Festive Season 2026
               </div>
 
               <h1 className="christmas-hero-title text-4xl sm:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1]">
                 Celebrate
-                <span className="italic font-light text-[#8fa2f4]">
-                  Christmas
+                <span className="italic font-light text-[#D4AF37] drop-shadow-[0_0_12px_rgba(212,175,55,0.4)]">
+                  {" "}
+                  Christmas{" "}
                 </span>{" "}
                 <br />
                 at Seven Stars
@@ -543,13 +1164,13 @@ export default function ChristmasPage() {
                   href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-widest text-xs font-bold rounded-full transition-all shadow-lg hover:shadow-xl text-center"
+                  className="px-8 py-4 bg-[#B91C1C] hover:bg-[#990000] text-white uppercase tracking-widest text-xs font-bold rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.4)] hover:shadow-xl text-center"
                 >
                   Reserve Your Table
                 </a>
                 <a
                   href="#menus"
-                  className="px-8 py-4 border border-white/40 text-white hover:bg-white/10 uppercase tracking-widest text-xs font-bold rounded-full transition-all text-center"
+                  className="px-8 py-4 border border-[#D4AF37]/60 text-[#D4AF37] hover:bg-[#D4AF37]/10 uppercase tracking-widest text-xs font-bold rounded-full transition-all text-center"
                 >
                   Discover Menus
                 </a>
@@ -557,21 +1178,18 @@ export default function ChristmasPage() {
             </div>
 
             {/* Right Column: Santa Claus Standalone Picture with Floating Glowing Snow Star */}
-            <div ref={santaRef} className="lg:col-span-5 flex justify-center lg:justify-end relative py-8">
+            <div
+              ref={santaRef}
+              className="lg:col-span-5 flex justify-center lg:justify-end relative py-8"
+            >
               {/* Single glowing snow star (snowflake) next to Santa */}
               <div className="absolute top-[10%] right-[-5%] z-30 text-white/90 animate-pulse pointer-events-none">
                 <Snowflake className="w-8 h-8 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
               </div>
 
-              {/* Standalone Santa image - no card border/background/vignette */}
-              <div className="relative w-full max-w-[340px] aspect-[4/5] group flex items-center justify-center z-20 rounded-3xl  overflow-hidden">
-                <Image
-                  src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-santaclaus.webp"
-                  alt="Santa Claus at Seven Stars"
-                  fill
-                  className="object-contain drop-shadow-[0_15px_30px_rgba(255,255,255,0.15)] group-hover:scale-105 transition-transform duration-700 ease-out"
-                  unoptimized
-                />
+              {/* Fully Interactive 3D WebGL Christmas Tree Model (Fitted & Borderless) */}
+              <div className="relative w-full max-w-[410px] aspect-[3/4.2] flex items-center justify-center z-20">
+                <ThreeDChristmasTree />
               </div>
             </div>
           </div>
@@ -581,7 +1199,7 @@ export default function ChristmasPage() {
         <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center justify-center gap-2 px-8 opacity-60">
           <div className="flex items-center justify-center gap-4 w-full max-w-4xl">
             <div className="h-[1px] bg-white/10 flex-grow" />
-            <div className="flex gap-3 text-[#8fa2f4] items-center">
+            <div className="flex gap-3 text-[#D4AF37] items-center">
               <Snowflake
                 className="w-3.5 h-3.5 animate-spin"
                 style={{ animationDuration: "20s" }}
@@ -610,16 +1228,16 @@ export default function ChristmasPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             {/* Left Column: Intro Copy */}
             <div className="lg:col-span-7 space-y-8">
-              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-2">
+              <span className="text-[10px] tracking-[0.4em] text-[#B91C1C] uppercase font-bold flex items-center gap-2">
                 Warmth & Festive Cheer <ReindeerIcon />
               </span>
               <h2 className="text-3xl sm:text-5xl font-serif tracking-tight text-neutral-900 leading-[1.15]">
                 Celebrate Christmas at <br />
-                <span className="italic font-light text-[#475DB1]">
+                <span className="italic font-light text-[#B91C1C]">
                   Seven Stars in Marsh Baldon!
                 </span>
               </h2>
-              <div className="w-16 h-[1px] bg-[#475DB1] opacity-50" />
+              <div className="w-16 h-[1px] bg-[#B91C1C] opacity-50" />
 
               <p className="text-lg text-neutral-600 leading-relaxed font-serif font-light">
                 Are you looking for the perfect place to celebrate Christmas
@@ -628,26 +1246,26 @@ export default function ChristmasPage() {
               </p>
 
               <div className="space-y-4 pt-4">
-                <h3 className="text-sm tracking-wider uppercase font-bold text-[#475DB1] flex items-center gap-2">
+                <h3 className="text-sm tracking-wider uppercase font-bold text-[#B91C1C] flex items-center gap-2">
                   <HollyIcon /> Why Choose Seven Stars:
                 </h3>
                 <ul className="space-y-3 text-sm text-neutral-600 font-serif font-light">
                   <li className="flex gap-3 items-start">
-                    <span className="text-[#475DB1] font-bold mt-0.5">✓</span>
+                    <span className="text-[#B91C1C] font-bold mt-0.5">✓</span>
                     <span>
                       Cosy Pub with beautiful Christmas décor, spreading warmth
                       and festive cheer.
                     </span>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <span className="text-[#475DB1] font-bold mt-0.5">✓</span>
+                    <span className="text-[#B91C1C] font-bold mt-0.5">✓</span>
                     <span>
                       Savor festive Christmas dishes prepared by our chefs for
                       the occasion.
                     </span>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <span className="text-[#475DB1] font-bold mt-0.5">✓</span>
+                    <span className="text-[#B91C1C] font-bold mt-0.5">✓</span>
                     <span>
                       Our Pub serves wine, cocktails, and seasonal drinks to
                       enhance Christmas joy.
@@ -673,8 +1291,9 @@ export default function ChristmasPage() {
 
       {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
       <section className="reveal-section py-20 bg-[#0a192f] text-white border-y border-white/5 relative overflow-hidden">
+        <HangingOrnamentsFeatures />
         {/* Soft radial glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(71,93,177,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(185,28,28,0.2),transparent_60%)]" />
         {/* Paper texture overlay */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
 
@@ -682,34 +1301,34 @@ export default function ChristmasPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Column: Special features */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-[10px] tracking-[0.4em] text-[#8fa2f4] uppercase font-bold flex items-center gap-2">
+              <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase font-bold flex items-center gap-2">
                 Exclusive Experiences <GiftIcon />
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-white leading-tight">
                 Special Christmas <br />
-                <span className="italic font-light text-[#8fa2f4]">
+                <span className="italic font-light text-[#D4AF37]">
                   Party Features
                 </span>
               </h2>
-              <div className="w-12 h-[1px] bg-[#8fa2f4] opacity-50" />
+              <div className="w-12 h-[1px] bg-[#D4AF37] opacity-50" />
 
               <ul className="space-y-4 text-base text-slate-300 font-serif font-light pt-2">
                 <li className="flex gap-3 items-start">
-                  <span className="text-[#8fa2f4] font-bold mt-0.5">✦</span>
+                  <span className="text-[#D4AF37] font-bold mt-0.5">★</span>
                   <span>
                     Special Seating arrangements tailored for families and group
                     bookings.
                   </span>
                 </li>
                 <li className="flex gap-3 items-start">
-                  <span className="text-[#8fa2f4] font-bold mt-0.5">✦</span>
+                  <span className="text-[#D4AF37] font-bold mt-0.5">★</span>
                   <span>
                     Elegant options for Private Celebrations and large
                     corporate/friend gatherings.
                   </span>
                 </li>
                 <li className="flex gap-3 items-start">
-                  <span className="text-[#8fa2f4] font-bold mt-0.5">✦</span>
+                  <span className="text-[#D4AF37] font-bold mt-0.5">★</span>
                   <span>
                     Book Before October to secure a £20 Voucher reward.
                   </span>
@@ -720,12 +1339,12 @@ export default function ChristmasPage() {
             {/* Right Column: Early Booking Card & CTA */}
             <div className="lg:col-span-5 bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 space-y-6 shadow-xl">
               <div className="space-y-2">
-                <div className="inline-block px-3 py-1 rounded-full bg-[#8fa2f4]/15 text-[#8fa2f4] text-[10px] font-bold uppercase tracking-widest">
+                <div className="inline-block px-3 py-1 rounded-full bg-[#B91C1C]/20 text-[#FFAAAA] border border-[#B91C1C]/30 text-[10px] font-bold uppercase tracking-widest">
                   Early Booking Reward
                 </div>
                 <h3 className="text-xl font-serif text-white">
                   Secure a{" "}
-                  <span className="text-[#8fa2f4] italic font-semibold">
+                  <span className="text-[#D4AF37] italic font-semibold">
                     £20 Voucher
                   </span>
                 </h3>
@@ -756,7 +1375,7 @@ export default function ChristmasPage() {
                   href="https://sevenstarsatmarshbaldon.co.uk/book-a-table/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full px-6 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-md hover:shadow-lg text-center"
+                  className="block w-full px-6 py-4 bg-[#B91C1C] hover:bg-[#990000] uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.3)] hover:shadow-lg text-center"
                 >
                   Book your Christmas Party Now!
                 </a>
@@ -771,8 +1390,9 @@ export default function ChristmasPage() {
         id="menus"
         className="reveal-section py-24 bg-[#faf9f6] relative overflow-hidden"
       >
+        <HangingOrnamentsMenus />
         {/* Large Christmas Bell Outline on the left (Top) */}
-        <div className="absolute left-[-50px] lg:left-4 top-2 w-[320px] h-[320px] opacity-[0.12] text-[#475DB1] pointer-events-none hidden md:block">
+        <div className="absolute left-[-50px] lg:left-4 top-2 w-[320px] h-[320px] opacity-[0.12] text-[#B91C1C] pointer-events-none hidden md:block">
           <svg
             viewBox="0 0 100 100"
             fill="none"
@@ -792,8 +1412,8 @@ export default function ChristmasPage() {
           </svg>
         </div>
 
-        {/* Large Santa Claus Outline on the right (Bottom) */}
-        <div className="absolute right-[-50px] lg:right-4 bottom-12 w-[320px] h-[320px] opacity-[0.12] text-[#475DB1] pointer-events-none hidden md:block">
+        {/* Large Snowman Outline on the right (Bottom) */}
+        <div className="absolute right-[-50px] lg:right-4 bottom-12 w-[320px] h-[320px] opacity-[0.12] text-[#B91C1C] pointer-events-none hidden md:block">
           <svg
             viewBox="0 0 100 100"
             fill="none"
@@ -803,37 +1423,47 @@ export default function ChristmasPage() {
             strokeLinejoin="round"
             className="w-full h-full"
           >
-            <circle cx="50" cy="15" r="4" fill="none" />
-            <path d="M50 19C42 19 32 25 32 36H68C68 25 58 19 50 19Z" />
-            <rect x="28" y="36" width="44" height="6" rx="3" />
-            <circle cx="43" cy="48" r="1.5" fill="currentColor" />
-            <circle cx="57" cy="48" r="1.5" fill="currentColor" />
-            <path d="M39 44C41 43 43 44 44 45" />
-            <path d="M61 44C59 43 57 44 56 45" />
-            <path
-              d="M50 49C52 49 53 51 51 52C50 53 48 53 47 52C45 51 47 49 50 49Z"
-              fill="currentColor"
-            />
-            <path
-              d="M50 54C46 54 42 52 38 55C42 57 46 56 50 55C54 56 58 57 62 55C58 52 54 54 50 54Z"
-              fill="currentColor"
-            />
-            <path d="M28 42C24 55 30 75 50 82C70 75 76 55 72 42C68 45 68 49 68 52C68 66 60 74 50 74C40 74 32 66 32 52C32 49 32 45 28 42Z" />
+            {/* Top hat */}
+            <rect x="38" y="10" width="24" height="12" fill="none" />
+            <line x1="30" y1="22" x2="70" y2="22" />
+
+            {/* Head */}
+            <circle cx="50" cy="35" r="12" fill="none" />
+            {/* Eyes */}
+            <circle cx="46" cy="33" r="1.2" fill="currentColor" />
+            <circle cx="54" cy="33" r="1.2" fill="currentColor" />
+            {/* Nose */}
+            <polygon points="50,35 59,37 50,39" fill="currentColor" />
+
+            {/* Scarf */}
+            <path d="M40 45 Q50 49 60 45" />
+            <path d="M53 47 L55 58 L50 57 L49 47" />
+
+            {/* Body */}
+            <circle cx="50" cy="67" r="20" fill="none" />
+            {/* Buttons */}
+            <circle cx="50" cy="57" r="1.5" fill="currentColor" />
+            <circle cx="50" cy="67" r="1.5" fill="currentColor" />
+            <circle cx="50" cy="77" r="1.5" fill="currentColor" />
+
+            {/* Arms */}
+            <line x1="31" y1="60" x2="16" y2="52" />
+            <line x1="69" y1="60" x2="84" y2="52" />
           </svg>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold block">
+            <span className="text-[10px] tracking-[0.4em] text-[#B91C1C] uppercase font-bold block">
               Culinary Delights
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-neutral-900">
               Download Our{" "}
-              <span className="italic font-light text-[#475DB1]">
+              <span className="italic font-light text-[#B91C1C]">
                 Festive Menus
               </span>
             </h2>
-            <div className="w-12 h-[1px] bg-[#475DB1] opacity-50 mx-auto mt-4" />
+            <div className="w-12 h-[1px] bg-[#B91C1C] opacity-50 mx-auto mt-4" />
           </div>
 
           {/* Tab buttons */}
@@ -845,7 +1475,7 @@ export default function ChristmasPage() {
               {/* Sliding Indicator */}
               <span
                 ref={indicatorRef}
-                className="absolute bottom-0 h-[2px] bg-[#475DB1] rounded-full z-10 pointer-events-none"
+                className="absolute bottom-0 h-[2px] bg-[#D4AF37] rounded-full z-10 pointer-events-none"
                 style={{ left: 0, width: 0 }}
               />
               {menus.map((menu, idx) => (
@@ -854,7 +1484,7 @@ export default function ChristmasPage() {
                   onClick={() => handleMenuTabChange(idx)}
                   className={`pb-4 text-xs sm:text-sm font-bold uppercase tracking-widest transition-colors duration-300 whitespace-nowrap cursor-pointer relative flex items-center gap-2 ${
                     activeMenuTab === idx
-                      ? "text-[#475DB1] font-extrabold"
+                      ? "text-[#B91C1C] font-extrabold"
                       : "text-neutral-400 hover:text-neutral-600"
                   }`}
                 >
@@ -878,7 +1508,7 @@ export default function ChristmasPage() {
             >
               {/* Menu Details */}
               <div className="lg:col-span-7 space-y-6">
-                <span className="text-[10px] uppercase font-bold text-[#475DB1] tracking-widest flex items-center gap-2">
+                <span className="text-[10px] uppercase font-bold text-[#B91C1C] tracking-widest flex items-center gap-2">
                   {activeMenuTab === 0 && <SleighIcon />}
                   {activeMenuTab === 1 && <ReindeerIcon />}
                   {activeMenuTab === 2 && <SantaHatIcon />}
@@ -898,7 +1528,7 @@ export default function ChristmasPage() {
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-neutral-700 font-serif font-light">
                     {menus[activeMenuTab].highlights.map((item, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#475DB1] opacity-70" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#B91C1C] opacity-70" />
                         {item}
                       </li>
                     ))}
@@ -910,7 +1540,7 @@ export default function ChristmasPage() {
                     href={menus[activeMenuTab].link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-widest text-[10px] font-bold rounded-full transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#B91C1C] hover:bg-[#990000] text-white uppercase tracking-widest text-[10px] font-bold rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.2)]"
                   >
                     <Download size={14} /> Download PDF Menu <SleighIcon />
                   </a>
@@ -933,6 +1563,7 @@ export default function ChristmasPage() {
 
       {/* SECTION 2C: TRANSITION BANNER (Make This Christmas Unforgettable - Dark Theme) */}
       <section className="reveal-section py-24 bg-[#0A192F] text-white relative overflow-hidden">
+        <HangingOrnamentsTransition />
         {/* Soft decorative floating snowflakes and borders */}
         <div className="absolute inset-0 opacity-15 pointer-events-none">
           <div className="absolute top-0 left-0 w-72 h-72 border-2 border-white rounded-full -translate-x-1/2 -translate-y-1/2" />
@@ -957,7 +1588,7 @@ export default function ChristmasPage() {
           </div>
           <h2 className="text-3xl sm:text-5xl font-serif tracking-tight text-white leading-tight">
             Make This Christmas <br className="sm:hidden" />
-            <span className="italic font-light text-[#8fa2f4]">
+            <span className="italic font-light text-[#D4AF37]">
               Unforgettable at Seven Stars
             </span>
           </h2>
@@ -978,20 +1609,72 @@ export default function ChristmasPage() {
         {/* Decorative accent */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
 
+        {/* Large Christmas Tree Outline on the right */}
+        <div className="absolute right-[-40px] lg:right-6 top-8 w-[340px] h-[340px] opacity-[0.08] text-[#1E3F20] pointer-events-none hidden md:block">
+          <svg
+            viewBox="0 0 100 100"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-full h-full"
+          >
+            {/* Star on top */}
+            <path
+              d="M50 5 L52 11 L58 11 L53 14 L55 20 L50 16 L45 20 L47 14 L42 11 L48 11 Z"
+              fill="currentColor"
+            />
+            {/* Tree branches */}
+            <path d="M50 16 L35 36 L42 36 L25 56 L35 56 L15 76 L85 76 L65 56 L75 56 L58 36 L65 36 Z" />
+            {/* Trunk */}
+            <rect x="46" y="76" width="8" height="12" />
+            {/* Details/Decorations */}
+            <circle cx="50" cy="30" r="1.5" fill="currentColor" />
+            <circle cx="43" cy="45" r="1.5" fill="currentColor" />
+            <circle cx="57" cy="45" r="1.5" fill="currentColor" />
+            <circle cx="35" cy="65" r="1.5" fill="currentColor" />
+            <circle cx="50" cy="60" r="1.5" fill="currentColor" />
+            <circle cx="65" cy="65" r="1.5" fill="currentColor" />
+          </svg>
+        </div>
+
+        {/* Large Christmas Tree Outline on the left (Bottom) */}
+        <div className="absolute left-[-40px] lg:left-6 bottom-8 w-[280px] h-[280px] opacity-[0.08] text-[#1E3F20] pointer-events-none hidden md:block">
+          <svg
+            viewBox="0 0 100 100"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-full h-full"
+          >
+            <path d="M50 10 L38 28 L44 28 L30 46 L38 46 L20 66 L80 66 L62 46 L70 46 L56 28 L62 28 Z" />
+            <rect x="47" y="66" width="6" height="10" />
+            <circle cx="50" cy="22" r="1.5" fill="currentColor" />
+            <circle cx="42" cy="38" r="1.5" fill="currentColor" />
+            <circle cx="58" cy="38" r="1.5" fill="currentColor" />
+            <circle cx="32" cy="56" r="1.5" fill="currentColor" />
+            <circle cx="50" cy="52" r="1.5" fill="currentColor" />
+            <circle cx="68" cy="56" r="1.5" fill="currentColor" />
+          </svg>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-4">
             <div className="space-y-4">
-              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold block">
+              <span className="text-[10px] tracking-[0.4em] text-[#B91C1C] uppercase font-bold block">
                 Visual Feast
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-neutral-900 flex items-center gap-3">
                 Our Christmas{" "}
-                <span className="italic font-light text-[#475DB1]">
+                <span className="italic font-light text-[#B91C1C]">
                   Special Dishes
                 </span>
                 <HollyIcon />
                 <Snowflake
-                  className="w-5 h-5 text-[#475DB1] animate-spin"
+                  className="w-5 h-5 text-[#D4AF37] animate-spin"
                   style={{ animationDuration: "12s" }}
                 />
               </h2>
@@ -1001,14 +1684,14 @@ export default function ChristmasPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={prevDish}
-                className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center text-neutral-700 hover:text-white hover:bg-[#475DB1] hover:border-[#475DB1] transition-all cursor-pointer shadow-sm"
+                className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center text-neutral-700 hover:text-white hover:bg-[#B91C1C] hover:border-[#B91C1C] transition-all cursor-pointer shadow-sm"
                 title="Previous Dish"
               >
                 <ChevronLeft size={20} />
               </button>
               <button
                 onClick={nextDish}
-                className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center text-neutral-700 hover:text-white hover:bg-[#475DB1] hover:border-[#475DB1] transition-all cursor-pointer shadow-sm"
+                className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center text-neutral-700 hover:text-white hover:bg-[#B91C1C] hover:border-[#B91C1C] transition-all cursor-pointer shadow-sm"
                 title="Next Dish"
               >
                 <ChevronRight size={20} />
@@ -1038,7 +1721,7 @@ export default function ChristmasPage() {
 
               {/* Description Side */}
               <div className="lg:col-span-6 space-y-6">
-                <span className="text-[10px] uppercase font-bold text-[#475DB1] tracking-widest flex items-center gap-2">
+                <span className="text-[10px] uppercase font-bold text-[#B91C1C] tracking-widest flex items-center gap-2">
                   {activeDishIdx === 0 && <SleighIcon />}
                   {activeDishIdx === 1 && <ReindeerIcon />}
                   {activeDishIdx === 2 && <SantaHatIcon />}
@@ -1047,7 +1730,7 @@ export default function ChristmasPage() {
                 <h3 className="text-3xl sm:text-4xl font-serif text-neutral-900 tracking-tight transition-all duration-300">
                   {dishes[activeDishIdx].name}
                 </h3>
-                <div className="w-12 h-[1px] bg-[#475DB1]/30" />
+                <div className="w-12 h-[1px] bg-[#B91C1C]/30" />
                 <p className="text-base text-neutral-600 leading-relaxed font-serif font-light">
                   {dishes[activeDishIdx].description}
                 </p>
@@ -1060,7 +1743,7 @@ export default function ChristmasPage() {
                       onClick={() => handleDishChange(idx)}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         activeDishIdx === idx
-                          ? "w-8 bg-[#475DB1]"
+                          ? "w-8 bg-[#B91C1C]"
                           : "w-1.5 bg-neutral-200"
                       }`}
                     />
@@ -1075,7 +1758,7 @@ export default function ChristmasPage() {
       {/* Footer Contact & Reservatons Block */}
       <section className="reveal-section py-20 bg-[#FDFBF7] border-t border-black/5 relative overflow-hidden">
         {/* Large Christmas Bell Outline on the left (Top) */}
-        <div className="absolute left-[-50px] lg:left-4 -top-4 w-[320px] h-[320px] opacity-[0.12] text-[#475DB1] pointer-events-none hidden md:block">
+        <div className="absolute left-[-50px] lg:left-4 -top-4 w-[320px] h-[320px] opacity-[0.12] text-[#B91C1C] pointer-events-none hidden md:block">
           <svg
             viewBox="0 0 100 100"
             fill="none"
@@ -1095,8 +1778,8 @@ export default function ChristmasPage() {
           </svg>
         </div>
 
-        {/* Large Santa Claus Outline on the right (Bottom) */}
-        <div className="absolute right-[-50px] lg:right-4 -bottom-3 w-[320px] h-[320px] opacity-[0.12] text-[#475DB1] pointer-events-none hidden md:block">
+        {/* Large Snowman Outline on the right (Bottom) */}
+        <div className="absolute right-[-50px] lg:right-4 -bottom-3 w-[320px] h-[320px] opacity-[0.12] text-[#B91C1C] pointer-events-none hidden md:block">
           <svg
             viewBox="0 0 100 100"
             fill="none"
@@ -1106,29 +1789,39 @@ export default function ChristmasPage() {
             strokeLinejoin="round"
             className="w-full h-full"
           >
-            <circle cx="50" cy="15" r="4" fill="none" />
-            <path d="M50 19C42 19 32 25 32 36H68C68 25 58 19 50 19Z" />
-            <rect x="28" y="36" width="44" height="6" rx="3" />
-            <circle cx="43" cy="48" r="1.5" fill="currentColor" />
-            <circle cx="57" cy="48" r="1.5" fill="currentColor" />
-            <path d="M39 44C41 43 43 44 44 45" />
-            <path d="M61 44C59 43 57 44 56 45" />
-            <path
-              d="M50 49C52 49 53 51 51 52C50 53 48 53 47 52C45 51 47 49 50 49Z"
-              fill="currentColor"
-            />
-            <path
-              d="M50 54C46 54 42 52 38 55C42 57 46 56 50 55C54 56 58 57 62 55C58 52 54 54 50 54Z"
-              fill="currentColor"
-            />
-            <path d="M28 42C24 55 30 75 50 82C70 75 76 55 72 42C68 45 68 49 68 52C68 66 60 74 50 74C40 74 32 66 32 52C32 49 32 45 28 42Z" />
+            {/* Top hat */}
+            <rect x="38" y="10" width="24" height="12" fill="none" />
+            <line x1="30" y1="22" x2="70" y2="22" />
+
+            {/* Head */}
+            <circle cx="50" cy="35" r="12" fill="none" />
+            {/* Eyes */}
+            <circle cx="46" cy="33" r="1.2" fill="currentColor" />
+            <circle cx="54" cy="33" r="1.2" fill="currentColor" />
+            {/* Nose */}
+            <polygon points="50,35 59,37 50,39" fill="currentColor" />
+
+            {/* Scarf */}
+            <path d="M40 45 Q50 49 60 45" />
+            <path d="M53 47 L55 58 L50 57 L49 47" />
+
+            {/* Body */}
+            <circle cx="50" cy="67" r="20" fill="none" />
+            {/* Buttons */}
+            <circle cx="50" cy="57" r="1.5" fill="currentColor" />
+            <circle cx="50" cy="67" r="1.5" fill="currentColor" />
+            <circle cx="50" cy="77" r="1.5" fill="currentColor" />
+
+            {/* Arms */}
+            <line x1="31" y1="60" x2="16" y2="52" />
+            <line x1="69" y1="60" x2="84" y2="52" />
           </svg>
         </div>
 
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 space-y-8 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-serif text-neutral-900 tracking-tight leading-none">
             Reserve Your Place at the <br className="hidden sm:inline" />
-            <span className="italic font-light text-[#475DB1]">
+            <span className="italic font-light text-[#B91C1C]">
               Christmas Table
             </span>
           </h2>
@@ -1140,16 +1833,16 @@ export default function ChristmasPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4 text-neutral-700">
             <a
               href="tel:01865343337"
-              className="flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-[#475DB1] transition-colors"
+              className="flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-[#B91C1C] transition-colors"
             >
-              <Phone size={14} className="text-[#475DB1]" /> 01865 343337
+              <Phone size={14} className="text-[#B91C1C]" /> 01865 343337
             </a>
             <span className="hidden sm:inline text-neutral-300">|</span>
             <a
               href="mailto:info@sevenstarsatmb.co.uk"
-              className="flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-[#475DB1] transition-colors"
+              className="flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-[#B91C1C] transition-colors"
             >
-              <Mail size={14} className="text-[#475DB1]" />{" "}
+              <Mail size={14} className="text-[#B91C1C]" />{" "}
               info@sevenstarsatmb.co.uk
             </a>
           </div>
@@ -1159,7 +1852,7 @@ export default function ChristmasPage() {
               href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-10 py-5 bg-[#475DB1] hover:bg-[#475DB1]/90 uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-md hover:shadow-lg"
+              className="inline-block px-10 py-5 bg-[#B91C1C] hover:bg-[#990000] uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.25)] hover:shadow-lg"
             >
               Book Table Online
             </a>
