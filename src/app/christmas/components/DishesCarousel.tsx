@@ -13,24 +13,36 @@ interface DishType {
 }
 
 interface DishesCarouselProps {
-  dishes: DishType[];
   activeDishIdx: number;
   prevDish: () => void;
   nextDish: () => void;
   handleDishChange: (idx: number) => void;
   dishContentRef: React.RefObject<HTMLDivElement | null>;
   setIsAutoplayPaused: (paused: boolean) => void;
+  data?: {
+    tagline?: string;
+    heading?: string;
+    headingHighlight?: string;
+    dishesList?: DishType[];
+  };
 }
 
 export const DishesCarousel = ({
-  dishes,
   activeDishIdx,
   prevDish,
   nextDish,
   handleDishChange,
   dishContentRef,
   setIsAutoplayPaused,
+  data,
 }: DishesCarouselProps) => {
+  const tagline = data?.tagline || "Visual Feast";
+  const heading = data?.heading || "Our Christmas";
+  const headingHighlight = data?.headingHighlight || "Special Dishes";
+  const dishes = data?.dishesList && data.dishesList.length > 0 ? data.dishesList : [];
+
+  const currentDish = dishes[activeDishIdx] || dishes[0] || {};
+
   return (
     <section className="reveal-section py-24 bg-[#FDFBF7] border-t border-black/5 relative overflow-hidden">
       {/* Decorative accent */}
@@ -92,12 +104,12 @@ export const DishesCarousel = ({
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-4">
           <div className="space-y-4">
             <span className="text-[10px] tracking-[0.4em] text-[#B91C1C] uppercase font-bold block">
-              Visual Feast
+              {tagline}
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-neutral-900 flex items-center gap-3">
-              Our Christmas{" "}
+              {heading}{" "}
               <span className="italic font-light text-[#B91C1C]">
-                Special Dishes
+                {headingHighlight}
               </span>
               <HollyIcon />
               <Snowflake
@@ -138,12 +150,14 @@ export const DishesCarousel = ({
           >
             {/* Image Side */}
             <div className="lg:col-span-6 relative rounded-2xl overflow-hidden h-[300px] sm:h-[400px] shadow-inner">
-              <Image
-                src={dishes[activeDishIdx].image}
-                alt={dishes[activeDishIdx].name}
-                fill
-                className="object-cover transition-opacity duration-500 ease-in-out"
-              />
+              {currentDish.image && (
+                <Image
+                  src={currentDish.image}
+                  alt={currentDish.name || "Dish image"}
+                  fill
+                  className="object-cover transition-opacity duration-500 ease-in-out"
+                />
+              )}
             </div>
 
             {/* Description Side */}
@@ -152,17 +166,17 @@ export const DishesCarousel = ({
                 {activeDishIdx === 0 && <SleighIcon />}
                 {activeDishIdx === 1 && <ReindeerIcon />}
                 {activeDishIdx === 2 && <SantaHatIcon />}
-                {dishes[activeDishIdx].tagline}
+                {currentDish.tagline}
               </span>
               <h3 className="text-3xl sm:text-4xl font-serif text-neutral-900 tracking-tight transition-all duration-300">
-                {dishes[activeDishIdx].name}
+                {currentDish.name}
               </h3>
               <div className="w-12 h-[1px] bg-[#B91C1C]/30" />
               <p className="text-base text-neutral-600 leading-relaxed font-serif font-light">
-                {dishes[activeDishIdx].description}
+                {currentDish.description}
               </p>
 
-              {/* Stots/Indicators */}
+              {/* Spots/Indicators */}
               <div className="flex gap-2.5 pt-4">
                 {dishes.map((_, idx) => (
                   <button

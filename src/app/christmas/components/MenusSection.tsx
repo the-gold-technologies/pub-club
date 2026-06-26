@@ -16,22 +16,35 @@ interface MenuType {
 }
 
 interface MenusSectionProps {
-  menus: MenuType[];
   activeMenuTab: number;
   handleMenuTabChange: (idx: number) => void;
   tabsRef: React.RefObject<HTMLDivElement | null>;
   indicatorRef: React.RefObject<HTMLSpanElement | null>;
   menuContentRef: React.RefObject<HTMLDivElement | null>;
+  data?: {
+    tagline?: string;
+    heading?: string;
+    headingHighlight?: string;
+    menusList?: MenuType[];
+  };
 }
 
 export const MenusSection = ({
-  menus,
   activeMenuTab,
   handleMenuTabChange,
   tabsRef,
   indicatorRef,
   menuContentRef,
+  data,
 }: MenusSectionProps) => {
+  const tagline = data?.tagline || "Culinary Delights";
+  const heading = data?.heading || "Download Our";
+  const headingHighlight = data?.headingHighlight || "Festive Menus";
+  const menus = data?.menusList && data.menusList.length > 0 ? data.menusList : [];
+
+  const currentMenu = menus[activeMenuTab] || menus[0] || {};
+  const currentHighlights = currentMenu.highlights || [];
+
   return (
     <section
       id="menus"
@@ -102,12 +115,12 @@ export const MenusSection = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-[10px] tracking-[0.4em] text-[#B91C1C] uppercase font-bold block">
-            Culinary Delights
+            {tagline}
           </span>
           <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-neutral-900">
-            Download Our{" "}
+            {heading}{" "}
             <span className="italic font-light text-[#B91C1C]">
-              Festive Menus
+              {headingHighlight}
             </span>
           </h2>
           <div className="w-12 h-[1px] bg-[#B91C1C] opacity-50 mx-auto mt-4" />
@@ -159,13 +172,13 @@ export const MenusSection = ({
                 {activeMenuTab === 0 && <SleighIcon />}
                 {activeMenuTab === 1 && <ReindeerIcon />}
                 {activeMenuTab === 2 && <SantaHatIcon />}
-                {menus[activeMenuTab].subtitle}
+                {currentMenu.subtitle}
               </span>
               <h3 className="text-3xl font-serif text-neutral-950">
-                {menus[activeMenuTab].title}
+                {currentMenu.title}
               </h3>
               <p className="text-sm text-neutral-600 leading-relaxed font-serif font-light">
-                {menus[activeMenuTab].description}
+                {currentMenu.description}
               </p>
 
               <div className="space-y-3 pt-2">
@@ -173,7 +186,7 @@ export const MenusSection = ({
                   Menu Highlights Include:
                 </h4>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-neutral-700 font-serif font-light">
-                  {menus[activeMenuTab].highlights.map((item, i) => (
+                  {currentHighlights.map((item, i) => (
                     <li key={i} className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#B91C1C] opacity-70" />
                       {item}
@@ -184,9 +197,8 @@ export const MenusSection = ({
 
               <div className="pt-6">
                 <a
-                  href={menus[activeMenuTab].link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/api/download?url=${encodeURIComponent(currentMenu.link)}`}
+                  download
                   className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#B91C1C] hover:bg-[#990000] text-white uppercase tracking-widest text-[10px] font-bold rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.2)]"
                 >
                   <Download size={14} /> Download PDF Menu <SleighIcon />
@@ -196,12 +208,14 @@ export const MenusSection = ({
 
             {/* Menu Cover Image */}
             <div className="lg:col-span-5 relative rounded-2xl overflow-hidden h-[300px] sm:h-[350px] shadow-md">
-              <Image
-                src={menus[activeMenuTab].image}
-                alt={menus[activeMenuTab].title}
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-[2000ms]"
-              />
+              {currentMenu.image && (
+                <Image
+                  src={currentMenu.image}
+                  alt={currentMenu.title || "Menu cover"}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-[2000ms]"
+                />
+              )}
             </div>
           </div>
         </div>

@@ -24,119 +24,19 @@ import { TransitionBanner } from "./components/TransitionBanner";
 import { DishesCarousel } from "./components/DishesCarousel";
 import { ReservationSection } from "./components/ReservationSection";
 
-const menus = [
-  {
-    title: "Festive Party Menu",
-    subtitle: "Corporate Events & Gatherings",
-    description:
-      "Our Festive Menu Is Here! Book Your Table and Enjoy Holiday Favorites! Don’t forget if you book your Christmas Party before the end of October 2025 you will receive a £20 voucher to use towards your booking. Minimum of 8 people dining and booking made before end of October 2025.",
-    link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Festive-Christmas-Menu.pdf",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-celebration-2.webp",
-    highlights: [
-      "Smoked Salmon Starter",
-      "Traditional Roast Turkey",
-      "Spiced Plum Pudding",
-    ],
-  },
-  {
-    title: "Christmas Day Menu",
-    subtitle: "The Main Event on December 25th",
-    description:
-      "Indulge in our Special Christmas Menu: From Turkey to Truffles! Why Cook on Christmas Day when we can do it for you? Book your Christmas Lunch with us here at Seven Stars instead.",
-    link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Christmas-Day-Menu.pdf",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/25-dec.webp",
-    highlights: [
-      "Pan-Seared Scallops",
-      "Aged Beef Wellington",
-      "Decadent Chocolate Delice",
-    ],
-  },
-  {
-    title: "Children's Festive Menu",
-    subtitle: "Special Treats for Younger Guests",
-    description:
-      "To make Christmas extra special for families, we’ve prepared a dedicated children’s menu — light, delicious, and perfect for younger guests.",
-    link: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/Childrens-Christmas-Menu-2.pdf",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/children-christmas.webp",
-    highlights: [
-      "Mini Roast Turkey Dinner",
-      "Festive Mac & Cheese",
-      "Ice Cream Sundae",
-    ],
-  },
-];
-
-const dishes = [
-  {
-    name: "Festive Starters",
-    tagline: "Begin the Celebration",
-    description:
-      "A selection of beautiful, chef-prepared seasonal appetizers to kick off your Christmas meal.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp",
-  },
-  {
-    name: "Traditional Mains",
-    tagline: "The Heart of Christmas",
-    description:
-      "Hearty, classic holiday main courses prepared using the finest locally sourced ingredients.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish2.webp",
-  },
-  {
-    name: "Decadent Desserts",
-    tagline: "A Sweet Finale",
-    description:
-      "Indulgent treats and festive showstoppers to end your celebration on a sweet note.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish3.webp",
-  },
-  {
-    name: "Festive Canapés",
-    tagline: "Perfect for Parties",
-    description:
-      "Bite-sized delights crafted to complement your festive drinks and social gatherings.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish4.webp",
-  },
-  {
-    name: "Gourmet Selections",
-    tagline: "Chef's Handcrafted Specialties",
-    description:
-      "Unique, seasonal creations highlighting the best of winter game and local produce.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish5.webp",
-  },
-  {
-    name: "Festive Roast Sides",
-    tagline: "The Perfect Accompaniments",
-    description:
-      "Crispy roast potatoes, honey-glazed root veg, and all the classic trimmings.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish6.webp",
-  },
-  {
-    name: "Artisan Cheeseboard",
-    tagline: "Savory Indulgence",
-    description:
-      "A curated selection of British cheeses served with crackers, seasonal chutney, and grapes.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish7.webp",
-  },
-  {
-    name: "Holiday Treats",
-    tagline: "Festive Sweet Treats",
-    description:
-      "Homemade mince pies, truffles, and warm festive cookies served alongside your coffee.",
-    image:
-      "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish8.webp",
-  },
-];
+import { useCMSStore } from "@/store/useCMSStore";
 
 export default function ChristmasPage() {
+  const { fetchPage, pages, isLoading } = useCMSStore();
+
+  useEffect(() => {
+    fetchPage("christmas").catch(console.error);
+  }, [fetchPage]);
+
+  const pageData = pages["christmas"] || {};
+  const sections = pageData.sections || {};
+  const storeLoading = isLoading["christmas"] ?? true;
+
   const [loading, setLoading] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -148,7 +48,26 @@ export default function ChristmasPage() {
 
   // Audio setup effect
   useEffect(() => {
-    const audio = new Audio("/christmas-tune.mp3");
+    if (storeLoading) return;
+
+    const heroData = sections["ChristmasHero"] || {};
+    const musicTrack =
+      heroData.musicTrack !== undefined
+        ? heroData.musicTrack
+        : "/christmas-tune.mp3";
+
+    // If set to None, disabled, or empty, do not play music
+    if (
+      !musicTrack ||
+      musicTrack.toLowerCase() === "none" ||
+      musicTrack.toLowerCase() === "disabled"
+    ) {
+      setIsAudioPlaying(false);
+      audioRef.current = null;
+      return;
+    }
+
+    const audio = new Audio(musicTrack);
     audio.loop = true;
     audio.volume = 0.35; // Soft ambient volume
     audioRef.current = audio;
@@ -186,7 +105,7 @@ export default function ChristmasPage() {
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [storeLoading, sections]);
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
@@ -219,9 +138,12 @@ export default function ChristmasPage() {
   useEffect(() => {
     if (loading || isAutoplayPaused) return;
 
+    const currentDishesList = sections["ChristmasDishes"]?.dishesList || [];
+    if (!currentDishesList || currentDishesList.length === 0) return;
+
     const interval = setInterval(() => {
       slideDirectionRef.current = "next";
-      const nextIdx = (activeDishIdx + 1) % dishes.length;
+      const nextIdx = (activeDishIdx + 1) % currentDishesList.length;
       // Animate out first, then set index
       if (dishContentRef.current) {
         gsap.to(dishContentRef.current, {
@@ -237,7 +159,7 @@ export default function ChristmasPage() {
     }, 4500);
 
     return () => clearInterval(interval);
-  }, [activeDishIdx, loading, isAutoplayPaused]);
+  }, [activeDishIdx, loading, isAutoplayPaused, sections]);
 
   const handleMenuTabChange = (idx: number) => {
     if (idx === activeMenuTab || !menuContentRef.current) return;
@@ -279,11 +201,13 @@ export default function ChristmasPage() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!storeLoading) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [storeLoading]);
 
   useEffect(() => {
     if (loading) return;
@@ -450,12 +374,18 @@ export default function ChristmasPage() {
   }, [loading]);
 
   const nextDish = () => {
-    const nextIdx = (activeDishIdx + 1) % dishes.length;
+    const currentDishesList = sections["ChristmasDishes"]?.dishesList || [];
+    const len = currentDishesList.length;
+    if (len === 0) return;
+    const nextIdx = (activeDishIdx + 1) % len;
     handleDishChange(nextIdx);
   };
 
   const prevDish = () => {
-    const prevIdx = (activeDishIdx - 1 + dishes.length) % dishes.length;
+    const currentDishesList = sections["ChristmasDishes"]?.dishesList || [];
+    const len = currentDishesList.length;
+    if (len === 0) return;
+    const prevIdx = (activeDishIdx - 1 + len) % len;
     handleDishChange(prevIdx);
   };
 
@@ -467,92 +397,110 @@ export default function ChristmasPage() {
       <PageLoader isLoading={loading} />
       <SnowEffect />
       <Navbar />
-      <HeroSection heroRef={heroRef} heroBgRef={heroBgRef} />
+      <HeroSection
+        heroRef={heroRef}
+        heroBgRef={heroBgRef}
+        data={sections["ChristmasHero"] || {}}
+      />
 
       {/* SECTION 2A: INTRO & WHY CHOOSE US (Light background) */}
-      <IntroSection />
+      <IntroSection data={sections["ChristmasIntro"] || {}} />
 
       {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
-      <FeaturesSection />
+      <FeaturesSection data={sections["ChristmasFeatures"] || {}} />
 
       {/* SECTION 4: FESTIVE MENUS SHOWCASE (Tabbed View with Food Imagery) */}
       <MenusSection
-        menus={menus}
         activeMenuTab={activeMenuTab}
         handleMenuTabChange={handleMenuTabChange}
         tabsRef={tabsRef}
         indicatorRef={indicatorRef}
         menuContentRef={menuContentRef}
+        data={sections["ChristmasMenus"] || {}}
       />
 
       {/* SECTION 2C: TRANSITION BANNER (Make This Christmas Unforgettable - Dark Theme) */}
-      <TransitionBanner />
+      <TransitionBanner data={sections["ChristmasTransition"] || {}} />
 
       {/* SECTION 5: SPECIAL DISHES CAROUSEL */}
       <DishesCarousel
-        dishes={dishes}
         activeDishIdx={activeDishIdx}
         prevDish={prevDish}
         nextDish={nextDish}
         handleDishChange={handleDishChange}
         dishContentRef={dishContentRef}
         setIsAutoplayPaused={setIsAutoplayPaused}
+        data={sections["ChristmasDishes"] || {}}
       />
 
       {/* Footer Contact & Reservations Block */}
-      <ReservationSection />
+      <ReservationSection data={sections["ChristmasReservation"] || {}} />
 
       {/* Floating Music Control Button */}
-      <button
-        onClick={toggleMusic}
-        className={`fixed bottom-6 right-6 z-[100] flex items-center gap-2.5 px-4 py-2.5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-105 active:scale-95 ${
-          isAudioPlaying
-            ? "bg-[#B91C1C]/25 border-[#B91C1C]/40 text-red-200 shadow-[0_0_15px_rgba(185,28,28,0.3)] hover:bg-[#B91C1C]/35"
-            : "bg-white/10 border-white/20 text-slate-300 hover:bg-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
-        }`}
-        aria-label={
-          isAudioPlaying ? "Mute Christmas music" : "Play Christmas music"
+      {(() => {
+        const heroData = sections["ChristmasHero"] || {};
+        const musicTrack =
+          heroData.musicTrack !== undefined ? heroData.musicTrack : "";
+        if (
+          !musicTrack ||
+          musicTrack.toLowerCase() === "none" ||
+          musicTrack.toLowerCase() === "disabled"
+        ) {
+          return null;
         }
-      >
-        <div className="flex items-end gap-[3px] h-3.5 w-4 overflow-hidden">
-          <span
-            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+        return (
+          <button
+            onClick={toggleMusic}
+            className={`fixed bottom-6 right-6 z-[100] flex items-center gap-2.5 px-4 py-2.5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-105 active:scale-95 ${
               isAudioPlaying
-                ? "animate-[soundWave_1.2s_ease-in-out_infinite]"
-                : "h-1"
+                ? "bg-[#B91C1C]/25 border-[#B91C1C]/40 text-red-200 shadow-[0_0_15px_rgba(185,28,28,0.3)] hover:bg-[#B91C1C]/35"
+                : "bg-white/10 border-white/20 text-slate-300 hover:bg-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
             }`}
-            style={{ animationDelay: "0.1s" }}
-          />
-          <span
-            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
-              isAudioPlaying
-                ? "animate-[soundWave_0.8s_ease-in-out_infinite]"
-                : "h-1.5"
-            }`}
-            style={{ animationDelay: "0.3s" }}
-          />
-          <span
-            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
-              isAudioPlaying
-                ? "animate-[soundWave_1.0s_ease-in-out_infinite]"
-                : "h-0.5"
-            }`}
-            style={{ animationDelay: "0.0s" }}
-          />
-          <span
-            className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
-              isAudioPlaying
-                ? "animate-[soundWave_0.9s_ease-in-out_infinite]"
-                : "h-2"
-            }`}
-            style={{ animationDelay: "0.5s" }}
-          />
-        </div>
+            aria-label={
+              isAudioPlaying ? "Mute Christmas music" : "Play Christmas music"
+            }
+          >
+            <div className="flex items-end gap-[3px] h-3.5 w-4 overflow-hidden">
+              <span
+                className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+                  isAudioPlaying
+                    ? "animate-[soundWave_1.2s_ease-in-out_infinite]"
+                    : "h-1"
+                }`}
+                style={{ animationDelay: "0.1s" }}
+              />
+              <span
+                className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+                  isAudioPlaying
+                    ? "animate-[soundWave_0.8s_ease-in-out_infinite]"
+                    : "h-1.5"
+                }`}
+                style={{ animationDelay: "0.3s" }}
+              />
+              <span
+                className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+                  isAudioPlaying
+                    ? "animate-[soundWave_1.0s_ease-in-out_infinite]"
+                    : "h-0.5"
+                }`}
+                style={{ animationDelay: "0.0s" }}
+              />
+              <span
+                className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
+                  isAudioPlaying
+                    ? "animate-[soundWave_0.9s_ease-in-out_infinite]"
+                    : "h-2"
+                }`}
+                style={{ animationDelay: "0.5s" }}
+              />
+            </div>
 
-        <span className="text-[10px] tracking-widest uppercase font-bold select-none">
-          {isAudioPlaying ? "Music On" : "Music Off"}
-        </span>
-      </button>
+            <span className="text-[10px] tracking-widest uppercase font-bold select-none">
+              {isAudioPlaying ? "Music On" : "Music Off"}
+            </span>
+          </button>
+        );
+      })()}
 
       <style
         dangerouslySetInnerHTML={{

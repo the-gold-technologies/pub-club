@@ -3,7 +3,26 @@
 import React from "react";
 import { Phone, Mail } from "lucide-react";
 
-export const ReservationSection = () => {
+interface ReservationSectionProps {
+  data?: {
+    heading?: string;
+    headingHighlight?: string;
+    description?: string;
+    phone?: string;
+    email?: string;
+    ctaText?: string;
+    ctaLink?: string;
+  };
+}
+
+export const ReservationSection = ({ data }: ReservationSectionProps) => {
+  const heading = data?.heading || "Reserve Your Place at the";
+  const headingHighlight = data?.headingHighlight || "Christmas Table";
+  const description = data?.description || "Tables fill up very fast during the Christmas season. Reserve your lunch or party early to avoid missing out.";
+  const phone = data?.phone || "01865 343337";
+  const email = data?.email || "info@sevenstarsatmb.co.uk";
+  const ctaText = data?.ctaText || "Book Table Online";
+  const ctaLink = data?.ctaLink || "https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website";
   return (
     <section className="reveal-section py-20 bg-[#FDFBF7] border-t border-black/5 relative overflow-hidden">
       {/* Large Christmas Bell Outline on the left (Top) */}
@@ -69,40 +88,39 @@ export const ReservationSection = () => {
 
       <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 space-y-8 relative z-10">
         <h2 className="text-3xl sm:text-4xl font-serif text-neutral-900 tracking-tight leading-none">
-          Reserve Your Place at the <br className="hidden sm:inline" />
+          {heading} <br className="hidden sm:inline" />
           <span className="italic font-light text-[#B91C1C]">
-            Christmas Table
+            {headingHighlight}
           </span>
         </h2>
         <p className="text-base text-neutral-500 font-serif font-light max-w-xl mx-auto leading-relaxed">
-          Tables fill up very fast during the Christmas season. Reserve your
-          lunch or party early to avoid missing out.
+          {description}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4 text-neutral-700">
           <a
-            href="tel:01865343337"
+            href={`tel:${phone.replace(/\s+/g, "")}`}
             className="flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-[#B91C1C] transition-colors"
           >
-            <Phone size={14} className="text-[#B91C1C]" /> 01865 343337
+            <Phone size={14} className="text-[#B91C1C]" /> {phone}
           </a>
           <span className="hidden sm:inline text-neutral-300">|</span>
           <a
-            href="mailto:info@sevenstarsatmb.co.uk"
+            href={`mailto:${email}`}
             className="flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-[#B91C1C] transition-colors"
           >
-            <Mail size={14} className="text-[#B91C1C]" /> info@sevenstarsatmb.co.uk
+            <Mail size={14} className="text-[#B91C1C]" /> {email}
           </a>
         </div>
 
         <div className="pt-4">
           <a
-            href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+            href={ctaLink}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-10 py-5 bg-[#B91C1C] hover:bg-[#990000] uppercase tracking-widest text-xs font-bold text-white rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.25)] hover:shadow-lg"
           >
-            Book Table Online
+            {ctaText}
           </a>
         </div>
       </div>

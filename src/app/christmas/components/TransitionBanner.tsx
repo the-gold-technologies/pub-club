@@ -5,7 +5,19 @@ import { Snowflake } from "lucide-react";
 import { HangingOrnamentsTransition } from "./HangingOrnaments";
 import { HollyIcon } from "./Icons";
 
-export const TransitionBanner = () => {
+interface TransitionBannerProps {
+  data?: {
+    heading?: string;
+    headingHighlight?: string;
+    description?: string;
+  };
+}
+
+export const TransitionBanner = ({ data }: TransitionBannerProps) => {
+  const heading = data?.heading || "Make This Christmas";
+  const headingHighlight = data?.headingHighlight || "Unforgettable at Seven Stars";
+  const description = data?.description || "Step into the festive spirit at our cosy pub in Marsh Baldon, Oxford. Whether you’re planning an intimate family lunch or a lively Christmas party with friends, Seven Stars is the perfect place to celebrate. With glowing décor, hearty festive dishes, and seasonal drinks, we’ll make sure your Christmas gathering is full of warmth, laughter, and cheer.";
+
   return (
     <section className="reveal-section py-24 bg-[#0A192F] text-white relative overflow-hidden">
       <HangingOrnamentsTransition />
@@ -32,19 +44,14 @@ export const TransitionBanner = () => {
           <HollyIcon />
         </div>
         <h2 className="text-3xl sm:text-5xl font-serif tracking-tight text-white leading-tight">
-          Make This Christmas <br className="sm:hidden" />
+          {heading} <br className="sm:hidden" />
           <span className="italic font-light text-[#D4AF37]">
-            Unforgettable at Seven Stars
+            {headingHighlight}
           </span>
         </h2>
         <div className="w-20 h-[1px] bg-white/40 mx-auto" />
         <p className="text-lg sm:text-xl text-white/95 font-serif font-light leading-relaxed max-w-3xl mx-auto">
-          Step into the festive spirit at our cosy pub in Marsh Baldon,
-          Oxford. Whether you’re planning an intimate family lunch or a lively
-          Christmas party with friends, Seven Stars is the perfect place to
-          celebrate. With glowing décor, hearty festive dishes, and seasonal
-          drinks, we’ll make sure your Christmas gathering is full of warmth,
-          laughter, and cheer.
+          {description}
         </p>
       </div>
     </section>

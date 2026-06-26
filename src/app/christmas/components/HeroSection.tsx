@@ -8,9 +8,32 @@ import { Snowflake } from "lucide-react";
 interface HeroSectionProps {
   heroRef: React.RefObject<HTMLElement | null>;
   heroBgRef: React.RefObject<HTMLDivElement | null>;
+  data?: {
+    tagline?: string;
+    headingPart1?: string;
+    headingItalicHighlight?: string;
+    headingPart2?: string;
+    description?: string;
+    ctaText1?: string;
+    ctaLink1?: string;
+    ctaText2?: string;
+    ctaLink2?: string;
+    backgroundImage?: string;
+  };
 }
 
-export const HeroSection = ({ heroRef, heroBgRef }: HeroSectionProps) => {
+export const HeroSection = ({ heroRef, heroBgRef, data }: HeroSectionProps) => {
+  const tagline = data?.tagline || "Festive Season 2026";
+  const headingPart1 = data?.headingPart1 || "Celebrate";
+  const headingItalicHighlight = data?.headingItalicHighlight || "Christmas";
+  const headingPart2 = data?.headingPart2 || "at Seven Stars";
+  const description = data?.description || "Step into the warmth of our decorated countryside pub in Marsh Baldon, Oxford. Savor award-winning festive menus, cozy up next to glowing fireplaces, and celebrate the season in style.";
+  const ctaText1 = data?.ctaText1 || "Reserve Your Table";
+  const ctaLink1 = data?.ctaLink1 || "https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website";
+  const ctaText2 = data?.ctaText2 || "Discover Menus";
+  const ctaLink2 = data?.ctaLink2 || "#menus";
+  const backgroundImage = data?.backgroundImage || "/christmas-pub-hero.png";
+
   return (
     <section
       ref={heroRef}
@@ -22,7 +45,7 @@ export const HeroSection = ({ heroRef, heroBgRef }: HeroSectionProps) => {
       {/* Background Image */}
       <div ref={heroBgRef} className="absolute inset-0 z-0">
         <Image
-          src="/christmas-pub-hero.png"
+          src={backgroundImage}
           alt="Bright Christmas pub celebration"
           fill
           className="object-cover object-center opacity-100"
@@ -38,41 +61,38 @@ export const HeroSection = ({ heroRef, heroBgRef }: HeroSectionProps) => {
           {/* Left Column: Text and CTAs */}
           <div className="lg:col-span-7 space-y-6 lg:text-left text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[10px] sm:text-xs uppercase tracking-[0.25em] font-bold text-[#E6C653] w-fit lg:mx-0 mx-auto animate-pulse">
-              <span>❄</span> Festive Season 2026
+              <span>❄</span> {tagline}
             </div>
 
             <h1 className="christmas-hero-title text-4xl sm:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              Celebrate
+              {headingPart1}
               <span className="italic font-light text-[#D4AF37] drop-shadow-[0_0_12px_rgba(212,175,55,0.4)]">
-                {" "}
-                Christmas{" "}
+                {" "}{headingItalicHighlight}{" "}
               </span>{" "}
               <br />
-              at Seven Stars
+              {headingPart2}
             </h1>
 
             <div className="w-16 h-px bg-white/20 lg:mx-0 mx-auto" />
 
             <p className="christmas-hero-desc text-base sm:text-lg text-slate-200 font-serif font-light leading-relaxed max-w-lg lg:mx-0 mx-auto drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
-              Step into the warmth of our decorated countryside pub in Marsh
-              Baldon, Oxford. Savor award-winning festive menus, cozy up next
-              to glowing fireplaces, and celebrate the season in style.
+              {description}
             </p>
 
             <div className="christmas-hero-cta flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start">
               <a
-                href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+                href={ctaLink1}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-[#B91C1C] hover:bg-[#990000] text-white uppercase tracking-widest text-xs font-bold rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.4)] hover:shadow-xl text-center"
               >
-                Reserve Your Table
+                {ctaText1}
               </a>
               <a
-                href="#menus"
+                href={ctaLink2}
                 className="px-8 py-4 border border-[#D4AF37]/60 text-[#D4AF37] hover:bg-[#D4AF37]/10 uppercase tracking-widest text-xs font-bold rounded-full transition-all text-center"
               >
-                Discover Menus
+                {ctaText2}
               </a>
             </div>
           </div>
