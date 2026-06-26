@@ -13,7 +13,7 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
-  const { navLinks, fetchNavLinks } = useCMSStore();
+  const { navLinks, fetchNavLinks, pages, fetchPage } = useCMSStore();
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
@@ -28,10 +28,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Fetch dynamic CMS navigation
+  // Fetch dynamic CMS navigation and Christmas page status
   useEffect(() => {
     fetchNavLinks().catch(console.error);
-  }, [fetchNavLinks]);
+    fetchPage("christmas").catch(console.error);
+  }, [fetchNavLinks, fetchPage]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -56,15 +57,128 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isMobileMenuOpen]);
 
-  const items = Array.isArray(navLinks)
-    ? navLinks.map((link) => ({
-        name: link.title,
-        href: link.link,
-        dropdown: link.dropdown
-          ? link.dropdown.map((sub) => ({ name: sub.title, href: sub.link }))
-          : undefined,
-      }))
-    : [];
+  const items = (() => {
+    const rawItems = Array.isArray(navLinks)
+      ? navLinks.map((link) => ({
+          name: link.title,
+          href: link.link,
+          dropdown: link.dropdown
+            ? link.dropdown.map((sub) => ({ name: sub.title, href: sub.link }))
+            : undefined,
+        }))
+      : [];
+
+    // 1. Find and extract Christmas item
+    let christmasItem: {
+      name: string;
+      href: string;
+      dropdown: { name: string; href: string }[] | undefined;
+    } | null = null;
+    const filteredForChristmas = rawItems.filter((item) => {
+      const isChristmas =
+        item.href === "/christmas" ||
+        item.name.toLowerCase().includes("christmas");
+      if (isChristmas) {
+        christmasItem = {
+          name: item.name,
+          href: item.href || "/christmas",
+          dropdown: item.dropdown,
+        };
+        return false;
+      }
+      return true;
+    });
+
+    if (!christmasItem) {
+      christmasItem = {
+        name: "Christmas",
+        href: "/christmas",
+        dropdown: undefined,
+      };
+    }
+
+    // 2. Find and extract Blog item
+    let blogItem: {
+      name: string;
+      href: string;
+      dropdown: { name: string; href: string }[] | undefined;
+    } | null = null;
+    const filteredForBlog = filteredForChristmas.filter((item) => {
+      const isBlog =
+        item.href === "/blog" || item.name.toLowerCase() === "blog";
+      if (isBlog) {
+        blogItem = {
+          name: item.name,
+          href: item.href || "/blog",
+          dropdown: item.dropdown,
+        };
+        return false;
+      }
+      return true;
+    });
+
+    if (!blogItem) {
+      blogItem = { name: "Blog", href: "/blog", dropdown: undefined };
+    }
+
+    // 3. Put Christmas inside Events dropdown
+    const eventsItemIdx = filteredForBlog.findIndex(
+      (item) =>
+        item.href === "/events" ||
+        item.name.toLowerCase() === "events" ||
+        item.name.toLowerCase() === "event",
+    );
+
+    const isChristmasPublished = pages["christmas"]?.visibility === "published";
+
+    if (eventsItemIdx !== -1 && isChristmasPublished) {
+      const eventsItem = filteredForBlog[eventsItemIdx];
+      const existingDropdown = eventsItem.dropdown || [];
+      const hasChristmas = existingDropdown.some(
+        (sub) =>
+          sub.href === "/christmas" ||
+          sub.name.toLowerCase().includes("christmas"),
+      );
+
+      if (!hasChristmas) {
+        const dropdownItems = [];
+        if (existingDropdown.length === 0) {
+          dropdownItems.push({ name: "Events", href: "/events" });
+        } else {
+          dropdownItems.push(...existingDropdown);
+        }
+        dropdownItems.push(christmasItem);
+        filteredForBlog[eventsItemIdx] = {
+          ...eventsItem,
+          dropdown: dropdownItems,
+        };
+      }
+    }
+
+    // 4. Place Blog after Gallery
+    const galleryItemIdx = filteredForBlog.findIndex(
+      (item) =>
+        item.href === "/gallery" || item.name.toLowerCase() === "gallery",
+    );
+
+    const finalItems = [...filteredForBlog];
+    if (galleryItemIdx !== -1) {
+      finalItems.splice(galleryItemIdx + 1, 0, blogItem);
+    } else {
+      // Fallback: search for events or just append
+      const eventsIdx = finalItems.findIndex(
+        (item) =>
+          item.href === "/events" || item.name.toLowerCase() === "events",
+      );
+      if (eventsIdx !== -1) {
+        finalItems.splice(eventsIdx + 1, 0, blogItem);
+      } else {
+        finalItems.push(blogItem);
+      }
+    }
+
+    return finalItems;
+  })();
 
   const isLinkActive = (href: string, dropdown?: { href: string }[]) => {
     if (href && href !== "#" && pathname === href) return true;
