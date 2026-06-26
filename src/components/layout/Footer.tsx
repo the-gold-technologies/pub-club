@@ -34,6 +34,7 @@ export default function Footer() {
 
   useEffect(() => {
     fetchPage("home").catch(console.error);
+    fetchPage("christmas").catch(console.error);
   }, [fetchPage]);
 
   const pageData = pages["home"];
@@ -49,17 +50,34 @@ export default function Footer() {
       ? navLinks.map((link) => ({ label: link.title, href: link.link }))
       : defaultNavLinks;
 
-  if (!displayNavLinks.some((link) => link.href === "/christmas")) {
-    const contactIndex = displayNavLinks.findIndex((link) => link.href === "/contact" || link.label.toLowerCase().includes("contact"));
-    if (contactIndex !== -1) {
-      displayNavLinks.splice(contactIndex, 0, { label: "Christmas", href: "/christmas" });
-    } else {
-      displayNavLinks.push({ label: "Christmas", href: "/christmas" });
+  const isChristmasPublished = pages["christmas"]?.visibility === "published";
+
+  if (isChristmasPublished) {
+    if (!displayNavLinks.some((link) => link.href === "/christmas")) {
+      const galleryIndex = displayNavLinks.findIndex(
+        (link) =>
+          link.href === "/gallery" ||
+          link.label.toLowerCase().includes("gallery"),
+      );
+      if (galleryIndex !== -1) {
+        displayNavLinks.splice(galleryIndex + 1, 0, {
+          label: "Christmas",
+          href: "/christmas",
+        });
+      } else {
+        displayNavLinks.push({ label: "Christmas", href: "/christmas" });
+      }
     }
+  } else {
+    displayNavLinks = displayNavLinks.filter((link) => link.href !== "/christmas");
   }
 
   if (!displayNavLinks.some((link) => link.href === "/blog")) {
-    const contactIndex = displayNavLinks.findIndex((link) => link.href === "/contact" || link.label.toLowerCase().includes("contact"));
+    const contactIndex = displayNavLinks.findIndex(
+      (link) =>
+        link.href === "/contact" ||
+        link.label.toLowerCase().includes("contact"),
+    );
     if (contactIndex !== -1) {
       displayNavLinks.splice(contactIndex, 0, { label: "Blog", href: "/blog" });
     } else {
@@ -72,7 +90,7 @@ export default function Footer() {
     !displayNavLinks.some(
       (link) =>
         link.href === "/contact" ||
-        link.label.toLowerCase().includes("contact")
+        link.label.toLowerCase().includes("contact"),
     )
   ) {
     displayNavLinks = [

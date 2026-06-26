@@ -24,6 +24,7 @@ import { TransitionBanner } from "./components/TransitionBanner";
 import { DishesCarousel } from "./components/DishesCarousel";
 import { ReservationSection } from "./components/ReservationSection";
 
+import { notFound } from "next/navigation";
 import { useCMSStore } from "@/store/useCMSStore";
 
 export default function ChristmasPage() {
@@ -36,6 +37,11 @@ export default function ChristmasPage() {
   const pageData = pages["christmas"] || {};
   const sections = pageData.sections || {};
   const storeLoading = isLoading["christmas"] ?? true;
+
+  // Visibility guard: if loaded and not published, render 404
+  if (!storeLoading && pageData.visibility !== "published") {
+    notFound();
+  }
 
   const [loading, setLoading] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
