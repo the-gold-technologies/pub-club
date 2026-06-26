@@ -855,17 +855,21 @@ export default function ChristmasPage() {
     audioRef.current = audio;
 
     const playAudio = () => {
-      audio.play()
+      audio
+        .play()
         .then(() => {
           setIsAudioPlaying(true);
         })
         .catch(() => {
           const startPlayOnInteract = () => {
-            audio.play()
+            audio
+              .play()
               .then(() => {
                 setIsAudioPlaying(true);
               })
-              .catch(err => console.log("Autoplay failed after interaction:", err));
+              .catch((err) =>
+                console.log("Autoplay failed after interaction:", err),
+              );
             window.removeEventListener("click", startPlayOnInteract);
             window.removeEventListener("touchstart", startPlayOnInteract);
           };
@@ -891,11 +895,12 @@ export default function ChristmasPage() {
       audioRef.current.pause();
       setIsAudioPlaying(false);
     } else {
-      audioRef.current.play()
+      audioRef.current
+        .play()
         .then(() => {
           setIsAudioPlaying(true);
         })
-        .catch(err => console.log("Play failed:", err));
+        .catch((err) => console.log("Play failed:", err));
     }
   };
 
@@ -1175,16 +1180,14 @@ export default function ChristmasPage() {
         {/* Background Image */}
         <div ref={heroBgRef} className="absolute inset-0 z-0">
           <Image
-            src="/christmas-hero.png"
-            alt="Cozy Christmas interior at Seven Stars"
+            src="/christmas-pub-hero.png"
+            alt="Bright Christmas pub celebration"
             fill
-            className="object-cover object-center opacity-90"
+            className="object-cover object-center opacity-100"
             priority
           />
-          {/* Layer of brand color tint overlay on top of background image */}
-          <div className="absolute inset-0 bg-[#0A192F]/50 mix-blend-multiply z-10" />
-          {/* Readability Vignette Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F]/70 via-transparent to-[#0A192F]/90 z-10" />
+          {/* Darker gradient overlay, stronger on the left for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A192F]/85 via-[#0A192F]/50 to-[#0A192F]/20 z-10" />
         </div>
 
         {/* Content Layer floating on top */}
@@ -1196,7 +1199,7 @@ export default function ChristmasPage() {
                 <span>❄</span> Festive Season 2026
               </div>
 
-              <h1 className="christmas-hero-title text-4xl sm:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1]">
+              <h1 className="christmas-hero-title text-4xl sm:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                 Celebrate
                 <span className="italic font-light text-[#D4AF37] drop-shadow-[0_0_12px_rgba(212,175,55,0.4)]">
                   {" "}
@@ -1208,7 +1211,7 @@ export default function ChristmasPage() {
 
               <div className="w-16 h-px bg-white/20 lg:mx-0 mx-auto" />
 
-              <p className="christmas-hero-desc text-base sm:text-lg text-slate-300 font-serif font-light leading-relaxed max-w-lg lg:mx-0 mx-auto">
+              <p className="christmas-hero-desc text-base sm:text-lg text-slate-200 font-serif font-light leading-relaxed max-w-lg lg:mx-0 mx-auto drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 Step into the warmth of our decorated countryside pub in Marsh
                 Baldon, Oxford. Savor award-winning festive menus, cozy up next
                 to glowing fireplaces, and celebrate the season in style.
@@ -1233,20 +1236,6 @@ export default function ChristmasPage() {
             </div>
 
             {/* Right Column: Santa Claus Standalone Picture with Floating Glowing Snow Star */}
-            <div
-              ref={santaRef}
-              className="lg:col-span-5 flex justify-center lg:justify-end relative py-8"
-            >
-              {/* Single glowing snow star (snowflake) next to Santa */}
-              <div className="absolute top-[10%] right-[-5%] z-30 text-white/90 animate-pulse pointer-events-none">
-                <Snowflake className="w-8 h-8 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
-              </div>
-
-              {/* Fully Interactive 3D WebGL Christmas Tree Model (Fitted & Borderless) */}
-              <div className="relative w-full max-w-[410px] aspect-[3/4.2] flex items-center justify-center z-20">
-                <ThreeDChristmasTree />
-              </div>
-            </div>
           </div>
         </div>
 
@@ -1923,30 +1912,40 @@ export default function ChristmasPage() {
             ? "bg-[#B91C1C]/25 border-[#B91C1C]/40 text-red-200 shadow-[0_0_15px_rgba(185,28,28,0.3)] hover:bg-[#B91C1C]/35"
             : "bg-white/10 border-white/20 text-slate-300 hover:bg-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)]"
         }`}
-        aria-label={isAudioPlaying ? "Mute Christmas music" : "Play Christmas music"}
+        aria-label={
+          isAudioPlaying ? "Mute Christmas music" : "Play Christmas music"
+        }
       >
         <div className="flex items-end gap-[3px] h-3.5 w-4 overflow-hidden">
           <span
             className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
-              isAudioPlaying ? "animate-[soundWave_1.2s_ease-in-out_infinite]" : "h-1"
+              isAudioPlaying
+                ? "animate-[soundWave_1.2s_ease-in-out_infinite]"
+                : "h-1"
             }`}
             style={{ animationDelay: "0.1s" }}
           />
           <span
             className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
-              isAudioPlaying ? "animate-[soundWave_0.8s_ease-in-out_infinite]" : "h-1.5"
+              isAudioPlaying
+                ? "animate-[soundWave_0.8s_ease-in-out_infinite]"
+                : "h-1.5"
             }`}
             style={{ animationDelay: "0.3s" }}
           />
           <span
             className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
-              isAudioPlaying ? "animate-[soundWave_1.0s_ease-in-out_infinite]" : "h-0.5"
+              isAudioPlaying
+                ? "animate-[soundWave_1.0s_ease-in-out_infinite]"
+                : "h-0.5"
             }`}
             style={{ animationDelay: "0.0s" }}
           />
           <span
             className={`w-[3px] rounded-full bg-current transition-all duration-300 ${
-              isAudioPlaying ? "animate-[soundWave_0.9s_ease-in-out_infinite]" : "h-2"
+              isAudioPlaying
+                ? "animate-[soundWave_0.9s_ease-in-out_infinite]"
+                : "h-2"
             }`}
             style={{ animationDelay: "0.5s" }}
           />
@@ -1957,12 +1956,16 @@ export default function ChristmasPage() {
         </span>
       </button>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes soundWave {
           0%, 100% { height: 4px; }
           50% { height: 14px; }
         }
-      `}} />
+      `,
+        }}
+      />
 
       <Footer />
     </div>
