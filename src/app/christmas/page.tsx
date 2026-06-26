@@ -412,9 +412,6 @@ export default function ChristmasPage() {
       {/* SECTION 2A: INTRO & WHY CHOOSE US (Light background) */}
       <IntroSection data={sections["ChristmasIntro"] || {}} />
 
-      {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
-      <FeaturesSection data={sections["ChristmasFeatures"] || {}} />
-
       {/* SECTION 4: FESTIVE MENUS SHOWCASE (Tabbed View with Food Imagery) */}
       <MenusSection
         activeMenuTab={activeMenuTab}
@@ -426,7 +423,10 @@ export default function ChristmasPage() {
       />
 
       {/* SECTION 2C: TRANSITION BANNER (Make This Christmas Unforgettable - Dark Theme) */}
-      <TransitionBanner data={sections["ChristmasTransition"] || {}} />
+      {/* <TransitionBanner data={sections["ChristmasTransition"] || {}} /> */}
+
+      {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
+      <FeaturesSection data={sections["ChristmasFeatures"] || {}} />
 
       {/* SECTION 5: SPECIAL DISHES CAROUSEL */}
       <DishesCarousel
