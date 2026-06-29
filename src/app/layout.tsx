@@ -76,7 +76,7 @@ export default async function RootLayout({
         {globalSEO?.favicon && (
           <link
             rel="icon"
-            href={`${globalSEO.favicon}?v=${Math.floor(Date.now() / 3600000)}`}
+            href={`${globalSEO.favicon}?v=${globalSEO.updatedAt ? new Date(globalSEO.updatedAt).getTime() : '1'}`}
             type={
               globalSEO.favicon.match(/\.(jpg|jpeg)$/i)
                 ? "image/jpeg"

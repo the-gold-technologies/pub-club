@@ -11,9 +11,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function UpcomingEvents({ data = {} }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [displayIndices, setDisplayIndices] = useState([0, 1, 2]);
-
   const events = Array.isArray(data.upcomingEvents) ? data.upcomingEvents : [];
+  
+  const [displayIndices, setDisplayIndices] = useState<number[]>(() =>
+    Array.from({ length: events.length }, (_, i) => i)
+  );
+
+  useEffect(() => {
+    setDisplayIndices(Array.from({ length: events.length }, (_, i) => i));
+  }, [events.length]);
 
   const handleSwap = (clickedPosition: number) => {
     setDisplayIndices((prev) => {
@@ -52,9 +58,7 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
 
   if (events.length === 0) return null;
 
-  const mainItem = events[displayIndices[0] % events.length];
-  const smallItem1 = events[displayIndices[1] % events.length] || events[0];
-  const smallItem2 = events[displayIndices[2] % events.length] || events[0];
+  const mainItem = events[displayIndices[0] ?? 0] || events[0];
 
   return (
     <section ref={containerRef} className="pt-24 bg-slate-50 relative overflow-hidden">
@@ -116,67 +120,41 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
             </div>
 
             <div className="lg:col-span-5 flex flex-col justify-center gap-12">
-              {events.length > 1 && (
-                <div
-                  className="reveal-section group cursor-pointer"
-                  onClick={() => handleSwap(1)}
-                >
-                  <div className="flex gap-6 items-center">
-                    <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl bg-slate-50/50">
-                      {smallItem1?.image && (
-                        <Image
-                          src={smallItem1.image}
-                          alt={smallItem1.title || ""}
-                          fill
-                          className="object-contain group-hover:scale-110 transition-transform duration-700"
-                        />
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
-                        {smallItem1?.date}
-                      </span>
-                      <h3 className="text-xl font-serif text-slate-900 group-hover:text-[#475DB1] transition-colors">
-                        {smallItem1?.title}
-                      </h3>
-                      <p className="text-xs text-slate-500 font-light line-clamp-2">
-                        {smallItem1?.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {events.length > 2 && (
-                <div
-                  className="reveal-section group cursor-pointer"
-                  onClick={() => handleSwap(2)}
-                >
-                  <div className="flex gap-6 items-center">
-                    <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl bg-slate-50/50">
-                      {smallItem2?.image && (
-                        <Image
-                          src={smallItem2.image}
-                          alt={smallItem2.title || ""}
-                          fill
-                          className="object-contain group-hover:scale-110 transition-transform duration-700"
-                        />
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
-                        {smallItem2?.date}
-                      </span>
-                      <h3 className="text-xl font-serif text-slate-900 group-hover:text-[#475DB1] transition-colors">
-                        {smallItem2?.title}
-                      </h3>
-                      <p className="text-xs text-slate-500 font-light line-clamp-2">
-                        {smallItem2?.description}
-                      </p>
+              {displayIndices.slice(1).map((idx, pos) => {
+                const item = events[idx];
+                if (!item) return null;
+                return (
+                  <div
+                    key={idx}
+                    className="reveal-section group cursor-pointer"
+                    onClick={() => handleSwap(pos + 1)}
+                  >
+                    <div className="flex gap-6 items-center">
+                      <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl bg-slate-50/50">
+                        {item.image && (
+                          <Image
+                            src={item.image}
+                            alt={item.title || ""}
+                            fill
+                            className="object-contain group-hover:scale-110 transition-transform duration-700"
+                          />
+                        )}
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
+                          {item.date}
+                        </span>
+                        <h3 className="text-xl font-serif text-slate-900 group-hover:text-[#475DB1] transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-slate-500 font-light line-clamp-2">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                );
+              })}
 
               <div className="reveal-section pt-4">
                 <Link
