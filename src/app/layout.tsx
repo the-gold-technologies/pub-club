@@ -4,6 +4,7 @@ import "./globals.css";
 import LenisProvider from "@/components/providers/LenisProvider";
 import Script from "next/script";
 import FooterScripts from "@/components/layout/FooterScripts";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
@@ -148,6 +149,7 @@ export default async function RootLayout({
         )}
 
         <LenisProvider>{children}</LenisProvider>
+        <Toaster position="top-center" />
 
         {/* Custom Footer Scripts */}
         {globalSEO?.customFooterScripts && (

@@ -8,93 +8,25 @@ import PageLoader from "@/components/layout/PageLoader";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Clock, Eye, BookOpen } from "lucide-react";
+import { useCMSStore } from "@/store/useCMSStore";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Navbar = dynamic(() => import("@/components/layout/Navbar"), { ssr: true });
 const Footer = dynamic(() => import("@/components/layout/Footer"), { ssr: true });
 
-const blogPosts = [
-  {
-    title: "Looking for the Perfect Pub in Abingdon?",
-    excerpt: "Just a short 10-minute drive from Abingdon-on-Thames, the Seven Stars at Marsh Baldon offers the ultimate countryside dining experience.",
-    link: "/blog/pub-in-abingdon",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp",
-    area: "Abingdon",
-    readTime: "3 min read",
-    date: "22 Jun 2026",
-    tag: "Local SEO / Abingdon",
-    views: "89"
-  },
-  {
-    title: "The Best Gastro Pub Experience Near Wallingford",
-    excerpt: "Discover why food enthusiasts from Wallingford make the short journey to Marsh Baldon for our seasonal dishes and premium drinks selection.",
-    link: "/blog/best-pub-in-wallingford",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish2.webp",
-    area: "Wallingford",
-    readTime: "3 min read",
-    date: "20 Jun 2026",
-    tag: "Dining / Wallingford",
-    views: "112"
-  },
-  {
-    title: "Your Cozy Country Pub Retreat Near Kennington",
-    excerpt: "Escaping the bustle of Kennington is easy. Find comfort in our cozy atmosphere, glowing fireplaces, and freshly prepared local produce.",
-    link: "/blog/pub-in-kennington",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish5.webp",
-    area: "Kennington",
-    readTime: "3 min read",
-    date: "18 Jun 2026",
-    tag: "Atmosphere / Kennington",
-    views: "74"
-  },
-  {
-    title: "A Scenic Beer Garden & Dining Near Berinsfield",
-    excerpt: "Looking for an exceptional pub near Berinsfield? Enjoy our beautiful, expansive beer garden overlooking the village green and premium cocktails.",
-    link: "/blog/pub-in-berinsfield",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish6.webp",
-    area: "Berinsfield",
-    readTime: "3 min read",
-    date: "15 Jun 2026",
-    tag: "Garden / Berinsfield",
-    views: "95"
-  },
-  {
-    title: "Exceptional Gastro Dining Near Stadhampton",
-    excerpt: "Only minutes from Stadhampton, the Seven Stars features local craft beers, fine wines, and handcrafted menus from our talented kitchen team.",
-    link: "/blog/pub-in-stadhampton",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish7.webp",
-    area: "Stadhampton",
-    readTime: "3 min read",
-    date: "12 Jun 2026",
-    tag: "Gastronomy / Stadhampton",
-    views: "103"
-  },
-  {
-    title: "A Traditional British Pub Experience Near Dorchester",
-    excerpt: "Steeped in history and charm, we invite visitors from Dorchester-on-Thames to relax with our selection of fine cask ales and classic pub food.",
-    link: "/blog/pub-in-dorchester",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish8.webp",
-    area: "Dorchester",
-    readTime: "3 min read",
-    date: "10 Jun 2026",
-    tag: "Heritage / Dorchester",
-    views: "120"
-  }
-];
-
 export default function BlogIndexPage() {
+  const { fetchBlogs, blogs } = useCMSStore();
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 600);
-    return () => clearTimeout(timer);
-  }, []);
+    fetchBlogs().finally(() => setLoading(false));
+  }, [fetchBlogs]);
+
+  const blogPosts = blogs || [];
 
   useEffect(() => {
     if (loading) return;
@@ -198,13 +130,13 @@ export default function BlogIndexPage() {
           {blogPosts.map((post, i) => (
             <Link
               key={i}
-              href={post.link}
+              href={`/blog/${post.slug}`}
               className="blog-card relative aspect-[3/4] rounded-[2.5rem] overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-500 block"
             >
               {/* Background Image */}
               <div className="absolute inset-0 z-0">
                 <Image
-                  src={post.image}
+                  src={post.featuredImage || "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp"}
                   alt={post.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

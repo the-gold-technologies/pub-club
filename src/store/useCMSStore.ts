@@ -41,6 +41,8 @@ interface CMSStoreState {
   events: any[] | null;
   gallery: any[] | null;
   menu: any[] | null;
+  blogs: any[] | null;
+  blogPosts: Record<string, any>;
 }
 
 interface CMSStoreActions {
@@ -50,6 +52,8 @@ interface CMSStoreActions {
   fetchEvents: () => Promise<void>;
   fetchGallery: () => Promise<void>;
   fetchMenu: () => Promise<void>;
+  fetchBlogs: () => Promise<any[]>;
+  fetchBlogBySlug: (slug: string) => Promise<any>;
 }
 
 const getApiBaseUrl = () => {
@@ -70,6 +74,8 @@ export const useCMSStore = create<CMSStoreState & CMSStoreActions>(
     events: null,
     gallery: null,
     menu: null,
+    blogs: null,
+    blogPosts: {},
 
     fetchPage: async (slug: string) => {
       // Return cached page data if already fetched to prevent redundant calls
@@ -270,6 +276,60 @@ export const useCMSStore = create<CMSStoreState & CMSStoreActions>(
       } catch (error) {
         console.error("Error fetching menu:", error);
       }
+    },
+
+    fetchBlogs: async () => {
+      const cachedBlogs = get().blogs;
+      if (cachedBlogs) {
+        return cachedBlogs;
+      }
+      try {
+        const baseUrl = getApiBaseUrl();
+        const response = await fetch(`${baseUrl}/api/blogs?visibility=published`, {
+          next: { revalidate: 60 },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch blogs data");
+        }
+
+        const json = await response.json();
+        if (json.success && Array.isArray(json.data)) {
+          set({ blogs: json.data });
+          return json.data;
+        }
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+      return [];
+    },
+
+    fetchBlogBySlug: async (slug: string) => {
+      const cachedBlog = get().blogPosts[slug];
+      if (cachedBlog) {
+        return cachedBlog;
+      }
+      try {
+        const baseUrl = getApiBaseUrl();
+        const response = await fetch(`${baseUrl}/api/blogs/${slug}`, {
+          next: { revalidate: 60 },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch blog post: ${slug}`);
+        }
+
+        const json = await response.json();
+        if (json.success && json.data) {
+          set((state) => ({
+            blogPosts: { ...state.blogPosts, [slug]: json.data }
+          }));
+          return json.data;
+        }
+      } catch (error) {
+        console.error(`Error fetching blog post ${slug}:`, error);
+      }
+      return null;
     },
   }),
 );

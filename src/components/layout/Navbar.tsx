@@ -233,7 +233,7 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className={`fixed w-full z-50 transition-all duration-700 ease-in-out bg-transparent border-b border-transparent ${
+      className={`absolute top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out bg-transparent border-b border-transparent ${
         isScrolled ? "py-3" : "py-5"
       }`}
     >
