@@ -57,10 +57,7 @@ export default function ChristmasPage() {
     if (storeLoading) return;
 
     const heroData = sections["ChristmasHero"] || {};
-    const musicTrack =
-      heroData.musicTrack !== undefined
-        ? heroData.musicTrack
-        : "/christmas-tune.mp3";
+    const musicTrack = heroData.musicTrack || "";
 
     // If set to None, disabled, or empty, do not play music
     if (
@@ -78,21 +75,29 @@ export default function ChristmasPage() {
     audio.volume = 0.35; // Soft ambient volume
     audioRef.current = audio;
 
+    // Handle source load errors (e.g. invalid/deleted custom URLs returning 404 HTML)
+    const handleError = () => {
+      console.warn(`Audio source failed to load: ${musicTrack}.`);
+      setIsAudioPlaying(false);
+    };
+    audio.addEventListener("error", handleError);
+
     const playAudio = () => {
       audio
         .play()
         .then(() => {
           setIsAudioPlaying(true);
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log("Autoplay blocked, waiting for user interaction:", err);
           const startPlayOnInteract = () => {
             audio
               .play()
               .then(() => {
                 setIsAudioPlaying(true);
               })
-              .catch((err) =>
-                console.log("Autoplay failed after interaction:", err),
+              .catch((playErr) =>
+                console.log("Autoplay failed after interaction:", playErr),
               );
             window.removeEventListener("click", startPlayOnInteract);
             window.removeEventListener("touchstart", startPlayOnInteract);
@@ -106,6 +111,7 @@ export default function ChristmasPage() {
 
     return () => {
       clearTimeout(audioTimer);
+      audio.removeEventListener("error", handleError);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
@@ -124,7 +130,9 @@ export default function ChristmasPage() {
         .then(() => {
           setIsAudioPlaying(true);
         })
-        .catch((err) => console.log("Play failed:", err));
+        .catch((err) => {
+          console.log("Play failed:", err);
+        });
     }
   };
 
