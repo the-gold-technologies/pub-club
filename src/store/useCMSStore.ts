@@ -10,6 +10,7 @@ export interface PageSEO {
   ogTitle: string | null;
   ogDescription: string | null;
   ogImage: string | null;
+  schema: string | null;
 }
 
 export interface NavLink {
@@ -127,8 +128,30 @@ export const useCMSStore = create<CMSStoreState & CMSStoreActions>(
             ogTitle: pageData.ogTitle,
             ogDescription: pageData.ogDescription,
             ogImage: pageData.ogImage,
+            schema: pageData.schema || null,
           },
         };
+
+        // Inject page-specific schema markup into <head>
+        if (typeof window !== "undefined") {
+          const existingSchema = document.getElementById("page-schema");
+          if (existingSchema) {
+            existingSchema.remove();
+          }
+
+          const schemaStr = transformedPage.seo?.schema;
+          if (schemaStr) {
+            try {
+              const script = document.createElement("script");
+              script.id = "page-schema";
+              script.type = "application/ld+json";
+              script.innerHTML = schemaStr;
+              document.head.appendChild(script);
+            } catch (e) {
+              console.error("Failed to inject page schema markup:", e);
+            }
+          }
+        }
 
         set((state) => ({
           pages: { ...state.pages, [slug]: transformedPage },

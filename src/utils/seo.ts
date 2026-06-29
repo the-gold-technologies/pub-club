@@ -32,6 +32,7 @@ export async function getPageSEO(slug: string): Promise<PageSEO | null> {
         ogTitle: seo.ogTitle || page.ogTitle || null,
         ogDescription: seo.ogDescription || page.ogDescription || null,
         ogImage: seo.ogImage || page.ogImage || null,
+        schema: seo.schema || page.schema || null,
       };
     }
     return null;
