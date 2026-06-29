@@ -148,12 +148,14 @@ export default function BlogIndexPage() {
               </div>
 
               {/* Top Left Tag */}
-              <div className="absolute top-6 left-6 z-20 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
-                <span className="text-[11px] text-amber-500 font-bold">★</span>
-                <span className="text-neutral-800 text-[10px] font-bold uppercase tracking-wider">
-                  {post.tag}
-                </span>
-              </div>
+              {post.tag && post.tag.trim() !== "" && (
+                <div className="absolute top-6 left-6 z-20 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
+                  <span className="text-[11px] text-amber-500 font-bold">★</span>
+                  <span className="text-neutral-800 text-[10px] font-bold uppercase tracking-wider">
+                    {post.tag}
+                  </span>
+                </div>
+              )}
 
               {/* Bottom Content Area */}
               <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white flex flex-col gap-5">
