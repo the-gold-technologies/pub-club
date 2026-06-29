@@ -12,9 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 export default function UpcomingEvents({ data = {} }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const events = Array.isArray(data.upcomingEvents) ? data.upcomingEvents : [];
-  
+
   const [displayIndices, setDisplayIndices] = useState<number[]>(() =>
-    Array.from({ length: events.length }, (_, i) => i)
+    Array.from({ length: events.length }, (_, i) => i),
   );
 
   useEffect(() => {
@@ -61,7 +61,10 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
   const mainItem = events[displayIndices[0] ?? 0] || events[0];
 
   return (
-    <section ref={containerRef} className="pt-24 bg-slate-50 relative overflow-hidden">
+    <section
+      ref={containerRef}
+      className="pt-24 bg-slate-50 relative overflow-hidden"
+    >
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#475DB1]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#475DB1]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -74,7 +77,16 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
             </span>
             <span className="w-12 h-px bg-[#475DB1]" />
           </div>
-          <h2 className="text-5xl md:text-7xl font-serif text-slate-900 tracking-tight leading-none" dangerouslySetInnerHTML={{ __html: data.heading?.replace('&', '<em class="text-[#475DB1] font-light not-italic">&</em>') || "" }} />
+          <h2
+            className="text-5xl md:text-7xl font-serif text-slate-900 tracking-tight leading-none"
+            dangerouslySetInnerHTML={{
+              __html:
+                data.heading?.replace(
+                  "&",
+                  '<em class="text-[#475DB1] font-light not-italic">&</em>',
+                ) || "",
+            }}
+          />
           <p className="text-lg text-slate-500 font-light mt-4 max-w-2xl mx-auto">
             {data.description}
           </p>
@@ -119,44 +131,49 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
               </div>
             </div>
 
-            <div className="lg:col-span-5 flex flex-col justify-center gap-12">
-              {displayIndices.slice(1).map((idx, pos) => {
-                const item = events[idx];
-                if (!item) return null;
-                return (
-                  <div
-                    key={idx}
-                    className="reveal-section group cursor-pointer"
-                    onClick={() => handleSwap(pos + 1)}
-                  >
-                    <div className="flex gap-6 items-center">
-                      <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl bg-slate-50/50">
-                        {item.image && (
-                          <Image
-                            src={item.image}
-                            alt={item.title || ""}
-                            fill
-                            className="object-contain group-hover:scale-110 transition-transform duration-700"
-                          />
-                        )}
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
-                          {item.date}
-                        </span>
-                        <h3 className="text-xl font-serif text-slate-900 group-hover:text-[#475DB1] transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-slate-500 font-light line-clamp-2">
-                          {item.description}
-                        </p>
+            <div className="lg:col-span-5 flex flex-col justify-between h-full min-h-[420px]">
+              <div 
+                className="space-y-8 overflow-y-auto max-h-[350px] no-scrollbar pr-2"
+                data-lenis-prevent
+              >
+                {displayIndices.slice(1).map((idx, pos) => {
+                  const item = events[idx];
+                  if (!item) return null;
+                  return (
+                    <div
+                      key={idx}
+                      className="reveal-section group cursor-pointer"
+                      onClick={() => handleSwap(pos + 1)}
+                    >
+                      <div className="flex gap-6 items-center">
+                        <div className="relative w-32 h-32 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl bg-slate-50/50">
+                          {item.image && (
+                            <Image
+                              src={item.image || ""}
+                              alt={item.title || ""}
+                              fill
+                              className="object-contain group-hover:scale-110 transition-transform duration-700"
+                            />
+                          )}
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[9px] tracking-widest text-[#475DB1] font-bold uppercase">
+                            {item.date}
+                          </span>
+                          <h3 className="text-xl font-serif text-slate-900 group-hover:text-[#475DB1] transition-colors">
+                            {item.title}
+                          </h3>
+                          <p className="text-xs text-slate-500 font-light line-clamp-2">
+                            {item.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
 
-              <div className="reveal-section pt-4">
+              <div className="reveal-section pt-6 mt-6 border-t border-slate-100/80">
                 <Link
                   href="/contact"
                   className="inline-flex items-center gap-5 group"
@@ -174,6 +191,16 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
                   </div>
                 </Link>
               </div>
+
+              <style>{`
+                .no-scrollbar::-webkit-scrollbar {
+                  display: none;
+                }
+                .no-scrollbar {
+                  -ms-overflow-style: none;
+                  scrollbar-width: none;
+                }
+              `}</style>
             </div>
           </div>
         </div>
