@@ -20,7 +20,6 @@ import { HeroSection } from "./components/HeroSection";
 import { IntroSection } from "./components/IntroSection";
 import { FeaturesSection } from "./components/FeaturesSection";
 import { MenusSection } from "./components/MenusSection";
-import { TransitionBanner } from "./components/TransitionBanner";
 import { DishesCarousel } from "./components/DishesCarousel";
 import { ReservationSection } from "./components/ReservationSection";
 
@@ -429,9 +428,6 @@ export default function ChristmasPage() {
         menuContentRef={menuContentRef}
         data={sections["ChristmasMenus"] || {}}
       />
-
-      {/* SECTION 2C: TRANSITION BANNER (Make This Christmas Unforgettable - Dark Theme) */}
-      {/* <TransitionBanner data={sections["ChristmasTransition"] || {}} /> */}
 
       {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
       <FeaturesSection data={sections["ChristmasFeatures"] || {}} />
