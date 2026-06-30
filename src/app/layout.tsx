@@ -6,6 +6,7 @@ import LenisProvider from "@/components/providers/LenisProvider";
 import Script from "next/script";
 import FooterScripts from "@/components/layout/FooterScripts";
 import { Toaster } from "react-hot-toast";
+import { RenderSchema } from "@/utils/seo";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
@@ -132,6 +133,11 @@ export default async function RootLayout({
           React.createElement("header-scripts", {
             dangerouslySetInnerHTML: { __html: globalSEO.customHeaderScripts },
           })}
+
+        {/* Global Schema */}
+        {globalSEO?.schema && (
+          <RenderSchema schema={globalSEO.schema} id="global-schema" />
+        )}
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} ${ebGaramond.variable} font-sans antialiased text-black bg-white`}
