@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, EB_Garamond } from "next/font/google";
 import "./globals.css";
@@ -127,11 +128,10 @@ export default async function RootLayout({
         )}
 
         {/* Custom Header Scripts */}
-        {globalSEO?.customHeaderScripts && (
-          <script
-            dangerouslySetInnerHTML={{ __html: globalSEO.customHeaderScripts }}
-          />
-        )}
+        {globalSEO?.customHeaderScripts &&
+          React.createElement("header-scripts", {
+            dangerouslySetInnerHTML: { __html: globalSEO.customHeaderScripts },
+          })}
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} ${ebGaramond.variable} font-sans antialiased text-black bg-white`}

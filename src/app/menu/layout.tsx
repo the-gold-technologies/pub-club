@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { generatePageMetadata } from "@/utils/seo";
+import { generatePageMetadata, getPageSEO, RenderSchema } from "@/utils/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata(
@@ -9,10 +9,18 @@ export async function generateMetadata(): Promise<Metadata> {
   );
 }
 
-export default function MenuLayout({
+export default async function MenuLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  const seo = await getPageSEO("menu");
+  const schema = seo?.schema;
+
+  return (
+    <>
+      {schema && <RenderSchema schema={schema} id="menu-schema" />}
+      {children}
+    </>
+  );
 }

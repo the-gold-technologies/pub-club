@@ -1,5 +1,25 @@
+import React from "react";
 import type { Metadata } from "next";
 import { PageSEO } from "@/store/useCMSStore";
+
+export function RenderSchema({ schema, id }: { schema: string; id: string }) {
+  const trimmed = schema.trim();
+  const hasScriptTag = /^<script/i.test(trimmed);
+  let jsonContent = trimmed;
+
+  if (hasScriptTag) {
+    jsonContent = trimmed
+      .replace(/^<script[^>]*>/i, "")
+      .replace(/<\/script>$/i, "")
+      .trim();
+  }
+
+  return React.createElement("script", {
+    type: "application/ld+json",
+    id: id,
+    dangerouslySetInnerHTML: { __html: jsonContent },
+  });
+}
 
 const getApiBaseUrl = () => {
   if (process.env.NEXT_PUBLIC_CMS_API_URL) {
