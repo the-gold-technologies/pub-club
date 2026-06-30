@@ -15,8 +15,19 @@ export default function Hero({ data = {} }: HeroProps) {
 
   const heroImages = Array.isArray(data.images) ? data.images : [];
   const marqueeTags = Array.isArray(data.marqueePills) ? data.marqueePills : [];
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
+  // Trigger animation state when data is loaded
   useEffect(() => {
+    if (heroImages.length > 0 && !shouldAnimate) {
+      setShouldAnimate(true);
+    }
+  }, [heroImages, shouldAnimate]);
+
+  // 1. Intro Animation (plays once when shouldAnimate becomes true)
+  useEffect(() => {
+    if (!shouldAnimate) return;
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -77,16 +88,23 @@ export default function Hero({ data = {} }: HeroProps) {
         );
     }, sectionRef);
 
-    // Image rotation logic
+    return () => {
+      ctx.revert();
+    };
+  }, [shouldAnimate]);
+
+  // 2. Background Slideshow Rotation
+  useEffect(() => {
+    if (heroImages.length <= 1) return;
+
     const timer = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % heroImages.length);
     }, 5000);
 
     return () => {
-      ctx.revert();
       clearInterval(timer);
     };
-  }, [heroImages, data]);
+  }, [heroImages]);
 
   return (
     <section
