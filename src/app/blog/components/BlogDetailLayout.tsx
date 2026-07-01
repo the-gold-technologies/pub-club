@@ -8,6 +8,7 @@ import PageLoader from "@/components/layout/PageLoader";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Clock, Eye, MapPin, Compass, ArrowLeft, Star, ChevronDown } from "lucide-react";
+import { useCMSStore } from "@/store/useCMSStore";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,43 +28,8 @@ interface BlogDetailLayoutProps {
   distanceInfo: string;
   headingTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   children: React.ReactNode;
+  currentSlug?: string;
 }
-
-const relatedPosts = [
-  {
-    title: "Celebrate Christmas at Seven Stars",
-    excerpt: "Step into the warmth of our decorated countryside pub in Marsh Baldon, Oxford. Savor award-winning festive menus and celebrate the season in style.",
-    link: "/christmas",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-celebration-2.webp",
-    area: "Marsh Baldon",
-    readTime: "4 min read",
-    date: "15 Nov 2026",
-    tag: "Festive Season",
-    views: "142"
-  },
-  {
-    title: "Looking for the Perfect Pub in Abingdon?",
-    excerpt: "Just a short 10-minute drive from Abingdon-on-Thames, the Seven Stars at Marsh Baldon offers the ultimate countryside dining experience.",
-    link: "/blog/pub-in-abingdon",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp",
-    area: "Abingdon",
-    readTime: "3 min read",
-    date: "22 Jun 2026",
-    tag: "Local SEO",
-    views: "89"
-  },
-  {
-    title: "The Best Gastro Pub Experience Near Wallingford",
-    excerpt: "Discover why food enthusiasts from Wallingford make the short journey to Marsh Baldon for our seasonal dishes and premium drinks selection.",
-    link: "/blog/best-pub-in-wallingford",
-    image: "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish2.webp",
-    area: "Wallingford",
-    readTime: "3 min read",
-    date: "20 Jun 2026",
-    tag: "Dining Guide",
-    views: "112"
-  }
-];
 
 export default function BlogDetailLayout({
   title,
@@ -77,8 +43,30 @@ export default function BlogDetailLayout({
   views,
   distanceInfo,
   headingTag: HeadingTag = "h1",
-  children
+  children,
+  currentSlug
 }: BlogDetailLayoutProps) {
+  const { blogs, fetchBlogs } = useCMSStore();
+
+  useEffect(() => {
+    fetchBlogs();
+  }, [fetchBlogs]);
+
+  const relatedPosts = (blogs || [])
+    .filter((post) => !currentSlug || post.slug !== currentSlug)
+    .slice(0, 3)
+    .map((post) => ({
+      title: post.title,
+      excerpt: post.excerpt,
+      link: `/blog/${post.slug}`,
+      image: post.featuredImage || "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp",
+      area: post.area || "",
+      readTime: post.readTime || "3 min read",
+      date: post.date,
+      tag: post.tag,
+      views: String(post.views)
+    }));
+
   const [loading, setLoading] = useState(true);
   const [headings, setHeadings] = useState<{ id: string; text: string; level: number }[]>([]);
   const [activeHeadingId, setActiveHeadingId] = useState<string>("");

@@ -100,6 +100,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
         views={String(blog.views)}
         distanceInfo={blog.area ? `${blog.area} Area` : "South Oxfordshire"}
         headingTag={blog.headingTag}
+        currentSlug={blog.slug}
       >
         <div className="space-y-6">
           <div 
