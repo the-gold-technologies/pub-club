@@ -4,12 +4,18 @@ import Image from "next/image";
 import { Instagram, Facebook, Youtube } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useCMSStore } from "@/store/useCMSStore";
 
 interface HeroProps {
   data?: any;
 }
 
 export default function Hero({ data = {} }: HeroProps) {
+  const pages = useCMSStore((state) => state.pages);
+  const pageData = pages["home"] || {};
+  const headingTag = data.headingTag || pageData.seo?.headingOptions?.heroHeadingTag || "h1";
+  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
   const sectionRef = useRef<HTMLElement>(null);
   const [currentIdx, setCurrentIdx] = useState(0);
 
@@ -160,14 +166,14 @@ export default function Hero({ data = {} }: HeroProps) {
           <div className="w-full flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-6 max-[650px]:gap-4">
             {/* Left side */}
             <div className="max-w-2xl space-y-6 relative group">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] font-serif text-white leading-[0.9] tracking-tight drop-shadow-2xl overflow-hidden">
+              <HeadingTag className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] font-serif text-white leading-[0.9] tracking-tight drop-shadow-2xl overflow-hidden">
                 <span className="hero-h1-line1 block pr-2 whitespace-pre-line">
                   {data.headlineLine1}
                 </span>
                 <span className="hero-h1-line2 block italic text-[#475DB1] font-light pr-4 pb-3">
                   {data.headlineLine2Italic}
                 </span>
-              </h1>
+              </HeadingTag>
 
               <div className="flex flex-col sm:flex-row items-center max-[650px]:items-start gap-3 pt-2">
                 <a

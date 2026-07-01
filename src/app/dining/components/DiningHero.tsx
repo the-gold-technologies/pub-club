@@ -5,6 +5,8 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { useCMSStore } from "@/store/useCMSStore";
+
 gsap.registerPlugin(ScrollTrigger);
 
 interface DiningHeroProps {
@@ -12,6 +14,11 @@ interface DiningHeroProps {
 }
 
 export default function DiningHero({ data = {} }: DiningHeroProps) {
+  const pages = useCMSStore((state) => state.pages);
+  const pageData = pages["dining"] || {};
+  const headingTag = data.headingTag || pageData.seo?.headingOptions?.heroHeadingTag || "h1";
+  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
   const heroRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
@@ -74,12 +81,12 @@ export default function DiningHero({ data = {} }: DiningHeroProps) {
               </span>
             </div>
 
-            <h1 className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
+            <HeadingTag className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
               {data.headingPart1} <br />
               <span className="italic font-light text-[#475DB1]">
                 {data.headingItalicHighlight}
               </span>
-            </h1>
+            </HeadingTag>
           </div>
 
           <div className="md:col-span-5 pb-2">

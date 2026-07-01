@@ -25,6 +25,7 @@ interface BlogDetailLayoutProps {
   date: string;
   views: string;
   distanceInfo: string;
+  headingTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   children: React.ReactNode;
 }
 
@@ -75,6 +76,7 @@ export default function BlogDetailLayout({
   date,
   views,
   distanceInfo,
+  headingTag: HeadingTag = "h1",
   children
 }: BlogDetailLayoutProps) {
   const [loading, setLoading] = useState(true);
@@ -280,12 +282,12 @@ export default function BlogDetailLayout({
                 </span>
               </div>
 
-              <h1 className="hero-reveal text-5xl md:text-7xl font-serif text-white tracking-tighter leading-[0.95]">
+              <HeadingTag className="hero-reveal text-5xl md:text-7xl font-serif text-white tracking-tighter leading-[0.95]">
                 {title} <br />
                 <span className="italic font-light text-[#475DB1]">
                   {italicHighlight}
                 </span>
-              </h1>
+              </HeadingTag>
             </div>
 
             <div className="md:col-span-5 pb-2">

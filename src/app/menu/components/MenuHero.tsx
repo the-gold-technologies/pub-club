@@ -5,9 +5,16 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { useCMSStore } from "@/store/useCMSStore";
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function MenuHero({ data = {} }: { data?: any }) {
+  const pages = useCMSStore((state) => state.pages);
+  const pageData = pages["menu"] || {};
+  const headingTag = data.headingTag || pageData.seo?.headingOptions?.heroHeadingTag || "h1";
+  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
   const bgRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -69,12 +76,12 @@ export default function MenuHero({ data = {} }: { data?: any }) {
               </span>
             </div>
 
-            <h1 className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
+            <HeadingTag className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
               {data.headingPart1} <br />
               <span className="italic font-light text-[#475DB1]">
                 {data.headingHighlight}
               </span>
-            </h1>
+            </HeadingTag>
           </div>
 
           <div className="md:col-span-5 pb-2">

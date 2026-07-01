@@ -23,6 +23,7 @@ interface Blog {
   date: string;
   metaTitle?: string;
   metaDescription?: string;
+  headingTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
 export default function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -98,6 +99,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
         date={blog.date}
         views={String(blog.views)}
         distanceInfo={blog.area ? `${blog.area} Area` : "South Oxfordshire"}
+        headingTag={blog.headingTag}
       >
         <div className="space-y-6">
           <div 

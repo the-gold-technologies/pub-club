@@ -5,6 +5,8 @@ import Image from "next/image";
 import { HangingOrnamentsHero } from "./HangingOrnaments";
 import { Snowflake } from "lucide-react";
 
+import { useCMSStore } from "@/store/useCMSStore";
+
 interface HeroSectionProps {
   heroRef: React.RefObject<HTMLElement | null>;
   heroBgRef: React.RefObject<HTMLDivElement | null>;
@@ -19,10 +21,16 @@ interface HeroSectionProps {
     ctaText2?: string;
     ctaLink2?: string;
     backgroundImage?: string;
+    headingTag?: string;
   };
 }
 
 export const HeroSection = ({ heroRef, heroBgRef, data }: HeroSectionProps) => {
+  const pages = useCMSStore((state) => state.pages);
+  const pageData = pages["christmas"] || {};
+  const headingTag = data?.headingTag || pageData.seo?.headingOptions?.heroHeadingTag || "h1";
+  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
   const tagline = data?.tagline || "Festive Season 2026";
   const headingPart1 = data?.headingPart1 || "Celebrate";
   const headingItalicHighlight = data?.headingItalicHighlight || "Christmas";
@@ -64,14 +72,14 @@ export const HeroSection = ({ heroRef, heroBgRef, data }: HeroSectionProps) => {
               <span>❄</span> {tagline}
             </div>
 
-            <h1 className="christmas-hero-title text-4xl sm:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+            <HeadingTag className="christmas-hero-title text-4xl sm:text-5xl lg:text-6xl font-serif text-white tracking-tight leading-[1.1] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               {headingPart1}
               <span className="italic font-light text-[#D4AF37] drop-shadow-[0_0_12px_rgba(212,175,55,0.4)]">
                 {" "}{headingItalicHighlight}{" "}
               </span>{" "}
               <br />
               {headingPart2}
-            </h1>
+            </HeadingTag>
 
             <div className="w-16 h-px bg-white/20 lg:mx-0 mx-auto" />
 
