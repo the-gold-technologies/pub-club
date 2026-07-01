@@ -84,10 +84,6 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
 
   return (
     <>
-      {/* SEO metadata tags */}
-      <title>{blog.metaTitle || `${blog.title} | Seven Stars Blog`}</title>
-      <meta name="description" content={blog.metaDescription || blog.excerpt} />
-
       <BlogDetailLayout
         title={displayTitle}
         italicHighlight={displayHighlight}
