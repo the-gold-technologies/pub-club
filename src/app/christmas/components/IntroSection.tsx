@@ -22,13 +22,24 @@ interface IntroSectionProps {
 export const IntroSection = ({ data }: IntroSectionProps) => {
   const tagline = data?.tagline || "Warmth & Festive Cheer";
   const heading = data?.heading || "Celebrate Christmas at";
-  const headingHighlight = data?.headingHighlight || "Seven Stars in Marsh Baldon!";
-  const description = data?.description || "Are you looking for the perfect place to celebrate Christmas with your loved ones? Seven Stars located in Marsh Baldon, Oxford, is here to make your Christmas Day magical!";
+  const headingHighlight =
+    data?.headingHighlight || "Seven Stars in Marsh Baldon!";
+  const description =
+    data?.description ||
+    "Are you looking for the perfect place to celebrate Christmas with your loved ones? Seven Stars located in Marsh Baldon, Oxford, is here to make your Christmas Day magical!";
   const whyChooseHeading = data?.whyChooseHeading || "Why Choose Seven Stars:";
-  const reason1 = data?.reason1 || "Cosy Pub with beautiful Christmas décor, spreading warmth and festive cheer.";
-  const reason2 = data?.reason2 || "Savor festive Christmas dishes prepared by our chefs for the occasion.";
-  const reason3 = data?.reason3 || "Our Pub serves wine, cocktails, and seasonal drinks to enhance Christmas joy.";
-  const showcaseImage = data?.showcaseImage || "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-santaclaus.webp";
+  const reason1 =
+    data?.reason1 ||
+    "Cosy Pub with beautiful Christmas décor, spreading warmth and festive cheer.";
+  const reason2 =
+    data?.reason2 ||
+    "Savor festive Christmas dishes prepared by our chefs for the occasion.";
+  const reason3 =
+    data?.reason3 ||
+    "Our Pub serves wine, cocktails, and seasonal drinks to enhance Christmas joy.";
+  const showcaseImage =
+    data?.showcaseImage ||
+    "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-santaclaus.webp";
 
   return (
     <section className="reveal-section py-24 bg-[#FDFBF7] border-b border-black/5 relative overflow-hidden">
@@ -56,7 +67,7 @@ export const IntroSection = ({ data }: IntroSectionProps) => {
 
             <div className="space-y-4 pt-4">
               <h3 className="text-sm tracking-wider uppercase font-bold text-[#B91C1C] flex items-center gap-2">
-                <HollyIcon /> {whyChooseHeading}
+                <HollyIcon className="hidden md:block" /> {whyChooseHeading}
               </h3>
               <ul className="space-y-3 text-sm text-neutral-600 font-serif font-light">
                 <li className="flex gap-3 items-start">
