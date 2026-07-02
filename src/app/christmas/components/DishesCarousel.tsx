@@ -40,7 +40,8 @@ export const DishesCarousel = ({
   const tagline = data?.tagline || "Visual Feast";
   const heading = data?.heading || "Our Christmas";
   const headingHighlight = data?.headingHighlight || "Special Dishes";
-  const dishes = data?.dishesList && data.dishesList.length > 0 ? data.dishesList : [];
+  const dishes =
+    data?.dishesList && data.dishesList.length > 0 ? data.dishesList : [];
 
   const currentDish = dishes[activeDishIdx] || dishes[0] || {};
 
@@ -107,14 +108,14 @@ export const DishesCarousel = ({
             <span className="text-[10px] tracking-[0.4em] text-[#B91C1C] uppercase font-bold block">
               {tagline}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-neutral-900 flex items-center gap-3">
+            <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-neutral-900 flex items-center gap-3 max-[650px]:gap-0">
               {heading}{" "}
               <span className="italic font-light text-[#B91C1C]">
                 {headingHighlight}
-              </span>
-              <HollyIcon />
+              </span>{" "}
+              <HollyIcon className="hidden md:block" />
               <Snowflake
-                className="w-5 h-5 text-[#D4AF37] animate-spin"
+                className="w-5 h-5 text-[#D4AF37] animate-spin hidden md:block"
                 style={{ animationDuration: "12s" }}
               />
             </h2>

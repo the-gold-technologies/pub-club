@@ -51,9 +51,9 @@ export const SantaHatIcon = () => (
   </svg>
 );
 
-export const HollyIcon = () => (
+export const HollyIcon = ({ className }: { className: string }) => (
   <svg
-    className="w-5 h-5 text-emerald-600 inline-block shrink-0"
+    className={`${className} w-5 h-5 text-emerald-600 inline-block shrink-0`}
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
