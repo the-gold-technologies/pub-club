@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Beer, Wine, GlassWater, Coffee } from "lucide-react";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,7 +69,7 @@ export default function MenuCellar({ data = {} }: { data?: any }) {
             </div>
 
             <p className="text-xl text-primary-100/70 font-light leading-relaxed">
-              {data.description}
+              {parseMarkdownLinks(data.description)}
             </p>
 
             <div className="grid grid-cols-2 gap-6 pt-8">

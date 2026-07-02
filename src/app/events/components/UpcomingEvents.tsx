@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -88,7 +89,7 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
             }}
           />
           <p className="text-lg text-slate-500 font-light mt-4 max-w-2xl mx-auto">
-            {data.description}
+            {parseMarkdownLinks(data.description)}
           </p>
         </div>
 
@@ -126,7 +127,7 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
                   {mainItem?.title}
                 </h3>
                 <p className="text-base text-slate-600 font-light leading-relaxed">
-                  {mainItem?.description}
+                  {parseMarkdownLinks(mainItem?.description)}
                 </p>
               </div>
             </div>
@@ -164,7 +165,7 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
                             {item.title}
                           </h3>
                           <p className="text-xs text-slate-500 font-light line-clamp-2">
-                            {item.description}
+                            {parseMarkdownLinks(item.description)}
                           </p>
                         </div>
                       </div>

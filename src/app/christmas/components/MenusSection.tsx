@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Download } from "lucide-react";
 import { HangingOrnamentsMenus } from "./HangingOrnaments";
 import { SleighIcon, ReindeerIcon, SantaHatIcon } from "./Icons";
+import { parseMarkdownLinks } from "@/utils/text";
 
 interface MenuType {
   title: string;
@@ -178,7 +179,7 @@ export const MenusSection = ({
                 {currentMenu.title}
               </h3>
               <p className="text-sm text-neutral-600 leading-relaxed font-serif font-light">
-                {currentMenu.description}
+                {parseMarkdownLinks(currentMenu.description)}
               </p>
 
               <div className="space-y-3 pt-2">

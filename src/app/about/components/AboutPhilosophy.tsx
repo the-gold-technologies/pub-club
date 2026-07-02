@@ -1,5 +1,7 @@
 "use client";
 
+import { parseMarkdownLinks } from "@/utils/text";
+
 export default function AboutPhilosophy({ data }: { data: any }) {
   return (
     <section className="py-24 bg-[#0A192F] relative overflow-hidden">
@@ -29,7 +31,7 @@ export default function AboutPhilosophy({ data }: { data: any }) {
 
       <div className="max-w-5xl mx-auto px-4 text-center space-y-12 reveal-section">
         <h3 className="text-3xl md:text-5xl font-serif text-white leading-snug">
-          {data.philosophyQuote}
+          {parseMarkdownLinks(data.philosophyQuote)}
         </h3>
         <div className="flex justify-center">
           <div className="w-20 h-1 bg-[#475DB1]" />

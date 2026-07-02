@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import ContactPopupModal from "@/components/sections/ContactPopupModal";
+import { parseMarkdownLinks } from "@/utils/text";
 
 interface OutdoorSeatingProps {
   data?: any;
@@ -77,7 +78,7 @@ export default function OutdoorSeating({ data = {} }: OutdoorSeatingProps) {
               <span className="text-[#475DB1]">{data.outdoorHeadingItalic}</span>
             </h2>
             <p className="text-neutral-600 font-light leading-relaxed max-w-md">
-              {data.outdoorDesc}
+              {parseMarkdownLinks(data.outdoorDesc)}
             </p>
             {hasNavigateUrl ? (
               <Link

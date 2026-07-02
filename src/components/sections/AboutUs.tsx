@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -135,7 +136,7 @@ export default function AboutUs({ data = {} }: AboutUsProps) {
                   key={idx}
                   className="about-para text-neutral-600 leading-relaxed font-light text-lg"
                 >
-                  {para}
+                  {parseMarkdownLinks(para)}
                 </p>
               ))}
 

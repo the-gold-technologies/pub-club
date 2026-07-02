@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { parseMarkdownLinks } from "@/utils/text";
 
 interface MapSectionProps {
   data?: {
@@ -29,7 +30,7 @@ export default function MapSection({ data = {} }: MapSectionProps) {
           </h2>
           <div className="w-16 h-1 bg-[#475DB1] mx-auto rounded-full"></div>
           <p className="text-slate-600 text-sm mt-3 max-w-xl mx-auto font-light leading-relaxed">
-            {description}
+            {parseMarkdownLinks(description)}
           </p>
         </div>
 

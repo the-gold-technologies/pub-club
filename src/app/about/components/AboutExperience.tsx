@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { parseMarkdownLinks } from "@/utils/text";
 
 export default function AboutExperience({ data }: { data: any }) {
   const highlights = Array.isArray(data.highlights) ? data.highlights : [];
@@ -36,7 +37,7 @@ export default function AboutExperience({ data }: { data: any }) {
             </div>
 
             <p className="text-lg text-slate-600 font-light leading-relaxed">
-              {data.differentDesc}
+              {parseMarkdownLinks(data.differentDesc)}
             </p>
 
             <div className="space-y-4 pt-4">
@@ -44,7 +45,7 @@ export default function AboutExperience({ data }: { data: any }) {
                 <div key={index} className="flex items-start gap-4">
                   <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#475DB1]" />
                   <p className="text-slate-700 font-medium italic">
-                    {highlight}
+                    {parseMarkdownLinks(highlight)}
                   </p>
                 </div>
               ))}

@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useCMSStore } from "@/store/useCMSStore";
 
+import { parseMarkdownLinks } from "@/utils/text";
+
 interface HeroProps {
   data?: any;
 }
@@ -279,7 +281,7 @@ export default function Hero({ data = {} }: HeroProps) {
             {/* Right side: description */}
             <div className="hero-desc max-w-sm lg:ml-auto lg:self-end mt-8 lg:mt-0 text-left">
               <p className="text-lg md:text-xl text-dark-100 font-light leading-relaxed">
-                {data.description}
+                {parseMarkdownLinks(data.description)}
               </p>
             </div>
           </div>

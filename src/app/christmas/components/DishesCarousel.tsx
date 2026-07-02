@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Snowflake } from "lucide-react";
 import { SleighIcon, ReindeerIcon, SantaHatIcon, HollyIcon } from "./Icons";
+import { parseMarkdownLinks } from "@/utils/text";
 
 interface DishType {
   name: string;
@@ -173,7 +174,7 @@ export const DishesCarousel = ({
               </h3>
               <div className="w-12 h-[1px] bg-[#B91C1C]/30" />
               <p className="text-base text-neutral-600 leading-relaxed font-serif font-light">
-                {currentDish.description}
+                {parseMarkdownLinks(currentDish.description)}
               </p>
 
               {/* Spots/Indicators */}

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { ReindeerIcon, HollyIcon } from "./Icons";
+import { parseMarkdownLinks } from "@/utils/text";
 
 interface IntroSectionProps {
   data?: {
@@ -50,7 +51,7 @@ export const IntroSection = ({ data }: IntroSectionProps) => {
             <div className="w-16 h-[1px] bg-[#B91C1C] opacity-50" />
 
             <p className="text-lg text-neutral-600 leading-relaxed font-serif font-light">
-              {description}
+              {parseMarkdownLinks(description)}
             </p>
 
             <div className="space-y-4 pt-4">
@@ -60,15 +61,15 @@ export const IntroSection = ({ data }: IntroSectionProps) => {
               <ul className="space-y-3 text-sm text-neutral-600 font-serif font-light">
                 <li className="flex gap-3 items-start">
                   <span className="text-[#B91C1C] font-bold mt-0.5">✓</span>
-                  <span>{reason1}</span>
+                  <span>{parseMarkdownLinks(reason1)}</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="text-[#B91C1C] font-bold mt-0.5">✓</span>
-                  <span>{reason2}</span>
+                  <span>{parseMarkdownLinks(reason2)}</span>
                 </li>
                 <li className="flex gap-3 items-start">
                   <span className="text-[#B91C1C] font-bold mt-0.5">✓</span>
-                  <span>{reason3}</span>
+                  <span>{parseMarkdownLinks(reason3)}</span>
                 </li>
               </ul>
             </div>

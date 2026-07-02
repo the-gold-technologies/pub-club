@@ -5,6 +5,7 @@ import { Camera } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -85,7 +86,7 @@ export default function Gallery({ data = {} }: GalleryProps) {
               </em>
             </h3>
             <p className="text-primary-100/70 leading-relaxed font-light text-lg max-w-2xl">
-              {data.description}
+              {parseMarkdownLinks(data.description)}
             </p>
           </div>
           <a

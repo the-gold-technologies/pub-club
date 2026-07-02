@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,7 +56,7 @@ export default function EventsArchive({ data = {} }: { data?: any }) {
               </h3>
             </div>
             <p className="text-xs text-slate-400 font-light italic max-w-sm">
-              {data.description}
+              {parseMarkdownLinks(data.description)}
             </p>
           </div>
 

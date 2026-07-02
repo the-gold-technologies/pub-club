@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,7 +65,7 @@ function FeatureTile({ feature, index }: { feature: any; index: number }) {
             {feature.title}
           </h3>
           <p className="text-white/70 font-light text-sm tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-700 delay-100 translate-y-4 group-hover:translate-y-0">
-            {feature.description}
+            {parseMarkdownLinks(feature.description)}
           </p>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { ArrowRight, Beer } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -142,7 +143,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
             <em className="italic font-light text-[#475DB1]">{data.italicHeading}</em>
           </h2>
           <p className="text-base text-neutral-500 font-light leading-relaxed">
-            {data.description}
+            {parseMarkdownLinks(data.description)}
           </p>
         </div>
 
@@ -180,7 +181,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
                   {mainItem.name}
                 </h3>
                 <p className="text-base text-neutral-600 font-light leading-relaxed">
-                  {mainItem.description}
+                  {parseMarkdownLinks(mainItem.description)}
                 </p>
               </div>
             </div>
@@ -211,7 +212,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
                       {smallItem1.name}
                     </h3>
                     <p className="text-xs text-neutral-500 font-light line-clamp-2">
-                      {smallItem1.description}
+                      {parseMarkdownLinks(smallItem1.description)}
                     </p>
                   </div>
                 </div>
@@ -241,7 +242,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
                       {smallItem2.name}
                     </h3>
                     <p className="text-xs text-neutral-500 font-light line-clamp-2">
-                      {smallItem2.description}
+                      {parseMarkdownLinks(smallItem2.description)}
                     </p>
                   </div>
                 </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { parseMarkdownLinks } from "@/utils/text";
+
 export default function StoryIntro({ data }: { data: any }) {
   return (
     <section className="pt-24 md:pt-32 pb-8 bg-white relative">
@@ -16,7 +18,7 @@ export default function StoryIntro({ data }: { data: any }) {
           <em className="text-[#475DB1] font-light">{data.introHeadingItalic}</em>
         </h2>
         <p className="text-lg sm:text-xl text-slate-600 font-light leading-relaxed max-w-3xl mx-auto">
-          {data.introDesc}
+          {parseMarkdownLinks(data.introDesc)}
         </p>
       </div>
     </section>

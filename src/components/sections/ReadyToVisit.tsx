@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ContactPopupModal from "./ContactPopupModal";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -100,7 +101,7 @@ export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
             <div className="cta-content-stagger space-y-1">
               {Array.isArray(data.lines) && data.lines.map((line: string, i: number) => (
                 <p key={i} className="text-xl md:text-2xl text-neutral-700 font-light leading-relaxed font-sans tracking-tight">
-                  {line}
+                  {parseMarkdownLinks(line)}
                 </p>
               ))}
             </div>

@@ -5,6 +5,7 @@ import * as LucideIcons from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -103,7 +104,7 @@ export default function EventsCapabilities({ data = {} }: EventsCapabilitiesProp
                     </div>
                     <h3 className="text-2xl font-serif mb-4">{card.title}</h3>
                     <p className="text-white/90 font-light leading-relaxed">
-                      {card.description}
+                      {parseMarkdownLinks(card.description)}
                     </p>
                   </div>
                 </div>

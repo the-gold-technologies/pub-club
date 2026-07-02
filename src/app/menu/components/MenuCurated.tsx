@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -165,7 +166,7 @@ export default function MenuCurated({ data = {} }: { data?: any }) {
                 {menuCategories[3].title}
               </h3>
               <p className="text-white/70 italic font-light text-sm mb-6">
-                {menuCategories[3].description}
+                {parseMarkdownLinks(menuCategories[3].description)}
               </p>
               <div className="flex flex-col gap-2 text-white/90 font-light">
                 {menuCategories[3].items?.map((item: string) => (

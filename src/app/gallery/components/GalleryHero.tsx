@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 import { useCMSStore } from "@/store/useCMSStore";
 
@@ -86,7 +87,7 @@ export default function GalleryHero({ data = {} }: { data?: any }) {
           <div className="md:col-span-5 pb-2">
             <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
               <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
-                {data.quote}
+                {parseMarkdownLinks(data.quote)}
               </p>
             </div>
           </div>

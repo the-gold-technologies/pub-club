@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Users, Heart, Beer, Coffee, Music } from "lucide-react";
+import { parseMarkdownLinks } from "@/utils/text";
 
 export default function StoryHub({ data }: { data: any }) {
   return (
@@ -24,9 +25,9 @@ export default function StoryHub({ data }: { data: any }) {
             </div>
 
             <div className="space-y-6 text-lg text-slate-600 font-light leading-relaxed">
-              <p>{data.hubDesc1}</p>
-              <p>{data.hubDesc2}</p>
-              <p>{data.hubDesc3}</p>
+              <p>{parseMarkdownLinks(data.hubDesc1)}</p>
+              <p>{parseMarkdownLinks(data.hubDesc2)}</p>
+              <p>{parseMarkdownLinks(data.hubDesc3)}</p>
             </div>
 
             <div className="p-6 bg-white rounded-2xl shadow-lg border border-slate-100 flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -38,7 +39,7 @@ export default function StoryHub({ data }: { data: any }) {
                   {data.cardTitle}
                 </h4>
                 <p className="text-sm text-slate-500 leading-relaxed">
-                  {data.cardDesc}
+                  {parseMarkdownLinks(data.cardDesc)}
                 </p>
               </div>
             </div>

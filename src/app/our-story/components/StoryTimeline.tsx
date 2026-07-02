@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -124,7 +125,7 @@ export default function StoryTimeline({ data }: { data: any[] }) {
                           {step.title}
                         </h3>
                         <p className="text-sm text-slate-500 leading-relaxed font-normal flex-grow">
-                          {step.desc}
+                          {parseMarkdownLinks(step.desc)}
                         </p>
                       </div>
                     </div>

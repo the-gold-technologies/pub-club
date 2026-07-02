@@ -5,6 +5,7 @@ import { UtensilsCrossed } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -128,10 +129,10 @@ export default function Dining({ data = {} }: DiningProps) {
               </p>
               <div className="space-y-6 md:space-y-8">
                 <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
-                  {data.paragraph1}
+                  {parseMarkdownLinks(data.paragraph1)}
                 </p>
                 <p className="dining-text-item text-neutral-600 leading-relaxed font-light text-lg">
-                  {data.paragraph2}
+                  {parseMarkdownLinks(data.paragraph2)}
                 </p>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { X, Snowflake } from "lucide-react";
 import Image from "next/image";
 import { useCMSStore } from "@/store/useCMSStore";
+import { parseMarkdownLinks } from "@/utils/text";
 
 export default function FirstTimePopupModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -219,7 +220,7 @@ export default function FirstTimePopupModal() {
                 {popupTitle}
               </h3>
               <p className="text-neutral-500 font-serif font-light text-xs leading-relaxed">
-                {popupDesc}
+                {parseMarkdownLinks(popupDesc)}
               </p>
             </div>
 

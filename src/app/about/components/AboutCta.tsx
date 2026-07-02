@@ -1,5 +1,7 @@
 "use client";
 
+import { parseMarkdownLinks } from "@/utils/text";
+
 export default function AboutCta({ data }: { data: any }) {
   return (
     <section className="py-32 relative overflow-hidden bg-[#475DB1]">
@@ -13,7 +15,7 @@ export default function AboutCta({ data }: { data: any }) {
           {data.ctaHeading}
         </h2>
         <p className="text-xl text-white/80 font-light max-w-2xl mx-auto">
-          {data.ctaDesc}
+          {parseMarkdownLinks(data.ctaDesc)}
         </p>
         <div className="pt-6">
           <a

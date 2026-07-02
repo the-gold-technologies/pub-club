@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { HangingOrnamentsHero } from "./HangingOrnaments";
 import { Snowflake } from "lucide-react";
+import { parseMarkdownLinks } from "@/utils/text";
 
 import { useCMSStore } from "@/store/useCMSStore";
 
@@ -84,7 +85,7 @@ export const HeroSection = ({ heroRef, heroBgRef, data }: HeroSectionProps) => {
             <div className="w-16 h-px bg-white/20 lg:mx-0 mx-auto" />
 
             <p className="christmas-hero-desc text-base sm:text-lg text-slate-200 font-serif font-light leading-relaxed max-w-lg lg:mx-0 mx-auto drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
-              {description}
+              {parseMarkdownLinks(description)}
             </p>
 
             <div className="christmas-hero-cta flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start">

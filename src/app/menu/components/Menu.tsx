@@ -4,6 +4,7 @@ import { Download } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -257,7 +258,7 @@ export default function Menu({ data = {} }: { data?: any }) {
             </div>
           </div>
           <p className="text-neutral-600 leading-relaxed font-light text-lg max-w-3xl">
-            {data.description}
+            {parseMarkdownLinks(data.description)}
           </p>
         </div>
 
@@ -390,7 +391,7 @@ export default function Menu({ data = {} }: { data?: any }) {
                                         </h6>
                                         {item?.desc && (
                                           <p className="text-[11px] text-neutral-500 italic font-light lowercase leading-relaxed max-w-[90%]">
-                                            {item.desc}
+                                            {parseMarkdownLinks(item.desc)}
                                           </p>
                                         )}
                                       </div>

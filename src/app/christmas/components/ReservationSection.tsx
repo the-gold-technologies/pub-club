@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Phone, Mail } from "lucide-react";
+import { parseMarkdownLinks } from "@/utils/text";
 
 interface ReservationSectionProps {
   data?: {
@@ -94,7 +95,7 @@ export const ReservationSection = ({ data }: ReservationSectionProps) => {
           </span>
         </h2>
         <p className="text-base text-neutral-500 font-serif font-light max-w-xl mx-auto leading-relaxed">
-          {description}
+          {parseMarkdownLinks(description)}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4 text-neutral-700">

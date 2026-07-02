@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { ChefHat, Flame } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,8 +61,8 @@ export default function DiningIntro({ data = {} }: DiningIntroProps) {
             </div>
 
             <div className="space-y-6 text-xl text-slate-600 font-light leading-relaxed">
-              <p>{data.introDesc1}</p>
-              <p className="text-lg">{data.introDesc2}</p>
+              <p>{parseMarkdownLinks(data.introDesc1)}</p>
+              <p className="text-lg">{parseMarkdownLinks(data.introDesc2)}</p>
             </div>
 
             <div className="pt-8 flex flex-wrap gap-6">

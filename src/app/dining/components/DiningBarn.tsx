@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { Users, GlassWater } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,7 +69,7 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
             </div>
 
             <p className="text-xl text-slate-300 font-light leading-relaxed">
-              {data.barnDesc}
+              {parseMarkdownLinks(data.barnDesc)}
             </p>
 
             <div className="space-y-6 pt-4">
@@ -81,7 +82,7 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
                     {data.capacityTitle}
                   </h4>
                   <p className="text-slate-400 font-light text-sm">
-                    {data.capacityDesc}
+                    {parseMarkdownLinks(data.capacityDesc)}
                   </p>
                 </div>
               </div>
@@ -94,7 +95,7 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
                     {data.beerTentTitle}
                   </h4>
                   <p className="text-slate-400 font-light text-sm">
-                    {data.beerTentDesc}
+                    {parseMarkdownLinks(data.beerTentDesc)}
                   </p>
                 </div>
               </div>

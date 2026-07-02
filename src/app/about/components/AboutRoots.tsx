@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Users, Heart, Utensils } from "lucide-react";
+import { parseMarkdownLinks } from "@/utils/text";
 
 export default function AboutRoots({ data }: { data: any }) {
   const rootsImages = Array.isArray(data.rootsImages) && data.rootsImages.length > 0
@@ -40,8 +41,8 @@ export default function AboutRoots({ data }: { data: any }) {
             </div>
 
             <div className="space-y-6 text-lg text-slate-600 font-light leading-relaxed">
-              <p>{data.rootsDesc1}</p>
-              <p>{data.rootsDesc2}</p>
+              <p>{parseMarkdownLinks(data.rootsDesc1)}</p>
+              <p>{parseMarkdownLinks(data.rootsDesc2)}</p>
             </div>
 
             <div className="pt-6 grid grid-cols-3 gap-8">
@@ -110,7 +111,7 @@ export default function AboutRoots({ data }: { data: any }) {
             {data.rootsQuote && (
               <div className="absolute bottom-16 left-8 right-8 text-center text-white z-30 pointer-events-none">
                 <p className="font-serif text-2xl italic leading-snug drop-shadow-md">
-                  {data.rootsQuote}
+                  {parseMarkdownLinks(data.rootsQuote)}
                 </p>
               </div>
             )}

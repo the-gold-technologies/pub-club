@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { Utensils, Sparkles, Clock, ChevronRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -94,7 +95,7 @@ export default function DiningPillars({ data = {} }: DiningPillarsProps) {
                     </div>
                     <h3 className="text-2xl font-serif mb-4">{item.title}</h3>
                     <p className="text-white/90 font-light leading-relaxed mb-6">
-                      {item.description || item.desc}
+                      {parseMarkdownLinks(item.description || item.desc)}
                     </p>
                   </div>
                   <ul className="space-y-3">

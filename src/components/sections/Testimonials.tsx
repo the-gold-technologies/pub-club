@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { Quote } from "lucide-react";
+import { parseMarkdownLinks } from "@/utils/text";
 
 
 
@@ -97,7 +98,7 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
                 </div>
 
                 <p className="text-2xl md:text-3xl font-serif text-neutral-800 italic leading-snug tracking-tight px-4">
-                  &quot;{testimonials[active].quote}&quot;
+                  &quot;{parseMarkdownLinks(testimonials[active].quote)}&quot;
                 </p>
 
                 <div className="space-y-2">
