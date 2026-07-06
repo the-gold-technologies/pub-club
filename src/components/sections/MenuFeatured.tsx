@@ -10,8 +10,6 @@ import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
-
 interface MenuFeaturedProps {
   data?: any;
 }
@@ -27,7 +25,9 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
   // Sync indices when CMS dishes load or change in length
   useEffect(() => {
     if (featuredItems.length > 0) {
-      setDisplayIndices(Array.from({ length: featuredItems.length }, (_, i) => i));
+      setDisplayIndices(
+        Array.from({ length: featuredItems.length }, (_, i) => i),
+      );
     }
   }, [featuredItems.length]);
 
@@ -42,15 +42,18 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
     });
   };
 
-  const mainItem = displayIndices.length > 0 && displayIndices[0] < featuredItems.length
-    ? featuredItems[displayIndices[0]]
-    : undefined;
-  const smallItem1 = displayIndices.length > 1 && displayIndices[1] < featuredItems.length
-    ? featuredItems[displayIndices[1]]
-    : undefined;
-  const smallItem2 = displayIndices.length > 2 && displayIndices[2] < featuredItems.length
-    ? featuredItems[displayIndices[2]]
-    : undefined;
+  const mainItem =
+    displayIndices.length > 0 && displayIndices[0] < featuredItems.length
+      ? featuredItems[displayIndices[0]]
+      : undefined;
+  const smallItem1 =
+    displayIndices.length > 1 && displayIndices[1] < featuredItems.length
+      ? featuredItems[displayIndices[1]]
+      : undefined;
+  const smallItem2 =
+    displayIndices.length > 2 && displayIndices[2] < featuredItems.length
+      ? featuredItems[displayIndices[2]]
+      : undefined;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -140,7 +143,9 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
           </div>
           <h2 className="text-4xl md:text-[3.8rem] font-serif text-black leading-tight tracking-tighter mb-4">
             {data.regularHeading}{" "}
-            <em className="italic font-light text-[#475DB1]">{data.italicHeading}</em>
+            <em className="italic font-light text-[#475DB1]">
+              {data.italicHeading}
+            </em>
           </h2>
           <p className="text-base text-neutral-500 font-light leading-relaxed">
             {parseMarkdownLinks(data.description)}
@@ -260,7 +265,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
                 </div>
                 <div className="space-y-0.5">
                   <span className="block text-xs font-bold uppercase tracking-[0.15em] text-black">
-                    {data.btnLabel || "Explore Full Menu"}
+                    {data.btnLabel}
                   </span>
                   {data.btnSublabel && (
                     <span className="block text-[10px] text-neutral-400 font-light">
@@ -276,4 +281,3 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
     </section>
   );
 }
-

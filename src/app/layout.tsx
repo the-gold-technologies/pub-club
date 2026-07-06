@@ -7,6 +7,7 @@ import Script from "next/script";
 import FooterScripts from "@/components/layout/FooterScripts";
 import { Toaster } from "react-hot-toast";
 import { RenderSchema } from "@/utils/seo";
+import CookieBanner from "@/components/layout/CookieBanner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({
@@ -156,6 +157,7 @@ export default async function RootLayout({
 
         <LenisProvider>{children}</LenisProvider>
         <Toaster position="top-center" />
+        <CookieBanner />
 
         {/* Custom Footer Scripts */}
         {globalSEO?.customFooterScripts && (
