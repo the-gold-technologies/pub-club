@@ -16,17 +16,27 @@ const Navbar = dynamic(() => import("@/components/layout/Navbar"), { ssr: true }
 const Footer = dynamic(() => import("@/components/layout/Footer"), { ssr: true });
 
 export default function BlogIndexPage() {
-  const { fetchBlogs, blogs } = useCMSStore();
+  const { fetchBlogs, blogs, fetchPage, pages } = useCMSStore();
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetchBlogs().finally(() => setLoading(false));
-  }, [fetchBlogs]);
+    Promise.all([
+      fetchBlogs(),
+      fetchPage("blog").catch(console.error)
+    ]).finally(() => setLoading(false));
+  }, [fetchBlogs, fetchPage]);
 
   const blogPosts = blogs || [];
+
+  const pageData = pages["blog"] || {};
+  const sections = pageData.sections || {};
+  const heroData = sections["BlogHero"] || {};
+  const headingTag = heroData.headingTag || pageData.seo?.headingOptions?.heroHeadingTag || "h1";
+  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  const description = heroData.description !== undefined ? heroData.description : "Read about local attractions, dining recommendations, seasonal events, and why the Seven Stars is the destination pub of choice near Abingdon, Wallingford, and South Oxfordshire.";
 
   useEffect(() => {
     if (loading) return;
@@ -84,7 +94,7 @@ export default function BlogIndexPage() {
         {/* Background Image with parallax */}
         <div ref={bgRef} className="absolute inset-0 z-0 scale-110">
           <Image
-            src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-celebration-2.webp"
+            src={heroData.backgroundImage || "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-celebration-2.webp"}
             alt="Seven Stars Dining Room"
             fill
             className="object-cover opacity-50 object-center"
@@ -101,25 +111,27 @@ export default function BlogIndexPage() {
               <div className="hero-reveal overflow-hidden mb-6 flex items-center gap-4">
                 <div className="w-12 h-px bg-[#475DB1]" />
                 <span className="block text-[#475DB1] uppercase tracking-[0.4em] text-[10px] font-bold">
-                  Guides & Articles
+                  {heroData.tagline || "Guides & Articles"}
                 </span>
               </div>
 
-              <h1 className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
-                The Seven Stars <br />
+              <HeadingTag className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
+                {heroData.headingPart1 || "The Seven Stars"} <br />
                 <span className="italic font-light text-[#475DB1]">
-                  Blog
+                  {heroData.headingItalicHighlight || "Blog"}
                 </span>
-              </h1>
+              </HeadingTag>
             </div>
 
-            <div className="md:col-span-5 pb-2">
-              <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
-                <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
-                  Read about local attractions, dining recommendations, seasonal events, and why the Seven Stars is the destination pub of choice near Abingdon, Wallingford, and South Oxfordshire.
-                </p>
+            {description && (
+              <div className="md:col-span-5 pb-2">
+                <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
+                  <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
+                    {description}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
