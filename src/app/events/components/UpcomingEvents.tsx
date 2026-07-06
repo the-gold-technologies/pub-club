@@ -7,12 +7,14 @@ import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { parseMarkdownLinks } from "@/utils/text";
+import ContactPopupModal from "@/components/sections/ContactPopupModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function UpcomingEvents({ data = {} }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const events = Array.isArray(data.upcomingEvents) ? data.upcomingEvents : [];
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [displayIndices, setDisplayIndices] = useState<number[]>(() =>
     Array.from({ length: events.length }, (_, i) => i),
@@ -175,22 +177,49 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
               </div>
 
               <div className="reveal-section pt-6 mt-6 border-t border-slate-100/80">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-5 group"
-                >
-                  <div className="w-14 h-14 rounded-full bg-[#475DB1] flex items-center justify-center text-white transition-transform duration-500 group-hover:scale-110 group-hover:rotate-45">
-                    <ArrowRight size={20} />
-                  </div>
-                  <div className="space-y-0.5">
-                    <span className="block text-xs font-bold uppercase tracking-[0.15em] text-slate-900">
-                      Request Table
-                    </span>
-                    <span className="block text-[10px] text-slate-400 font-light">
-                      Inquire about our upcoming occasions
-                    </span>
-                  </div>
-                </Link>
+                {(() => {
+                  const ctaText = data.ctaText || "Request Table";
+                  const ctaSubtitle = data.ctaSubtitle || "Inquire about our upcoming occasions";
+                  const ctaLink = data.ctaLink || "";
+                  const hasNavigateUrl = ctaLink.trim() !== "" && ctaLink !== "#";
+
+                  return hasNavigateUrl ? (
+                    <Link
+                      href={ctaLink}
+                      className="inline-flex items-center gap-5 group"
+                    >
+                      <div className="w-14 h-14 rounded-full bg-[#475DB1] flex items-center justify-center text-white transition-transform duration-500 group-hover:scale-110 group-hover:rotate-45">
+                        <ArrowRight size={20} />
+                      </div>
+                      <div className="space-y-0.5">
+                        <span className="block text-xs font-bold uppercase tracking-[0.15em] text-slate-900">
+                          {ctaText}
+                        </span>
+                        <span className="block text-[10px] text-slate-400 font-light">
+                          {ctaSubtitle}
+                        </span>
+                      </div>
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(true)}
+                      className="inline-flex items-center gap-5 group text-left cursor-pointer focus:outline-none"
+                    >
+                      <div className="w-14 h-14 rounded-full bg-[#475DB1] flex items-center justify-center text-white transition-transform duration-500 group-hover:scale-110 group-hover:rotate-45">
+                        <ArrowRight size={20} />
+                      </div>
+                      <div className="space-y-0.5">
+                        <span className="block text-xs font-bold uppercase tracking-[0.15em] text-slate-900">
+                          {ctaText}
+                        </span>
+                        <span className="block text-[10px] text-slate-400 font-light">
+                          {ctaSubtitle}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })()}
               </div>
 
               <style>{`
@@ -206,6 +235,7 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
           </div>
         </div>
       </div>
+      <ContactPopupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

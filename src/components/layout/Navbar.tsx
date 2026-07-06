@@ -327,11 +327,8 @@ export default function Navbar() {
           <div className="nav-icons flex items-center justify-end space-x-3 w-auto lg:w-1/4">
             {/* Book Table — slides in on scroll */}
             <div
-              className={`transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-center overflow-hidden ${
-                isScrolled
-                  ? "max-w-[200px] opacity-100 mr-3 translate-x-0"
-                  : "max-w-0 opacity-0 mr-0 translate-x-12 pointer-events-none"
-              }`}
+              className={`transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-center overflow-hidden 
+                max-w-[200px] opacity-100 mr-3 translate-x-0`}
             >
               <Link
                 href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
