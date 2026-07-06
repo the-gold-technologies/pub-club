@@ -36,7 +36,7 @@ export const HeroSection = ({ heroRef, heroBgRef, data }: HeroSectionProps) => {
   const headingPart1 = data?.headingPart1 || "Celebrate";
   const headingItalicHighlight = data?.headingItalicHighlight || "Christmas";
   const headingPart2 = data?.headingPart2 || "at Seven Stars";
-  const description = data?.description || "Step into the warmth of our decorated countryside pub in Marsh Baldon, Oxford. Savor award-winning festive menus, cozy up next to glowing fireplaces, and celebrate the season in style.";
+  const description = data?.description !== undefined ? data.description : "Step into the warmth of our decorated countryside pub in Marsh Baldon, Oxford. Savor award-winning festive menus, cozy up next to glowing fireplaces, and celebrate the season in style.";
   const ctaText1 = data?.ctaText1 || "Reserve Your Table";
   const ctaLink1 = data?.ctaLink1 || "https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website";
   const ctaText2 = data?.ctaText2 || "Discover Menus";
@@ -82,11 +82,14 @@ export const HeroSection = ({ heroRef, heroBgRef, data }: HeroSectionProps) => {
               {headingPart2}
             </HeadingTag>
 
-            <div className="w-16 h-px bg-white/20 lg:mx-0 mx-auto" />
-
-            <p className="christmas-hero-desc text-base sm:text-lg text-slate-200 font-serif font-light leading-relaxed max-w-lg lg:mx-0 mx-auto drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
-              {parseMarkdownLinks(description)}
-            </p>
+            {description && (
+              <>
+                <div className="w-16 h-px bg-white/20 lg:mx-0 mx-auto" />
+                <p className="christmas-hero-desc text-base sm:text-lg text-slate-200 font-serif font-light leading-relaxed max-w-lg lg:mx-0 mx-auto drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                  {parseMarkdownLinks(description)}
+                </p>
+              </>
+            )}
 
             <div className="christmas-hero-cta flex flex-col sm:flex-row gap-4 pt-2 justify-center lg:justify-start">
               <a

@@ -279,11 +279,13 @@ export default function Hero({ data = {} }: HeroProps) {
             </div>
 
             {/* Right side: description */}
-            <div className="hero-desc max-w-sm lg:ml-auto lg:self-end mt-8 lg:mt-0 text-left">
-              <p className="text-lg md:text-xl text-dark-100 font-light leading-relaxed">
-                {parseMarkdownLinks(data.description)}
-              </p>
-            </div>
+            {data.description && (
+              <div className="hero-desc max-w-sm lg:ml-auto lg:self-end mt-8 lg:mt-0 text-left">
+                <p className="text-lg md:text-xl text-dark-100 font-light leading-relaxed">
+                  {parseMarkdownLinks(data.description)}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

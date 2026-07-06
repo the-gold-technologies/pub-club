@@ -87,13 +87,15 @@ export default function AboutHero({ data }: { data: any }) {
             </HeadingTag>
           </div>
 
-          <div className="md:col-span-5 pb-2">
-            <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
-              <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
-                {parseMarkdownLinks(data.quote)}
-              </p>
+          {data.quote && (
+            <div className="md:col-span-5 pb-2">
+              <div className="hero-reveal border-l border-white/20 pl-6 md:pl-8">
+                <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed font-serif italic">
+                  {parseMarkdownLinks(data.quote)}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
