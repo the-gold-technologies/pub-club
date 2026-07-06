@@ -71,6 +71,50 @@ export default function CookieBanner() {
         aria-label="Cookie consent"
         aria-live="polite"
       >
+        {/* Close Button */}
+        <button
+          onClick={handleReject}
+          aria-label="Close cookie consent banner"
+          style={{
+            position: "absolute",
+            top: "1.1rem",
+            right: "1.1rem",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            padding: "0.25rem",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#9ca3af",
+            transition: "all 0.2s ease",
+            outline: "none",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = "#f3f4f6";
+            (e.currentTarget as HTMLButtonElement).style.color = "#4b5563";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background =
+              "transparent";
+            (e.currentTarget as HTMLButtonElement).style.color = "#9ca3af";
+          }}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
           <span style={{ fontSize: "1.35rem" }} aria-hidden="true">
@@ -133,11 +177,13 @@ export default function CookieBanner() {
               outline: "none",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "#f3f4f6";
+              (e.currentTarget as HTMLButtonElement).style.background =
+                "#f3f4f6";
               (e.currentTarget as HTMLButtonElement).style.color = "#374151";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+              (e.currentTarget as HTMLButtonElement).style.background =
+                "transparent";
               (e.currentTarget as HTMLButtonElement).style.color = "#6b7280";
             }}
           >
@@ -163,12 +209,16 @@ export default function CookieBanner() {
               boxShadow: "0 0 15px rgba(57,74,141,0.4)",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "#2d3b72";
-              (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(57,74,141,0.6)";
+              (e.currentTarget as HTMLButtonElement).style.background =
+                "#2d3b72";
+              (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                "0 4px 20px rgba(57,74,141,0.6)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = "#394A8D";
-              (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 15px rgba(57,74,141,0.4)";
+              (e.currentTarget as HTMLButtonElement).style.background =
+                "#394A8D";
+              (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                "0 0 15px rgba(57,74,141,0.4)";
             }}
           >
             Accept All

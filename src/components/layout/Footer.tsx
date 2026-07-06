@@ -69,7 +69,9 @@ export default function Footer() {
       }
     }
   } else {
-    displayNavLinks = displayNavLinks.filter((link) => link.href !== "/christmas");
+    displayNavLinks = displayNavLinks.filter(
+      (link) => link.href !== "/christmas",
+    );
   }
 
   if (!displayNavLinks.some((link) => link.href === "/blog")) {
@@ -360,11 +362,17 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-4 text-[10px] text-primary-400/60 uppercase tracking-widest flex-wrap justify-center">
             <span className="text-primary-800">·</span>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link
+              href="/privacy-policy"
+              className="hover:text-white transition-colors"
+            >
               Privacy Policy
             </Link>
             <span className="text-primary-800">·</span>
-            <Link href="#" className="hover:text-white transition-colors">
+            <Link
+              href="/terms-of-service"
+              className="hover:text-white transition-colors"
+            >
               Terms of Service
             </Link>
           </div>
