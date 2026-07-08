@@ -241,7 +241,7 @@ export default function Menu({ data = {} }: { data?: any }) {
         {/* Header */}
         <div className="menu-header mb-10 flex flex-col gap-6 border-b border-black/5 pb-12 w-full">
           <div className="flex flex-col gap-3">
-            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
+            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-3">
               <span className="font-serif text-2xl text-black/10 leading-none">
                 {data.sectionNumber}
               </span>

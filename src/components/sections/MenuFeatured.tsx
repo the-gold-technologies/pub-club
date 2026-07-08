@@ -137,7 +137,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
         <div className="menu-header-content mb-12 max-w-full">
           <div className="flex items-center gap-4 mb-3">
             <span className="h-[2px] w-10 bg-[#475DB1]" />
-            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-black">
+            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold">
               {data.upperTag}
             </span>
           </div>

@@ -56,7 +56,7 @@ export default function WhatWeHost({ data = {} }: { data?: any }) {
 
           <div className="reveal-section space-y-12">
             <div className="space-y-4">
-              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium">
+              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold">
                 {data.tagline}
               </span>
               <h2 className="text-4xl md:text-6xl font-serif leading-tight">

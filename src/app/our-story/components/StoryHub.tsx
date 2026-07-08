@@ -14,7 +14,7 @@ export default function StoryHub({ data }: { data: any }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <div className="reveal-section lg:col-span-6 space-y-8">
             <div className="space-y-4">
-              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
+              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-3">
                 <span className="w-8 h-[1px] bg-[#475DB1]"></span>
                 {data.hubTagline}
               </span>

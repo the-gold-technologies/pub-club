@@ -73,7 +73,7 @@ export default function ContactHero({ data = {} }: { data?: any }) {
             {data.tagline}
           </span>
         </div>
-        <HeadingTag className="hero-reveal text-5xl md:text-7xl font-serif text-white tracking-tighter leading-[0.9]">
+        <HeadingTag className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
           {data.headingPart1}{" "}
           <span className="italic font-light text-[#475DB1]">
             {data.headingItalicHighlight}

@@ -57,7 +57,7 @@ export default function MenuCellar({ data = {} }: { data?: any }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="reveal-section space-y-8">
             <div className="space-y-4">
-              <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-medium">
+              <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-bold">
                 {data.tagline}
               </span>
               <h2 className="text-4xl md:text-6xl font-serif leading-tight">

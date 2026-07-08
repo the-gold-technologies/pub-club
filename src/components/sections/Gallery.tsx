@@ -72,7 +72,7 @@ export default function Gallery({ data = {} }: GalleryProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="gallery-header mb-16 flex items-end justify-between border-b border-white/10 pb-8">
           <div className="flex flex-col gap-3">
-            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-medium flex items-center gap-3">
+            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-bold flex items-center gap-3">
               <span className="font-serif text-2xl text-primary-800 leading-none">
                 04
               </span>

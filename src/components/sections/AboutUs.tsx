@@ -115,7 +115,7 @@ export default function AboutUs({ data = {} }: AboutUsProps) {
 
           <div className="order-1 lg:order-2 space-y-8">
             <div className="about-heading flex flex-col gap-3 pb-8 border-b border-black/5">
-              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
+              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-3">
                 <span className="font-serif text-2xl text-black/10 leading-none">
                   {data.sectionNumber}
                 </span>

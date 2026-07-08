@@ -75,7 +75,7 @@ export default function AboutAmenities({ data }: { data: any }) {
     <section ref={containerRef} className="py-24 md:py-32 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 reveal-section">
-          <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium">
+          <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold">
             {data.amenitiesTag}
           </span>
           <h2 className="mt-4 text-4xl md:text-5xl font-serif text-slate-900">

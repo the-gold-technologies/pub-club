@@ -64,7 +64,7 @@ export default function DiningPillars({ data = {} }: DiningPillarsProps) {
     <section ref={containerRef} className="py-24 md:py-32 bg-slate-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-20 reveal-section">
-          <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium block mb-4">
+          <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold block mb-4">
             {data.upperTag}
           </span>
           <h2 className="text-4xl md:text-5xl font-serif text-slate-900">

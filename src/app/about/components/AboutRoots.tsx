@@ -28,7 +28,7 @@ export default function AboutRoots({ data }: { data: any }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="reveal-section space-y-8">
             <div className="space-y-4">
-              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
+              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-3">
                 <span className="w-8 h-[1px] bg-[#475DB1]"></span>
                 {data.rootsTag}
               </span>

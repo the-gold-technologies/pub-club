@@ -240,7 +240,7 @@ export default function Footer() {
         <div className="py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 border-b border-white/10">
           {/* Col 1: About */}
           <div className="footer-col space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-medium flex items-center gap-3">
+            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-bold flex items-center gap-3">
               About
             </span>
             <p className="text-white/90 text-sm font-light leading-relaxed">
@@ -276,7 +276,7 @@ export default function Footer() {
 
           {/* Col 2: Navigation */}
           <div className="footer-col space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-medium flex items-center gap-3">
+            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-bold flex items-center gap-3">
               {footerCMS.navigateTitle || "Navigate"}
             </span>
             <ul className="space-y-3">
@@ -295,7 +295,7 @@ export default function Footer() {
 
           {/* Col 3: Opening Hours */}
           <div className="footer-col space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-medium flex items-center gap-3">
+            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-bold flex items-center gap-3">
               Hours
             </span>
             <ul className="space-y-4">
@@ -315,7 +315,7 @@ export default function Footer() {
 
           {/* Col 4: Contact */}
           <div className="footer-col space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-medium flex items-center gap-3">
+            <span className="text-[10px] tracking-[0.4em] text-primary-400 uppercase font-bold flex items-center gap-3">
               Find Us
             </span>
             <ul className="space-y-5">

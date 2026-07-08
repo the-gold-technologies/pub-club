@@ -103,7 +103,7 @@ export default function Dining({ data = {} }: DiningProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="dining-header mb-20 flex items-end justify-between border-b border-black/5 pb-8">
           <div className="flex flex-col gap-3">
-            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
+            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-3">
               <span className="font-serif text-2xl text-black/10 leading-none">
                 02
               </span>

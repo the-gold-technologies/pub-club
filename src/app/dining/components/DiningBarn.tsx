@@ -59,7 +59,7 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
 
           <div className="reveal-section order-1 lg:order-2 space-y-8">
             <div className="space-y-4">
-              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center gap-3">
+              <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center gap-3">
                 <span className="w-8 h-[1px] bg-[#475DB1]"></span>
                 {data.barnTagline}
               </span>

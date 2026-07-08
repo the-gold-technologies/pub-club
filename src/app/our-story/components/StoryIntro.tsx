@@ -8,7 +8,7 @@ export default function StoryIntro({ data }: { data: any }) {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[45rem] h-[45rem] bg-[#475DB1]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal-section relative z-10">
-        <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium flex items-center justify-center gap-3 mb-6">
+        <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold flex items-center justify-center gap-3 mb-6">
           <span className="w-8 h-[1px] bg-[#475DB1]"></span>
           {data.introTagline}
           <span className="w-8 h-[1px] bg-[#475DB1]"></span>

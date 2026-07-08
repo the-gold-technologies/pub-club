@@ -62,7 +62,7 @@ export default function EventsCapabilities({ data = {} }: EventsCapabilitiesProp
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 reveal-section">
           {data.upperTag && (
-            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-medium block mb-4">
+            <span className="text-[10px] tracking-[0.4em] text-[#475DB1] uppercase font-bold block mb-4">
               {data.upperTag}
             </span>
           )}
