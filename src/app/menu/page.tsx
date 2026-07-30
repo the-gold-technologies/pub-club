@@ -42,11 +42,13 @@ export default function MenuPage() {
     <div className="min-h-screen bg-white overflow-x-hidden">
       <PageLoader isLoading={loading} />
       <Navbar />
-      <MenuHero data={sections["MenuHero"] || {}} />
-      <Menu data={sections["MenuBook"] || {}} />
-      <MenuCurated data={sections["MenuCurated"] || {}} />
-      <MenuCellar data={sections["MenuCellar"] || {}} />
-      <MenuIntro data={sections["MenuIntro"] || {}} />
+      <main id="main-content" tabIndex={-1}>
+        <MenuHero data={sections["MenuHero"] || {}} />
+        <Menu data={sections["MenuBook"] || {}} />
+        <MenuCurated data={sections["MenuCurated"] || {}} />
+        <MenuCellar data={sections["MenuCellar"] || {}} />
+        <MenuIntro data={sections["MenuIntro"] || {}} />
+      </main>
       <Footer />
     </div>
   );

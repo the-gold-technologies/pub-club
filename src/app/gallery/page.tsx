@@ -25,8 +25,10 @@ export default function GalleryPage() {
     <div className="min-h-screen bg-slate-50 overflow-x-hidden">
       <PageLoader isLoading={loading} />
       <Navbar />
-      <GalleryHero data={sections["GalleryHero"] || {}} />
-      <GalleryGrid data={sections["GalleryGrid"] || {}} />
+      <main id="main-content" tabIndex={-1}>
+        <GalleryHero data={sections["GalleryHero"] || {}} />
+        <GalleryGrid data={sections["GalleryGrid"] || {}} />
+      </main>
       <Footer />
     </div>
   );

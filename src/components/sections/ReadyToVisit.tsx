@@ -68,7 +68,7 @@ export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
         {data.image1 && (
           <Image
             src={data.image1}
-            alt=""
+            alt="Seven Stars Pub Atmosphere"
             fill
             className="object-cover rounded-[3rem] shadow-2xl rotate-[6deg]"
           />
@@ -78,7 +78,7 @@ export default function ReadyToVisit({ data = {} }: ReadyToVisitProps) {
         {data.image2 && (
           <Image
             src={data.image2}
-            alt=""
+            alt="Seven Stars Dining Room"
             fill
             className="object-cover rounded-[3rem] shadow-2xl rotate-[-5deg]"
           />

@@ -208,7 +208,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                 <div className="relative pt-4">
                   <input
                     type="text"
-                    id="name"
+                    id="contact-info-name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent"
@@ -216,7 +216,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                     required
                   />
                   <label
-                    htmlFor="name"
+                    htmlFor="contact-info-name"
                     className="absolute left-0 -top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:-top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                   >
                     Name
@@ -225,7 +225,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                 <div className="relative pt-4">
                   <input
                     type="email"
-                    id="email"
+                    id="contact-info-email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent"
@@ -233,7 +233,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                     required
                   />
                   <label
-                    htmlFor="email"
+                    htmlFor="contact-info-email"
                     className="absolute left-0 -top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:-top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                   >
                     Email
@@ -243,7 +243,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
 
               <div className="relative pt-4">
                 <select
-                  id="subject"
+                  id="contact-info-subject"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors appearance-none cursor-pointer"
@@ -258,7 +258,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                   <option value="General Question">General Question</option>
                 </select>
                 <label
-                  htmlFor="subject"
+                  htmlFor="contact-info-subject"
                   className="absolute left-0 -top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-focus:text-[#475DB1]"
                 >
                   Subject
@@ -282,7 +282,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
 
               <div className="relative pt-4">
                 <textarea
-                  id="message"
+                  id="contact-info-message"
                   rows={4}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -291,7 +291,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                   required
                 ></textarea>
                 <label
-                  htmlFor="message"
+                  htmlFor="contact-info-message"
                   className="absolute left-0 -top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:-top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                 >
                   Message

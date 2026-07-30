@@ -34,17 +34,18 @@ export default function DiningPage() {
     <div className="min-h-screen bg-white overflow-x-hidden">
       <PageLoader isLoading={loading} />
       <Navbar />
-      <DiningHero data={sections["DiningHero"] || {}} />
-      <Dining data={sections["Dining"] || {}} />
-      <DiningQuote data={sections["DiningQuote"] || {}} />
-      <DiningIntro data={sections["DiningIntro"] || {}} />
-      {/* <MenuFeatured data={sections["MenuFeatured"] || {}} /> */}
-      <DiningPillars data={sections["DiningPillars"] || sections["DiningMenu"] || {}} />
-      <DiningBarn data={sections["DiningBarn"] || {}} />
-      {/* <Gallery data={sections["Gallery"] || {}} /> */}
-      <OutdoorSeating data={sections["DiningOutdoor"] || {}} />
+      <main id="main-content" tabIndex={-1}>
+        <DiningHero data={sections["DiningHero"] || {}} />
+        <Dining data={sections["Dining"] || {}} />
+        <DiningQuote data={sections["DiningQuote"] || {}} />
+        <DiningIntro data={sections["DiningIntro"] || {}} />
+        {/* <MenuFeatured data={sections["MenuFeatured"] || {}} /> */}
+        <DiningPillars data={sections["DiningPillars"] || sections["DiningMenu"] || {}} />
+        <DiningBarn data={sections["DiningBarn"] || {}} />
+        {/* <Gallery data={sections["Gallery"] || {}} /> */}
+        <OutdoorSeating data={sections["DiningOutdoor"] || {}} />
+      </main>
       <Footer />
-
     </div>
   );
 }

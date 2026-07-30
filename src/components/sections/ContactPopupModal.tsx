@@ -141,6 +141,9 @@ export default function ContactPopupModal({
     >
       <div
         ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-modal-title"
         className={`relative w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden p-10 md:p-14 transition-all duration-500 ease-out transform ${
           isOpen
             ? "scale-100 translate-y-0 opacity-100"
@@ -158,7 +161,7 @@ export default function ContactPopupModal({
 
         {/* Form Content */}
         <div>
-          <h3 className="text-3xl font-serif text-slate-900 mb-2">
+          <h3 id="contact-modal-title" className="text-3xl font-serif text-slate-900 mb-2">
             Send an Enquiry
           </h3>
           <p className="text-slate-500 font-light mb-12 text-sm">
@@ -171,7 +174,7 @@ export default function ContactPopupModal({
               <div className="relative pt-4">
                 <input
                   type="text"
-                  id="name"
+                  id="modal-contact-name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent text-sm"
@@ -179,7 +182,7 @@ export default function ContactPopupModal({
                   required
                 />
                 <label
-                  htmlFor="name"
+                  htmlFor="modal-contact-name"
                   className="absolute left-0 top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                 >
                   Name
@@ -190,7 +193,7 @@ export default function ContactPopupModal({
               <div className="relative pt-4">
                 <input
                   type="email"
-                  id="email"
+                  id="modal-contact-email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent text-sm"
@@ -198,7 +201,7 @@ export default function ContactPopupModal({
                   required
                 />
                 <label
-                  htmlFor="email"
+                  htmlFor="modal-contact-email"
                   className="absolute left-0 top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                 >
                   Email
@@ -209,7 +212,7 @@ export default function ContactPopupModal({
             {/* Subject Dropdown */}
             <div className="relative pt-4">
               <select
-                id="subject"
+                id="modal-contact-subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors appearance-none cursor-pointer text-sm pr-8"
@@ -224,7 +227,7 @@ export default function ContactPopupModal({
                 <option value="General Question">General Question</option>
               </select>
               <label
-                htmlFor="subject"
+                htmlFor="modal-contact-subject"
                 className="absolute left-0 top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-focus:text-[#475DB1]"
               >
                 Subject
@@ -249,7 +252,7 @@ export default function ContactPopupModal({
             {/* Message */}
             <div className="relative pt-4">
               <textarea
-                id="message"
+                id="modal-contact-message"
                 rows={4}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -258,7 +261,7 @@ export default function ContactPopupModal({
                 required
               ></textarea>
               <label
-                htmlFor="message"
+                htmlFor="modal-contact-message"
                 className="absolute left-0 top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
               >
                 Message

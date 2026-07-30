@@ -30,12 +30,14 @@ export default function EventsPage() {
     <div className="min-h-screen bg-white overflow-x-hidden">
       <PageLoader isLoading={loading} />
       <Navbar />
-      <EventsHero data={sections["EventsHero"] || {}} />
-      <UpcomingEvents data={sections["UpcomingEvents"] || {}} />
-      {/* <EventsArchive data={sections["EventsArchive"] || {}} /> */}
-      <WhatWeHost data={sections["WhatWeHost"] || {}} />
-      <EventsCapabilities data={sections["EventsCapabilities"] || {}} />
-      <InstagramRibbon data={sections["EventsArchive"] || {}} />
+      <main id="main-content" tabIndex={-1}>
+        <EventsHero data={sections["EventsHero"] || {}} />
+        <UpcomingEvents data={sections["UpcomingEvents"] || {}} />
+        {/* <EventsArchive data={sections["EventsArchive"] || {}} /> */}
+        <WhatWeHost data={sections["WhatWeHost"] || {}} />
+        <EventsCapabilities data={sections["EventsCapabilities"] || {}} />
+        <InstagramRibbon data={sections["EventsArchive"] || {}} />
+      </main>
       <Footer />
     </div>
   );

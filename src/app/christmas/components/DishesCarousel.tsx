@@ -125,6 +125,7 @@ export const DishesCarousel = ({
           <div className="flex items-center gap-3">
             <button
               onClick={prevDish}
+              aria-label="Previous Dish"
               className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center text-neutral-700 hover:text-white hover:bg-[#B91C1C] hover:border-[#B91C1C] transition-all cursor-pointer shadow-sm"
               title="Previous Dish"
             >
@@ -132,6 +133,7 @@ export const DishesCarousel = ({
             </button>
             <button
               onClick={nextDish}
+              aria-label="Next Dish"
               className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center text-neutral-700 hover:text-white hover:bg-[#B91C1C] hover:border-[#B91C1C] transition-all cursor-pointer shadow-sm"
               title="Next Dish"
             >

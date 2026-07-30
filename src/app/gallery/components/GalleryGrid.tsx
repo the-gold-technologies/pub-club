@@ -175,6 +175,7 @@ export default function GalleryGrid({ data = {} }: { data?: any }) {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
+              aria-label="Previous page"
               className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:border-[#475DB1] hover:bg-slate-50 disabled:opacity-30 disabled:pointer-events-none transition-all"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -187,6 +188,7 @@ export default function GalleryGrid({ data = {} }: { data?: any }) {
                   <button
                     key={pageNumber}
                     onClick={() => setCurrentPage(pageNumber)}
+                    aria-label={`Page ${pageNumber}`}
                     className={`w-10 h-10 rounded-full text-sm font-bold transition-all ${
                       currentPage === pageNumber
                         ? "bg-[#475DB1] text-white shadow-md"
@@ -204,6 +206,7 @@ export default function GalleryGrid({ data = {} }: { data?: any }) {
                 setCurrentPage((prev) => Math.min(totalPages, prev + 1))
               }
               disabled={currentPage === totalPages}
+              aria-label="Next page"
               className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:border-[#475DB1] hover:bg-slate-50 disabled:opacity-30 disabled:pointer-events-none transition-all"
             >
               <ChevronRight className="w-4 h-4" />

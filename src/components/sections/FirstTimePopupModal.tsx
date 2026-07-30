@@ -168,6 +168,9 @@ export default function FirstTimePopupModal() {
     >
       <div
         ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="first-time-modal-title"
         className="relative w-full max-w-4xl bg-[#FDFBF7] rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.12)] overflow-hidden grid grid-cols-1 md:grid-cols-2 border border-black/5"
       >
         {/* Close Button */}
@@ -216,7 +219,7 @@ export default function FirstTimePopupModal() {
               <span className="text-[9px] tracking-[0.4em] text-[#475DB1] uppercase font-bold block mb-1">
                 Get In Touch
               </span>
-              <h3 className="text-2xl sm:text-3xl font-serif text-neutral-900 tracking-tight leading-none mb-2">
+              <h3 id="first-time-modal-title" className="text-2xl sm:text-3xl font-serif text-neutral-900 tracking-tight leading-none mb-2">
                 {popupTitle}
               </h3>
               <p className="text-neutral-500 font-serif font-light text-xs leading-relaxed">

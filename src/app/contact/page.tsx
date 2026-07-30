@@ -42,9 +42,11 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white overflow-x-hidden">
       <PageLoader isLoading={loading} />
       <Navbar />
-      <ContactHero data={sections["ContactHero"] || {}} />
-      <ContactInfo data={sections["ContactInfo"] || {}} />
-      <MapSection data={contactData} />
+      <main id="main-content" tabIndex={-1}>
+        <ContactHero data={sections["ContactHero"] || {}} />
+        <ContactInfo data={sections["ContactInfo"] || {}} />
+        <MapSection data={contactData} />
+      </main>
       <Footer />
     </div>
   );

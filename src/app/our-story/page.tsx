@@ -66,10 +66,12 @@ export default function OurStoryPage() {
       <PageLoader isLoading={loading} />
       <Navbar />
 
-      <StoryHero data={hero} />
-      <StoryIntro data={intro} />
-      <StoryTimeline data={timelineSteps} />
-      <StoryHub data={hub} />
+      <main id="main-content" tabIndex={-1}>
+        <StoryHero data={hero} />
+        <StoryIntro data={intro} />
+        <StoryTimeline data={timelineSteps} />
+        <StoryHub data={hub} />
+      </main>
 
       <Footer />
     </div>

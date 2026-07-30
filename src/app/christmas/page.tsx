@@ -410,41 +410,43 @@ export default function ChristmasPage() {
       <PageLoader isLoading={loading} />
       <SnowEffect />
       <Navbar />
-      <HeroSection
-        heroRef={heroRef}
-        heroBgRef={heroBgRef}
-        data={sections["ChristmasHero"] || {}}
-      />
+      <main id="main-content" tabIndex={-1}>
+        <HeroSection
+          heroRef={heroRef}
+          heroBgRef={heroBgRef}
+          data={sections["ChristmasHero"] || {}}
+        />
 
-      {/* SECTION 2A: INTRO & WHY CHOOSE US (Light background) */}
-      <IntroSection data={sections["ChristmasIntro"] || {}} />
+        {/* SECTION 2A: INTRO & WHY CHOOSE US (Light background) */}
+        <IntroSection data={sections["ChristmasIntro"] || {}} />
 
-      {/* SECTION 4: FESTIVE MENUS SHOWCASE (Tabbed View with Food Imagery) */}
-      <MenusSection
-        activeMenuTab={activeMenuTab}
-        handleMenuTabChange={handleMenuTabChange}
-        tabsRef={tabsRef}
-        indicatorRef={indicatorRef}
-        menuContentRef={menuContentRef}
-        data={sections["ChristmasMenus"] || {}}
-      />
+        {/* SECTION 4: FESTIVE MENUS SHOWCASE (Tabbed View with Food Imagery) */}
+        <MenusSection
+          activeMenuTab={activeMenuTab}
+          handleMenuTabChange={handleMenuTabChange}
+          tabsRef={tabsRef}
+          indicatorRef={indicatorRef}
+          menuContentRef={menuContentRef}
+          data={sections["ChristmasMenus"] || {}}
+        />
 
-      {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
-      <FeaturesSection data={sections["ChristmasFeatures"] || {}} />
+        {/* SECTION 2B: SPECIAL FEATURES & INCENTIVES (Dark background for color breakage) */}
+        <FeaturesSection data={sections["ChristmasFeatures"] || {}} />
 
-      {/* SECTION 5: SPECIAL DISHES CAROUSEL */}
-      <DishesCarousel
-        activeDishIdx={activeDishIdx}
-        prevDish={prevDish}
-        nextDish={nextDish}
-        handleDishChange={handleDishChange}
-        dishContentRef={dishContentRef}
-        setIsAutoplayPaused={setIsAutoplayPaused}
-        data={sections["ChristmasDishes"] || {}}
-      />
+        {/* SECTION 5: SPECIAL DISHES CAROUSEL */}
+        <DishesCarousel
+          activeDishIdx={activeDishIdx}
+          prevDish={prevDish}
+          nextDish={nextDish}
+          handleDishChange={handleDishChange}
+          dishContentRef={dishContentRef}
+          setIsAutoplayPaused={setIsAutoplayPaused}
+          data={sections["ChristmasDishes"] || {}}
+        />
 
-      {/* Footer Contact & Reservations Block */}
-      <ReservationSection data={sections["ChristmasReservation"] || {}} />
+        {/* Footer Contact & Reservations Block */}
+        <ReservationSection data={sections["ChristmasReservation"] || {}} />
+      </main>
 
       {/* Floating Music Control Button */}
       {(() => {
