@@ -173,7 +173,11 @@ export default function Menu({ data = {} }: { data?: any }) {
     if (activeSection?.pdf && activeSection.pdf !== "#") {
       return activeSection.pdf;
     }
-    if (Array.isArray(data.menuPdfs) && data.menuPdfs[sectionIdx] && data.menuPdfs[sectionIdx] !== "#") {
+    if (
+      Array.isArray(data.menuPdfs) &&
+      data.menuPdfs[sectionIdx] &&
+      data.menuPdfs[sectionIdx] !== "#"
+    ) {
       return data.menuPdfs[sectionIdx];
     }
     return null;
@@ -185,7 +189,9 @@ export default function Menu({ data = {} }: { data?: any }) {
     const pdfUrl = getActiveSectionPdf();
 
     if (!pdfUrl) {
-      setDownloadToast(`No PDF menu available for ${activeSection?.title || "this section"}.`);
+      setDownloadToast(
+        `No PDF menu available for ${activeSection?.title || "this section"}.`,
+      );
       setTimeout(() => setDownloadToast(null), 3000);
       return;
     }
@@ -196,7 +202,9 @@ export default function Menu({ data = {} }: { data?: any }) {
       const downloadUrl = `/api/download?url=${encodeURIComponent(pdfUrl)}`;
       const link = document.createElement("a");
       link.href = downloadUrl;
-      const filename = pdfUrl.split("/").pop()?.split("?")[0] || `${activeSection?.title || "menu"}.pdf`;
+      const filename =
+        pdfUrl.split("/").pop()?.split("?")[0] ||
+        `${activeSection?.title || "menu"}.pdf`;
       link.download = filename;
       document.body.appendChild(link);
       link.click();
@@ -210,50 +218,7 @@ export default function Menu({ data = {} }: { data?: any }) {
     }
   };
 
-  const handleDownloadAll = async () => {
-    const pdfsToDownload = Array.isArray(data.menuPdfs) && data.menuPdfs.length > 0
-      ? data.menuPdfs.filter((url: string) => url && url !== "#")
-      : menuSections.map((s: MenuSection) => s.pdf).filter((url: string) => url && url !== "#");
 
-    if (pdfsToDownload.length === 0) {
-      setDownloadToast("No PDF menus available for download.");
-      setTimeout(() => setDownloadToast(null), 3000);
-      return;
-    }
-
-    setIsDownloading(true);
-
-    try {
-      if (pdfsToDownload.length === 1) {
-        setDownloadToast("Downloading menu PDF...");
-        const pdfUrl = pdfsToDownload[0];
-        const downloadUrl = `/api/download?url=${encodeURIComponent(pdfUrl)}`;
-        const link = document.createElement("a");
-        link.href = downloadUrl;
-        const filename = pdfUrl.split("/").pop()?.split("?")[0] || "menu.pdf";
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      } else {
-        setDownloadToast(`Zipping and downloading ${pdfsToDownload.length} menu PDFs...`);
-        const encodedUrls = pdfsToDownload.map((url: string) => encodeURIComponent(url)).join(",");
-        const downloadUrl = `/api/download?urls=${encodedUrls}`;
-        const link = document.createElement("a");
-        link.href = downloadUrl;
-        link.download = "all-menus.zip";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      }
-    } catch (err) {
-      console.error("Download failed:", err);
-      pdfsToDownload.forEach((url: string) => window.open(url, "_blank"));
-    } finally {
-      setIsDownloading(false);
-      setTimeout(() => setDownloadToast(null), 3000);
-    }
-  };
 
   if (!activeSection || !activePage) return null;
 
@@ -335,13 +300,9 @@ export default function Menu({ data = {} }: { data?: any }) {
                   <div className="w-12 h-12 rounded-full bg-[#475DB1]/5 hover:bg-[#475DB1]/10 flex items-center justify-center text-[#475DB1] hover:scale-110 active:scale-95 transition-all duration-300">
                     <Beer size={24} />
                   </div>
-                  <button
-                    onClick={handleDownloadAll}
-                    disabled={isDownloading}
-                    className="text-[10px] tracking-[0.27em] font-bold text-[#475DB1] hover:text-black transition-colors uppercase relative z-30 pointer-events-auto cursor-pointer"
-                  >
-                    {isDownloading ? "Downloading..." : "Download All Menus"}
-                  </button>
+                  <span className="text-[10px] tracking-[0.27em] font-bold text-[#475DB1] uppercase text-center">
+                    Craft & Culinary
+                  </span>
                 </div>
               </div>
             </div>
@@ -379,64 +340,97 @@ export default function Menu({ data = {} }: { data?: any }) {
                   <button
                     key={s.id || i}
                     onClick={() => changePage(i, 0)}
-                    className={`text-[11px] uppercase tracking-[0.3em] font-bold transition-all relative shrink-0 py-1.5 ${sectionIdx === i
+                    className={`text-[11px] uppercase tracking-[0.3em] font-bold transition-all relative shrink-0 py-1.5 ${
+                      sectionIdx === i
                         ? "text-[#475DB1] scale-105"
                         : "text-neutral-400 hover:text-black"
-                      }`}
+                    }`}
                   >
                     {s.title}
                     <div
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#475DB1] transition-transform duration-500 origin-left ${sectionIdx === i ? "scale-x-100" : "scale-x-0"
-                        }`}
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[#475DB1] transition-transform duration-500 origin-left ${
+                        sectionIdx === i ? "scale-x-100" : "scale-x-0"
+                      }`}
                     />
                   </button>
                 ))}
               </div>
 
               {/* CONTENT CONTAINER */}
-              <div className="active-page-content p-8 md:p-12 lg:p-14 h-full flex flex-col relative z-10">
-                <div className="flex-grow overflow-y-auto no-scrollbar pb-10">
-                  <div className="flex flex-col items-center text-center mb-10 border-b border-black/5 pb-6">
-                    <h4 className="text-[20px] font-bold text-black uppercase tracking-[0.4em] mb-4">
-                      {activeSection.title}
-                    </h4>
-                    <span className="text-[11px] text-[#475DB1] font-bold uppercase tracking-[0.2em]">
-                      {activeSection.subtitle || data.activeSectionSubtitle}
-                    </span>
-                  </div>
+              <div className="active-page-content p-0 sm:p-2 md:p-3 h-full flex flex-col relative z-10">
+                <div
+                  data-lenis-prevent
+                  data-lenis-prevent-wheel
+                  data-lenis-prevent-touch
+                  className="flex-grow overflow-y-auto no-scrollbar scroll-smooth w-full h-full overscroll-contain"
+                  style={{
+                    WebkitOverflowScrolling: "touch",
+                    touchAction: "pan-y",
+                    msOverflowStyle: "none",
+                    scrollbarWidth: "none",
+                  }}
+                >
+                  {/* DISPLAY MENU IMAGE OR EMBEDDED PDF */}
+                  <div className="w-full h-full flex justify-center items-start">
+                    {(() => {
+                      const pdfUrl =
+                        activeSection?.pdf ||
+                        (Array.isArray(data.menuPdfs) && data.menuPdfs[sectionIdx]) ||
+                        null;
 
-                  <div className="space-y-10">
-                    {activePage.categories.map((cat, cIdx) => (
-                      <div key={cIdx}>
-                        <h5 className="text-[#475DB1] text-[12px] font-bold uppercase tracking-[0.4em] mb-8 text-center flex items-center gap-8 justify-center">
-                          <span className="w-8 h-[1px] bg-[#475DB1]/30"></span>
-                          {cat.name}
-                          <span className="w-8 h-[1px] bg-[#475DB1]/30"></span>
-                        </h5>
+                      const pageImage =
+                        (activePage as any)?.image ||
+                        (activePage as any)?.pdfImage ||
+                        (activeSection as any)?.image ||
+                        (activeSection as any)?.menuImage ||
+                        (activeSection as any)?.pdfImage;
 
-                        <div className="space-y-8">
-                          {cat.items.map((item, iIdx) => (
-                            <div key={iIdx} className="group hover:translate-x-1.5 transition-transform duration-300">
-                              <div className="flex justify-between items-start gap-8 mb-1">
-                                <div className="flex-grow">
-                                  <h6 className="text-[15px] font-bold text-black uppercase tracking-[0.15em] mb-1 leading-tight group-hover:text-[#475DB1] transition-colors duration-300">
-                                    {item.name}
-                                  </h6>
-                                  {item?.desc && (
-                                    <p className="text-[12px] text-neutral-500 italic font-light lowercase leading-relaxed max-w-[85%]">
-                                      {parseMarkdownLinks(item.desc)}
-                                    </p>
-                                  )}
-                                </div>
-                                <span className="text-[19px] font-serif text-[#475DB1] shrink-0 font-bold">
-                                  {item.price}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
+                      if (pageImage) {
+                        return (
+                          <img
+                            src={pageImage}
+                            alt={activeSection?.title || "Menu Sheet"}
+                            className="w-full h-auto block object-cover rounded-sm"
+                          />
+                        );
+                      }
+
+                      if (pdfUrl && pdfUrl !== "#") {
+                        const isImage =
+                          pdfUrl.endsWith(".jpg") ||
+                          pdfUrl.endsWith(".jpeg") ||
+                          pdfUrl.endsWith(".png") ||
+                          pdfUrl.endsWith(".webp") ||
+                          pdfUrl.endsWith(".svg");
+
+                        if (isImage) {
+                          return (
+                            <img
+                              src={pdfUrl}
+                              alt={activeSection?.title || "Menu Sheet"}
+                              className="w-full h-auto block object-cover rounded-sm"
+                            />
+                          );
+                        }
+
+                        // Display uploaded PDF file in embedded iframe
+                        return (
+                          <iframe
+                            src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                            title={activeSection?.title || "Menu Sheet PDF"}
+                            className="w-full h-full min-h-[650px] border-0 rounded-sm"
+                          />
+                        );
+                      }
+
+                      return (
+                        <img
+                          src="/summer-menu.jpg"
+                          alt={activeSection?.title || "Summer Menu"}
+                          className="w-full h-auto block object-cover rounded-sm"
+                        />
+                      );
+                    })()}
                   </div>
                 </div>
 
@@ -454,13 +448,17 @@ export default function Menu({ data = {} }: { data?: any }) {
                     id="menu-download-btn"
                     onClick={handleDownload}
                     disabled={isDownloading || !activePdfUrl}
-                    title={activePdfUrl ? `Download ${activeSection?.title || "menu"} PDF` : `No PDF available for ${activeSection?.title || "this menu"}`}
+                    title={
+                      activePdfUrl
+                        ? `Download ${activeSection?.title || "menu"} PDF`
+                        : `No PDF available for ${activeSection?.title || "this menu"}`
+                    }
                     className={`transition-colors flex items-center gap-2 ${
                       isDownloading
                         ? "text-[#475DB1] animate-pulse cursor-wait"
                         : activePdfUrl
-                        ? "text-neutral-400 hover:text-[#475DB1] cursor-pointer"
-                        : "text-neutral-300 opacity-40 cursor-not-allowed"
+                          ? "text-neutral-400 hover:text-[#475DB1] cursor-pointer"
+                          : "text-neutral-300 opacity-40 cursor-not-allowed"
                     }`}
                   >
                     <Download size={24} />
@@ -468,7 +466,11 @@ export default function Menu({ data = {} }: { data?: any }) {
 
                   <button
                     onClick={next}
-                    disabled={isFlipping || (sectionIdx === menuSections.length - 1 && pageIdx === activeSection.pages.length - 1)}
+                    disabled={
+                      isFlipping ||
+                      (sectionIdx === menuSections.length - 1 &&
+                        pageIdx === activeSection.pages.length - 1)
+                    }
                     className={`flex items-center gap-4 text-[12px] uppercase tracking-widest font-bold transition-all ${sectionIdx === menuSections.length - 1 && pageIdx === activeSection.pages.length - 1 ? "opacity-0 cursor-default" : "text-black hover:text-[#475DB1] cursor-pointer"}`}
                   >
                     Turn Page <ChevronRight size={20} />
@@ -498,11 +500,27 @@ export default function Menu({ data = {} }: { data?: any }) {
           transform-style: preserve-3d;
         }
         .no-scrollbar::-webkit-scrollbar {
-          display: none;
+          display: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          background: transparent !important;
+        }
+        .no-scrollbar::-webkit-scrollbar-thumb,
+        .no-scrollbar::-webkit-scrollbar-track {
+          display: none !important;
         }
         .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+          -ms-overflow-style: none !important;
+          scrollbar-width: none !important;
+        }
+        .no-scrollbar *::-webkit-scrollbar {
+          display: none !important;
+          width: 0 !important;
+          height: 0 !important;
+        }
+        .no-scrollbar * {
+          -ms-overflow-style: none !important;
+          scrollbar-width: none !important;
         }
       `}</style>
     </section>
