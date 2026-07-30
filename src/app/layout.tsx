@@ -151,6 +151,7 @@ export default async function RootLayout({
               height="0"
               width="0"
               style={{ display: "none", visibility: "hidden" }}
+              title="Google Tag Manager"
             />
           </noscript>
         )}

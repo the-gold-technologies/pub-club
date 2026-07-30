@@ -87,6 +87,7 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
       <div className="w-full grid grid-cols-1 md:grid-cols-2 h-full min-h-[600px] relative z-10">
         {/* Left Side: Content */}
         <div className="p-12 md:p-24 flex flex-col justify-center items-center text-center relative bg-[#FDFBF7] min-h-[550px]">
+          <h2 className="sr-only">Guest Testimonials</h2>
           <div className="max-w-xl w-full flex flex-col justify-center min-h-[350px]">
             {testimonials[active] && (
               <div className="testimonial-content space-y-10">

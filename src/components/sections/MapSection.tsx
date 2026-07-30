@@ -37,6 +37,7 @@ export default function MapSection({ data = {} }: MapSectionProps) {
         <div className="relative w-full h-[450px] rounded-3xl overflow-hidden shadow-xl border border-slate-200/60 bg-white p-2">
           <iframe
             src={embedUrl}
+            title="Google Maps Location of The Seven Stars"
             width="100%"
             height="100%"
             style={{ border: 0 }}

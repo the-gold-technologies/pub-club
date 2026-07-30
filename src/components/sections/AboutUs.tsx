@@ -122,12 +122,12 @@ export default function AboutUs({ data = {} }: AboutUsProps) {
                 <span className="w-6 h-[1px] bg-[#475DB1]"></span>
                 {data.upperTag}
               </span>
-              <h3 className="text-4xl md:text-5xl font-serif text-black leading-tight tracking-tight">
+              <h2 className="text-4xl md:text-5xl font-serif text-black leading-tight tracking-tight">
                 {data.headingLabel} <br />
                 <em className="not-italic text-[#475DB1] font-light">
                   {data.headingItalicHighlight}
                 </em>
-              </h3>
+              </h2>
             </div>
 
             {Array.isArray(data.paragraphs) &&

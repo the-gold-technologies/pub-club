@@ -251,6 +251,7 @@ export default function Footer() {
                 href={footerCMS.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram Page"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Instagram size={15} />
@@ -259,6 +260,7 @@ export default function Footer() {
                 href={footerCMS.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Facebook Page"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Facebook size={15} />
@@ -267,6 +269,7 @@ export default function Footer() {
                 href={footerCMS.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="YouTube Channel"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Youtube size={15} />

@@ -318,6 +318,7 @@ export default function Hero({ data = {} }: HeroProps) {
               href={data.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Follow us on Instagram"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Instagram size={15} />
@@ -326,12 +327,16 @@ export default function Hero({ data = {} }: HeroProps) {
               href={data.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Follow us on Facebook"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Facebook size={15} />
             </a>
             <a
               href={data.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Subscribe to our YouTube Channel"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Youtube size={15} />

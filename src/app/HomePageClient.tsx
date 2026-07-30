@@ -38,16 +38,17 @@ export default function HomePageClient() {
     <div className="min-h-screen bg-white font-sans selection:bg-primary-500 selection:text-white overflow-x-hidden">
       <PageLoader isLoading={loading} />
       <Navbar />
-      <Hero data={sections["HeroSection"] || {}} />
-
-      <AboutUs data={sections["AboutUs"] || {}} />
-      {/* <EventGallery data={sections["EventGallery"] || {}} /> */}
-      <FeatureTiles data={sections["FeatureTiles"] || {}} />
-      <MenuFeatured data={sections["MenuFeatured"] || {}} />
-      {/* <Gallery data={sections["Gallery"] || {}} /> */}
-      <Testimonials data={sections["Testimonials"] || {}} />
-      <ReadyToVisit data={sections["ReadyToVisit"] || {}} />
-      <MapSection data={contactData} />
+      <main id="main-content" tabIndex={-1}>
+        <Hero data={sections["HeroSection"] || {}} />
+        <AboutUs data={sections["AboutUs"] || {}} />
+        {/* <EventGallery data={sections["EventGallery"] || {}} /> */}
+        <FeatureTiles data={sections["FeatureTiles"] || {}} />
+        <MenuFeatured data={sections["MenuFeatured"] || {}} />
+        {/* <Gallery data={sections["Gallery"] || {}} /> */}
+        <Testimonials data={sections["Testimonials"] || {}} />
+        <ReadyToVisit data={sections["ReadyToVisit"] || {}} />
+        <MapSection data={contactData} />
+      </main>
       <FirstTimePopupModal />
       <Footer />
     </div>

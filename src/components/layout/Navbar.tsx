@@ -243,10 +243,10 @@ export default function Navbar() {
         >
           {/* Logo */}
           <div className="nav-logo flex-shrink-0 flex items-center w-auto lg:w-1/4">
-            <Link href="/" className="w-36">
+            <Link href="/" className="w-36" aria-label="Seven Stars Pub Home">
               <img
                 src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2023/06/FINAL-SEVEN-STARS-GREY-BACKGROUND-2023-trimmed.png"
-                alt=""
+                alt="Seven Stars Pub Logo"
                 className="w-full h-full object-contain"
               />
             </Link>
@@ -342,6 +342,7 @@ export default function Navbar() {
             <div className="flex items-center space-x-2">
               <Link
                 href="/contact"
+                aria-label="Contact Us"
                 className="relative group w-12 h-12 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 text-white hover:bg-[#475DB1] hover:text-white transition-all duration-300 flex items-center justify-center shadow-lg"
               >
                 <Contact size={20} />

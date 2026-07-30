@@ -67,12 +67,14 @@ export default function AboutPage() {
       <PageLoader isLoading={loading} />
       <Navbar />
 
-      <AboutHero data={hero} />
-      <AboutRoots data={roots} />
-      <AboutPhilosophy data={philosophy} />
-      <AboutExperience data={experience} />
-      <AboutAmenities data={amenitiesSection} />
-      <AboutCta data={cta} />
+      <main id="main-content" tabIndex={-1}>
+        <AboutHero data={hero} />
+        <AboutRoots data={roots} />
+        <AboutPhilosophy data={philosophy} />
+        <AboutExperience data={experience} />
+        <AboutAmenities data={amenitiesSection} />
+        <AboutCta data={cta} />
+      </main>
 
       <Footer />
     </div>
