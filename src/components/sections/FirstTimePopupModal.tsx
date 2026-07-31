@@ -289,11 +289,14 @@ export default function FirstTimePopupModal() {
                   <input
                     type="text"
                     id="first-time-name"
+                    autoComplete="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:ring-1 focus:ring-[#475DB1] focus:border-[#475DB1] focus:outline-none transition-all placeholder:text-neutral-300"
                     placeholder="Your name"
                     required
+                    aria-required="true"
+                    aria-describedby="first-time-modal-status"
                   />
                 </div>
 
@@ -308,11 +311,14 @@ export default function FirstTimePopupModal() {
                   <input
                     type="email"
                     id="first-time-email"
+                    autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:ring-1 focus:ring-[#475DB1] focus:border-[#475DB1] focus:outline-none transition-all placeholder:text-neutral-300"
                     placeholder="Your email"
                     required
+                    aria-required="true"
+                    aria-describedby="first-time-modal-status"
                   />
                 </div>
               </div>
@@ -331,6 +337,7 @@ export default function FirstTimePopupModal() {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:ring-1 focus:ring-[#475DB1] focus:border-[#475DB1] focus:outline-none transition-all appearance-none cursor-pointer pr-10"
+                    aria-describedby="first-time-modal-status"
                   >
                     <option value="" disabled>
                       Select a subject
@@ -341,7 +348,7 @@ export default function FirstTimePopupModal() {
                     </option>
                     <option value="General Question">General Question</option>
                   </select>
-                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-neutral-400">
+                  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-neutral-400" aria-hidden="true">
                     <svg
                       className="w-4 h-4"
                       fill="none"
@@ -375,21 +382,25 @@ export default function FirstTimePopupModal() {
                   className="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-neutral-800 text-xs focus:ring-1 focus:ring-[#475DB1] focus:border-[#475DB1] focus:outline-none transition-all resize-none placeholder:text-neutral-300"
                   placeholder="Tell us about your enquiry..."
                   required
+                  aria-required="true"
+                  aria-describedby="first-time-modal-status"
                 />
               </div>
 
               {/* Feedback messages */}
-              {submitStatus === "success" && (
-                <p className="text-emerald-600 text-xs font-semibold mt-2 transition-opacity duration-300">
-                  ✓ Thank you! Enquiry submitted successfully.
-                </p>
-              )}
+              <div id="first-time-modal-status" role="status" aria-live="polite">
+                {submitStatus === "success" && (
+                  <p className="text-emerald-600 text-xs font-semibold mt-2 transition-opacity duration-300">
+                    ✓ Thank you! Enquiry submitted successfully.
+                  </p>
+                )}
 
-              {submitStatus === "error" && (
-                <p className="text-rose-600 text-xs font-semibold mt-2 transition-opacity duration-300">
-                  ✗ {errorMsg}
-                </p>
-              )}
+                {submitStatus === "error" && (
+                  <p className="text-rose-600 text-xs font-semibold mt-2 transition-opacity duration-300">
+                    ✗ {errorMsg}
+                  </p>
+                )}
+              </div>
 
               {/* Submit Button */}
               <div className="pt-4">

@@ -341,6 +341,9 @@ export default function Navbar() {
             >
               <Link
                 href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Book Table on OpenTable (opens in a new tab)"
                 className="hidden sm:flex px-6 py-2.5 text-sm font-medium rounded-full bg-[#475DB1] text-white hover:bg-[#475DB1]/90 shadow-[0_0_15px_rgba(202,158,90,0.2)] hover:shadow-[0_0_20px_rgba(202,158,90,0.4)] whitespace-nowrap transition-all duration-300"
               >
                 Book Table
@@ -464,6 +467,9 @@ export default function Navbar() {
 
           <Link
             href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Book Table on OpenTable (opens in a new tab)"
             onClick={closeMobileMenu}
             className="mt-8 px-6 py-3 text-center text-sm font-medium rounded-full bg-[#475DB1] text-white hover:bg-[#475DB1]/90 transition-colors"
           >

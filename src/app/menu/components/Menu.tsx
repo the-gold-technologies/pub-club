@@ -448,9 +448,10 @@ export default function Menu({ data = {} }: { data?: any }) {
                     id="menu-download-btn"
                     onClick={handleDownload}
                     disabled={isDownloading || !activePdfUrl}
+                    aria-label={`Download ${activeSection?.title || "Menu"} (PDF Format)`}
                     title={
                       activePdfUrl
-                        ? `Download ${activeSection?.title || "menu"} PDF`
+                        ? `Download ${activeSection?.title || "menu"} PDF (PDF Format)`
                         : `No PDF available for ${activeSection?.title || "this menu"}`
                     }
                     className={`transition-colors flex items-center gap-2 ${

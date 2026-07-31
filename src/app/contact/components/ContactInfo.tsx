@@ -209,34 +209,40 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                   <input
                     type="text"
                     id="contact-info-name"
+                    autoComplete="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent"
                     placeholder="Name"
                     required
+                    aria-required="true"
+                    aria-describedby="contact-info-status"
                   />
                   <label
                     htmlFor="contact-info-name"
                     className="absolute left-0 -top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:-top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                   >
-                    Name
+                    Name <span className="text-red-500">*</span>
                   </label>
                 </div>
                 <div className="relative pt-4">
                   <input
                     type="email"
                     id="contact-info-email"
+                    autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent"
                     placeholder="Email"
                     required
+                    aria-required="true"
+                    aria-describedby="contact-info-status"
                   />
                   <label
                     htmlFor="contact-info-email"
                     className="absolute left-0 -top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:-top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                   >
-                    Email
+                    Email <span className="text-red-500">*</span>
                   </label>
                 </div>
               </div>
@@ -247,6 +253,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors appearance-none cursor-pointer"
+                  aria-describedby="contact-info-status"
                 >
                   <option value="" disabled>
                     Select a subject
@@ -263,7 +270,7 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                 >
                   Subject
                 </label>
-                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none text-slate-400 mt-4">
+                <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none text-slate-400 mt-4" aria-hidden="true">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -289,26 +296,30 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                   className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent resize-none"
                   placeholder="Message"
                   required
+                  aria-required="true"
+                  aria-describedby="contact-info-status"
                 ></textarea>
                 <label
                   htmlFor="contact-info-message"
                   className="absolute left-0 -top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:-top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                 >
-                  Message
+                  Message <span className="text-red-500">*</span>
                 </label>
               </div>
 
-              {submitStatus === "success" && (
-                <p className="text-emerald-600 text-sm font-semibold mt-4">
-                  ✓ Thank you! Your enquiry has been submitted successfully.
-                </p>
-              )}
+              <div id="contact-info-status" role="status" aria-live="polite">
+                {submitStatus === "success" && (
+                  <p className="text-emerald-600 text-sm font-semibold mt-4">
+                    ✓ Thank you! Your enquiry has been submitted successfully.
+                  </p>
+                )}
 
-              {submitStatus === "error" && (
-                <p className="text-rose-600 text-sm font-semibold mt-4">
-                  ✗ {errorMsg}
-                </p>
-              )}
+                {submitStatus === "error" && (
+                  <p className="text-rose-600 text-sm font-semibold mt-4">
+                    ✗ {errorMsg}
+                  </p>
+                )}
+              </div>
 
               <button
                 type="submit"

@@ -20,6 +20,22 @@ p {
 /* Custom Utilities for smooth scrolling and glassmorphism */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+[id], section, main {
+  scroll-margin-top: 100px;
+}
+
+/* Accessibility Focus States: Visible high-contrast focus ONLY when tabbing via keyboard */
+*:focus-visible {
+  outline: 2px solid #475DB1 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 4px rgba(71, 93, 177, 0.25) !important;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none !important;
 }
 
 .glass {

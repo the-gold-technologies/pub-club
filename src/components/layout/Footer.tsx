@@ -202,7 +202,8 @@ export default function Footer() {
         {footerCMS.backgroundImage && (
           <Image
             src={footerCMS.backgroundImage}
-            alt="Atmospheric Footer Background"
+            alt=""
+            aria-hidden="true"
             fill
             className="object-cover"
           />
@@ -251,7 +252,7 @@ export default function Footer() {
                 href={footerCMS.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram Page"
+                aria-label="Instagram Page (opens in a new tab)"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Instagram size={15} />
@@ -260,7 +261,7 @@ export default function Footer() {
                 href={footerCMS.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook Page"
+                aria-label="Facebook Page (opens in a new tab)"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Facebook size={15} />
@@ -269,7 +270,7 @@ export default function Footer() {
                 href={footerCMS.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="YouTube Channel"
+                aria-label="YouTube Channel (opens in a new tab)"
                 className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-primary-300 hover:text-white hover:border-white transition-all"
               >
                 <Youtube size={15} />
@@ -386,6 +387,7 @@ export default function Footer() {
             href="https://thegoldtechnologies.com/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="TGT (opens in a new tab)"
             className="font-bold underline decoration-white/20 transition-colors"
           >
             TGT

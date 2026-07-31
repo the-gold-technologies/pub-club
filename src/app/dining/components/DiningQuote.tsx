@@ -42,7 +42,8 @@ export default function DiningQuote({ data = {} }: DiningQuoteProps) {
         {data.backgroundImage && (
           <Image
             src={data.backgroundImage}
-            alt="Atmosphere"
+            alt=""
+            aria-hidden="true"
             fill
             className="object-cover"
           />

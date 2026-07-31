@@ -46,7 +46,8 @@ export default function MenuCellar({ data = {} }: { data?: any }) {
         {data.backgroundImage && (
           <Image
             src={data.backgroundImage}
-            alt="Cellar Background"
+            alt=""
+            aria-hidden="true"
             fill
             className="object-cover"
           />

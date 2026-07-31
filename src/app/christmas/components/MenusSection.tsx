@@ -200,6 +200,7 @@ export const MenusSection = ({
                 <a
                   href={`/api/download?url=${encodeURIComponent(currentMenu.link)}`}
                   download
+                  aria-label={`Download ${currentMenu.title || "Festive"} Menu (PDF Format)`}
                   className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#B91C1C] hover:bg-[#990000] text-white uppercase tracking-widest text-[10px] font-bold rounded-full transition-all shadow-[0_0_15px_rgba(185,28,28,0.2)]"
                 >
                   <Download size={14} /> Download PDF Menu <SleighIcon />

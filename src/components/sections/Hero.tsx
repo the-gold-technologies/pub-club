@@ -265,6 +265,7 @@ export default function Hero({ data = {} }: HeroProps) {
                       href={data.googleReviewsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`${data.googleReviewsCount || ""} Google reviews (opens in a new tab)`}
                       className="text-sm font-medium text-gray-300 hover:text-white underline underline-offset-4 decoration-white/20 hover:decoration-white transition-all duration-200 pt-0.5"
                     >
                       {data.googleReviewsCount} Google reviews
@@ -312,13 +313,12 @@ export default function Hero({ data = {} }: HeroProps) {
             </div>
           </div>
 
-          {/* Social icons */}
           <div className="hidden md:flex gap-2">
             <a
               href={data.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Follow us on Instagram"
+              aria-label="Follow us on Instagram (opens in a new tab)"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Instagram size={15} />
@@ -327,7 +327,7 @@ export default function Hero({ data = {} }: HeroProps) {
               href={data.facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Follow us on Facebook"
+              aria-label="Follow us on Facebook (opens in a new tab)"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Facebook size={15} />
@@ -336,7 +336,7 @@ export default function Hero({ data = {} }: HeroProps) {
               href={data.youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Subscribe to our YouTube Channel"
+              aria-label="Subscribe to our YouTube Channel (opens in a new tab)"
               className="hero-social w-9 h-9 rounded-full border border-white/10 bg-black/40 backdrop-blur-md flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all shadow-lg"
             >
               <Youtube size={15} />

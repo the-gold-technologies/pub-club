@@ -224,17 +224,20 @@ export default function ContactPopupModal({
                 <input
                   type="text"
                   id="modal-contact-name"
+                  autoComplete="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent text-sm"
                   placeholder="Name"
                   required
+                  aria-required="true"
+                  aria-describedby="contact-modal-status"
                 />
                 <label
                   htmlFor="modal-contact-name"
                   className="absolute left-0 top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                 >
-                  Name
+                  Name <span className="text-red-500">*</span>
                 </label>
               </div>
 
@@ -243,17 +246,20 @@ export default function ContactPopupModal({
                 <input
                   type="email"
                   id="modal-contact-email"
+                  autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent text-sm"
                   placeholder="Email"
                   required
+                  aria-required="true"
+                  aria-describedby="contact-modal-status"
                 />
                 <label
                   htmlFor="modal-contact-email"
                   className="absolute left-0 top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
                 >
-                  Email
+                  Email <span className="text-red-500">*</span>
                 </label>
               </div>
             </div>
@@ -265,6 +271,7 @@ export default function ContactPopupModal({
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors appearance-none cursor-pointer text-sm pr-8"
+                aria-describedby="contact-modal-status"
               >
                 <option value="" disabled>
                   Select a subject
@@ -281,7 +288,7 @@ export default function ContactPopupModal({
               >
                 Subject
               </label>
-              <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none text-slate-400 mt-4">
+              <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none text-slate-400 mt-4" aria-hidden="true">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -308,27 +315,31 @@ export default function ContactPopupModal({
                 className="peer w-full bg-transparent border-b border-slate-300 py-2 text-slate-900 font-light focus:outline-none focus:border-[#475DB1] transition-colors placeholder-transparent resize-none text-sm"
                 placeholder="Message"
                 required
+                aria-required="true"
+                aria-describedby="contact-modal-status"
               ></textarea>
               <label
                 htmlFor="modal-contact-message"
                 className="absolute left-0 top-0 text-[10px] uppercase tracking-widest font-bold text-slate-400 transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-slate-400 peer-placeholder-shown:font-light peer-placeholder-shown:top-6 peer-placeholder-shown:normal-case peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:font-bold peer-focus:text-[#475DB1]"
               >
-                Message
+                Message <span className="text-red-500">*</span>
               </label>
             </div>
 
             {/* Feedback messages */}
-            {submitStatus === "success" && (
-              <p className="text-emerald-600 text-sm font-semibold mt-4 transition-opacity duration-300">
-                ✓ Thank you! Your enquiry has been submitted successfully.
-              </p>
-            )}
+            <div id="contact-modal-status" role="status" aria-live="polite">
+              {submitStatus === "success" && (
+                <p className="text-emerald-600 text-sm font-semibold mt-4 transition-opacity duration-300">
+                  ✓ Thank you! Your enquiry has been submitted successfully.
+                </p>
+              )}
 
-            {submitStatus === "error" && (
-              <p className="text-rose-600 text-sm font-semibold mt-4 transition-opacity duration-300">
-                ✗ {errorMsg}
-              </p>
-            )}
+              {submitStatus === "error" && (
+                <p className="text-rose-600 text-sm font-semibold mt-4 transition-opacity duration-300">
+                  ✗ {errorMsg}
+                </p>
+              )}
+            </div>
 
             {/* Submit Button */}
             <button
