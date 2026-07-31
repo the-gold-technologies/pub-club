@@ -388,7 +388,7 @@ export default function BlogDetailLayout({
       {/* Continue Reading Section (Related Posts Grid) */}
       <section className="reveal-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-neutral-200">
         <div className="space-y-2 mb-10 text-center md:text-left">
-          <h3 className="text-2xl sm:text-3xl font-serif font-bold text-neutral-900">Continue Reading</h3>
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-neutral-900">Continue Reading</h2>
           <p className="text-sm text-neutral-500 font-light">More on design, engineering, and craft</p>
         </div>
 
@@ -420,9 +420,9 @@ export default function BlogDetailLayout({
               )}
 
               <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white flex flex-col gap-4">
-                <h2 className="text-lg font-serif font-bold leading-snug group-hover:text-[#8fa2f4] transition-colors duration-300 line-clamp-2">
+                <h3 className="text-lg font-serif font-bold leading-snug group-hover:text-[#8fa2f4] transition-colors duration-300 line-clamp-2">
                   {post.title}
-                </h2>
+                </h3>
                 <div className="grid grid-cols-12 items-center gap-2 border-t border-white/10 pt-4">
                   <div className="col-span-6 pr-2">
                     <p className="text-[10px] text-slate-300 font-light leading-relaxed line-clamp-2">

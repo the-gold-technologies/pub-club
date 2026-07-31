@@ -231,12 +231,20 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav
-      ref={navRef}
-      className={`absolute top-0 left-0 w-full z-50 transition-all duration-700 ease-in-out bg-transparent border-b border-transparent ${
-        isScrolled ? "py-3" : "py-5"
-      }`}
-    >
+    <header className="absolute top-0 left-0 w-full z-50">
+      {/* Skip to Main Content Link for Keyboard Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-6 focus:py-3 focus:bg-[#475DB1] focus:text-white focus:font-semibold focus:rounded-full focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white transition-all"
+      >
+        Skip to main content
+      </a>
+      <nav
+        ref={navRef}
+        className={`w-full transition-all duration-700 ease-in-out bg-transparent border-b border-transparent ${
+          isScrolled ? "py-3" : "py-5"
+        }`}
+      >
       <div className="relative z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex justify-between items-center transition-all duration-700 ${isScrolled ? "h-14" : "h-16"}`}
@@ -265,10 +273,11 @@ export default function Navbar() {
                           ? "bg-white text-[#475DB1] shadow-md font-semibold"
                           : "text-white/85 hover:text-white hover:bg-white/10"
                       }`}
+                      aria-haspopup="true"
                     >
                       {getDisplayName(item)}
                       <svg
-                        className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 group-hover:rotate-180 ${
+                        className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180 ${
                           isLinkActive(item.href, item.dropdown)
                             ? "text-[#475DB1]"
                             : "text-white/80"
@@ -285,7 +294,7 @@ export default function Navbar() {
                         />
                       </svg>
                     </Link>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 w-56">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 z-50 w-56">
                       <div className="py-2 bg-[#475DB1]/95 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
                         {item.dropdown.map((subItem) => {
                           const isSubActive = pathname === subItem.href;
@@ -463,5 +472,6 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    </header>
   );
 }

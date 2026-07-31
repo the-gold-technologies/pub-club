@@ -218,6 +218,9 @@ export default function GalleryGrid({ data = {} }: { data?: any }) {
       {/* Lightbox Modal */}
       {selectedItemIndex !== null && filteredItems[selectedItemIndex] && (
         <div 
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photo Lightbox"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm select-none"
           onClick={closeLightbox}
         >

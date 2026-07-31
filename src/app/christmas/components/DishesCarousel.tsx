@@ -144,9 +144,23 @@ export const DishesCarousel = ({
 
         {/* Dish Detail Carousel Item */}
         <div
-          className="bg-white rounded-3xl p-8 sm:p-12 border border-black/5 shadow-sm overflow-hidden relative"
+          tabIndex={0}
+          role="region"
+          aria-label="Dishes Carousel. Use Left and Right arrow keys to navigate."
+          className="bg-white rounded-3xl p-8 sm:p-12 border border-black/5 shadow-sm overflow-hidden relative focus:outline-none focus:ring-2 focus:ring-[#B91C1C]"
           onMouseEnter={() => setIsAutoplayPaused(true)}
           onMouseLeave={() => setIsAutoplayPaused(false)}
+          onFocus={() => setIsAutoplayPaused(true)}
+          onBlur={() => setIsAutoplayPaused(false)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              prevDish();
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              nextDish();
+            }
+          }}
         >
           <div
             ref={dishContentRef}

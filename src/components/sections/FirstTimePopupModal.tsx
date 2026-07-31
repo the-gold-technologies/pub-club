@@ -42,25 +42,74 @@ export default function FirstTimePopupModal() {
       .catch((err) => console.error("Error fetching popup config:", err));
   }, [fetchPage]);
 
-  // Disable background scrolling when modal is open
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  // Disable background scrolling and focus management when modal is open
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
       document.body.style.overflow = "hidden";
+
+      // Focus first interactive element inside modal
+      const timer = setTimeout(() => {
+        if (modalRef.current) {
+          const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          if (focusable.length > 0) {
+            focusable[0].focus();
+          }
+        }
+      }, 50);
+
+      return () => clearTimeout(timer);
     } else {
       document.body.style.overflow = "";
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus();
+      }
     }
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
 
-  // Handle escape key to close modal
+  // Handle keydown for escape and focus trap
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+      if (!isOpen) return;
+
+      if (e.key === "Escape") {
         handleClose();
+        return;
+      }
+
+      if (e.key === "Tab" && modalRef.current) {
+        const focusables = Array.from(
+          modalRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => !el.hasAttribute("disabled"));
+
+        if (focusables.length === 0) return;
+
+        const firstElement = focusables[0];
+        const lastElement = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
