@@ -161,9 +161,9 @@ export default function ContactPopupModal({
 
         {/* Form Content */}
         <div>
-          <h3 id="contact-modal-title" className="text-3xl font-serif text-slate-900 mb-2">
+          <h2 id="contact-modal-title" className="text-3xl font-serif text-slate-900 mb-2">
             Send an Enquiry
-          </h3>
+          </h2>
           <p className="text-slate-500 font-light mb-12 text-sm">
             We aim to respond to all enquiries within 24 hours.
           </p>

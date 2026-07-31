@@ -79,7 +79,7 @@ export default async function RootLayout({
         {globalSEO?.favicon && (
           <link
             rel="icon"
-            href={`${globalSEO.favicon}?v=${globalSEO.updatedAt ? new Date(globalSEO.updatedAt).getTime() : '1'}`}
+            href={`${globalSEO.favicon}?v=${globalSEO.updatedAt ? new Date(globalSEO.updatedAt).getTime() : "1"}`}
             type={
               globalSEO.favicon.match(/\.(jpg|jpeg)$/i)
                 ? "image/jpeg"
@@ -143,13 +143,6 @@ export default async function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} ${ebGaramond.variable} font-sans antialiased text-black bg-white`}
       >
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[10000] focus:px-6 focus:py-3 focus:bg-[#475DB1] focus:text-white focus:rounded-full focus:font-bold focus:shadow-2xl"
-        >
-          Skip to main content
-        </a>
-
         {/* GTM Noscript */}
         {globalSEO?.gtmId && (
           <noscript>

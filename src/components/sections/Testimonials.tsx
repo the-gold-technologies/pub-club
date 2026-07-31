@@ -103,9 +103,9 @@ export default function Testimonials({ data = {} }: TestimonialsProps) {
                 </p>
 
                 <div className="space-y-2">
-                  <h4 className="text-sm tracking-[0.4em] text-black uppercase font-bold">
+                  <h3 className="text-sm tracking-[0.4em] text-black uppercase font-bold">
                     {testimonials[active].author}
-                  </h4>
+                  </h3>
                   <p className="text-[11px] tracking-[0.3em] text-[#475DB1] uppercase font-bold opacity-80">
                     {testimonials[active].role}
                   </p>

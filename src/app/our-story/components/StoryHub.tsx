@@ -35,9 +35,9 @@ export default function StoryHub({ data }: { data: any }) {
                 <Music className="text-[#475DB1] w-6 h-6" />
               </div>
               <div>
-                <h4 className="font-bold text-slate-900 mb-1">
+                <h3 className="font-bold text-slate-900 mb-1">
                   {data.cardTitle}
-                </h4>
+                </h3>
                 <p className="text-sm text-slate-500 leading-relaxed">
                   {parseMarkdownLinks(data.cardDesc)}
                 </p>

@@ -137,9 +137,9 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
               {/* Location & Contact Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
                 <div>
-                  <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-4">
+                  <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-4">
                     Location
-                  </h4>
+                  </h3>
                   <address className="not-italic text-slate-900 font-light leading-loose">
                     {data.locationTitle}
                     <br />
@@ -149,9 +149,9 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                   </address>
                 </div>
                 <div>
-                  <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-4">
+                  <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-4">
                     Contact
-                  </h4>
+                  </h3>
                   <div className="text-slate-900 font-light leading-loose flex flex-col gap-1">
                     <a
                       href={`tel:${data.phoneNumber?.replace(/\s+/g, "")}`}
@@ -171,9 +171,9 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
 
               {/* Opening Hours */}
               <div>
-                <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-6">
+                <h3 className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-6">
                   Opening Hours
-                </h4>
+                </h3>
                 <div className="max-w-md space-y-3 text-slate-900 font-light">
                   {Array.isArray(data.openingHours) &&
                     data.openingHours.map((oh: any, idx: number) => (

@@ -78,9 +78,9 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
                   <Users size={18} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-white text-sm uppercase tracking-widest mb-1">
+                  <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-1">
                     {data.capacityTitle}
-                  </h4>
+                  </h3>
                   <p className="text-slate-400 font-light text-sm">
                     {parseMarkdownLinks(data.capacityDesc)}
                   </p>
@@ -91,9 +91,9 @@ export default function DiningBarn({ data = {} }: DiningBarnProps) {
                   <GlassWater size={18} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-white text-sm uppercase tracking-widest mb-1">
+                  <h3 className="font-bold text-white text-sm uppercase tracking-widest mb-1">
                     {data.beerTentTitle}
-                  </h4>
+                  </h3>
                   <p className="text-slate-400 font-light text-sm">
                     {parseMarkdownLinks(data.beerTentDesc)}
                   </p>

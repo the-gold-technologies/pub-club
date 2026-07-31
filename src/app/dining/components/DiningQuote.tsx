@@ -49,11 +49,11 @@ export default function DiningQuote({ data = {} }: DiningQuoteProps) {
         )}
       </div>
       <div className="max-w-4xl mx-auto px-4 text-center reveal-section relative z-10">
-        <h3 className="text-3xl md:text-5xl font-serif text-white leading-tight italic font-light whitespace-pre-line">
+        <h2 className="text-3xl md:text-5xl font-serif text-white leading-tight italic font-light whitespace-pre-line">
           &quot;{data.quotePart1}{" "}
           <span className="text-[#475DB1] not-italic">{data.quoteHighlight}</span>
           &quot;
-        </h3>
+        </h2>
       </div>
     </section>
   );

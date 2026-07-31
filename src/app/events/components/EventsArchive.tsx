@@ -51,9 +51,9 @@ export default function EventsArchive({ data = {} }: { data?: any }) {
               <span className="text-[9px] tracking-widest text-[#475DB1] uppercase font-bold block">
                 {data.title}
               </span>
-              <h3 className="text-2xl font-serif text-slate-900 tracking-tight">
+              <h2 className="text-2xl font-serif text-slate-900 tracking-tight">
                 {data.subtitle}
-              </h3>
+              </h2>
             </div>
             <p className="text-xs text-slate-400 font-light italic max-w-sm">
               {parseMarkdownLinks(data.description)}
@@ -82,9 +82,9 @@ export default function EventsArchive({ data = {} }: { data?: any }) {
                           <span className="text-[8px] tracking-widest text-[#475DB1] uppercase font-bold block mb-1">
                             Archive Feature
                           </span>
-                          <h4 className="text-white font-serif text-base leading-snug">
+                          <h3 className="text-white font-serif text-base leading-snug">
                             {ev.name}
-                          </h4>
+                          </h3>
                         </div>
                       </div>
                     </div>

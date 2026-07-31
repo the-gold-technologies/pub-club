@@ -200,9 +200,9 @@ export default function FirstTimePopupModal() {
               />{" "}
               {popupWelcome}
             </div>
-            <h4 className="font-serif text-3xl tracking-wide leading-tight drop-shadow-md">
+            <p className="font-serif text-3xl tracking-wide leading-tight drop-shadow-md">
               {popupImageTitle}
-            </h4>
+            </p>
             <p className="text-[10px] uppercase tracking-widest text-neutral-300 mt-1.5 drop-shadow-sm font-bold">
               {popupImageSubtitle}
             </p>
@@ -219,9 +219,9 @@ export default function FirstTimePopupModal() {
               <span className="text-[9px] tracking-[0.4em] text-[#475DB1] uppercase font-bold block mb-1">
                 Get In Touch
               </span>
-              <h3 id="first-time-modal-title" className="text-2xl sm:text-3xl font-serif text-neutral-900 tracking-tight leading-none mb-2">
+              <h2 id="first-time-modal-title" className="text-2xl sm:text-3xl font-serif text-neutral-900 tracking-tight leading-none mb-2">
                 {popupTitle}
-              </h3>
+              </h2>
               <p className="text-neutral-500 font-serif font-light text-xs leading-relaxed">
                 {parseMarkdownLinks(popupDesc)}
               </p>
