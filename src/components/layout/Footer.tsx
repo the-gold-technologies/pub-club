@@ -231,9 +231,10 @@ export default function Footer() {
 
           <Link
             href={footerCMS.ctaUrl || "#"}
+            aria-label={footerCMS.ctaLabel || "Book Now"}
             className="footer-cta self-start md:self-end flex items-center justify-center px-8 py-4 bg-[#475DB1] hover:bg-[#475DB1]/90 text-white uppercase tracking-widest text-[12px] font-bold transition-all rounded-full group shadow-lg hover:shadow-primary-600/20"
           >
-            <span>{footerCMS.ctaLabel}</span>
+            <span>{footerCMS.ctaLabel || "Book Now"}</span>
           </Link>
         </div>
 
@@ -249,7 +250,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3 pt-2">
               <a
-                href={footerCMS.instagramUrl}
+                href={footerCMS.instagramUrl || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram Page (opens in a new tab)"
@@ -258,7 +259,7 @@ export default function Footer() {
                 <Instagram size={15} />
               </a>
               <a
-                href={footerCMS.facebookUrl}
+                href={footerCMS.facebookUrl || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook Page (opens in a new tab)"
@@ -267,7 +268,7 @@ export default function Footer() {
                 <Facebook size={15} />
               </a>
               <a
-                href={footerCMS.youtubeUrl}
+                href={footerCMS.youtubeUrl || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="YouTube Channel (opens in a new tab)"
@@ -337,24 +338,30 @@ export default function Footer() {
                       ))}
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone size={14} className="text-primary-400 shrink-0" />
-                <a
-                  href={`tel:${footerCMS.phoneNumber}`}
-                  className="text-white/90 hover:text-white text-sm font-light transition-colors"
-                >
-                  {footerCMS.phoneNumber}
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail size={14} className="text-primary-400 shrink-0" />
-                <a
-                  href={`mailto:${footerCMS.emailAddress}`}
-                  className="text-white/90 hover:text-white text-sm font-light transition-colors"
-                >
-                  {footerCMS.emailAddress}
-                </a>
-              </li>
+              {footerCMS.phoneNumber && (
+                <li className="flex items-center gap-3">
+                  <Phone size={14} className="text-primary-400 shrink-0" />
+                  <a
+                    href={`tel:${footerCMS.phoneNumber.replace(/\s+/g, "")}`}
+                    aria-label={`Call us at ${footerCMS.phoneNumber}`}
+                    className="text-white/90 hover:text-white text-sm font-light transition-colors"
+                  >
+                    {footerCMS.phoneNumber}
+                  </a>
+                </li>
+              )}
+              {footerCMS.emailAddress && (
+                <li className="flex items-center gap-3">
+                  <Mail size={14} className="text-primary-400 shrink-0" />
+                  <a
+                    href={`mailto:${footerCMS.emailAddress}`}
+                    aria-label={`Email us at ${footerCMS.emailAddress}`}
+                    className="text-white/90 hover:text-white text-sm font-light transition-colors"
+                  >
+                    {footerCMS.emailAddress}
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>

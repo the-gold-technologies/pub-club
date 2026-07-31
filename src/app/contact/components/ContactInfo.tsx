@@ -153,18 +153,24 @@ export default function ContactInfo({ data = {} }: { data?: any }) {
                     Contact
                   </h3>
                   <div className="text-slate-900 font-light leading-loose flex flex-col gap-1">
-                    <a
-                      href={`tel:${data.phoneNumber?.replace(/\s+/g, "")}`}
-                      className="hover:text-[#475DB1] transition-colors"
-                    >
-                      {data.phoneNumber}
-                    </a>
-                    <a
-                      href={`mailto:${data.emailAddress}`}
-                      className="hover:text-[#475DB1] transition-colors"
-                    >
-                      {data.emailAddress}
-                    </a>
+                    {data.phoneNumber && (
+                      <a
+                        href={`tel:${data.phoneNumber.replace(/\s+/g, "")}`}
+                        aria-label={`Call us at ${data.phoneNumber}`}
+                        className="hover:text-[#475DB1] transition-colors"
+                      >
+                        {data.phoneNumber}
+                      </a>
+                    )}
+                    {data.emailAddress && (
+                      <a
+                        href={`mailto:${data.emailAddress}`}
+                        aria-label={`Email us at ${data.emailAddress}`}
+                        className="hover:text-[#475DB1] transition-colors"
+                      >
+                        {data.emailAddress}
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
