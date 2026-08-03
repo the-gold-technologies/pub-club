@@ -118,7 +118,7 @@ export default function Navbar() {
     });
 
     if (!blogItem) {
-      blogItem = { name: "Blog", href: "/blog", dropdown: undefined };
+      blogItem = { name: "News & Blogs", href: "/blog", dropdown: undefined };
     }
 
     // 3. Put Christmas inside Events dropdown
@@ -245,239 +245,239 @@ export default function Navbar() {
           isScrolled ? "py-3" : "py-5"
         }`}
       >
-      <div className="relative z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className={`flex justify-between items-center transition-all duration-700 ${isScrolled ? "h-14" : "h-16"}`}
-        >
-          {/* Logo */}
-          <div className="nav-logo flex-shrink-0 flex items-center w-auto lg:w-1/4">
-            <Link href="/" className="w-36" aria-label="Seven Stars Pub Home">
-              <img
-                src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2023/06/FINAL-SEVEN-STARS-GREY-BACKGROUND-2023-trimmed.png"
-                alt="Seven Stars Pub Logo"
-                className="w-full h-full object-contain"
-              />
-            </Link>
-          </div>
+        <div className="relative z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className={`flex justify-between items-center transition-all duration-700 ${isScrolled ? "h-14" : "h-16"}`}
+          >
+            {/* Logo */}
+            <div className="nav-logo flex-shrink-0 flex items-center">
+              <Link href="/" className="w-36" aria-label="Seven Stars Pub Home">
+                <img
+                  src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2023/06/FINAL-SEVEN-STARS-GREY-BACKGROUND-2023-trimmed.png"
+                  alt="Seven Stars Pub Logo"
+                  className="w-full h-full object-contain"
+                />
+              </Link>
+            </div>
 
-          {/* Desktop Pill Nav */}
-          <div className="nav-pill hidden lg:flex flex-1 justify-center">
-            <div className="flex items-center p-1.5 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 shadow-xl transition-all duration-500">
-              {items.map((item) =>
-                item.dropdown ? (
-                  <div key={item.name} className="relative group">
+            {/* Desktop Pill Nav */}
+            <div className="nav-pill hidden lg:flex flex-1 justify-center px-4 min-w-0">
+              <div className="flex items-center p-1.5 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 shadow-xl transition-all duration-500">
+                {items.map((item) =>
+                  item.dropdown ? (
+                    <div key={item.name} className="relative group shrink-0">
+                      <Link
+                        href={item.href || "#"}
+                        className={`px-4 xl:px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 flex items-center whitespace-nowrap ${
+                          isLinkActive(item.href, item.dropdown)
+                            ? "bg-white text-[#475DB1] shadow-md font-semibold"
+                            : "text-white/85 hover:text-white hover:bg-white/10"
+                        }`}
+                        aria-haspopup="true"
+                      >
+                        {getDisplayName(item)}
+                        <svg
+                          className={`w-3.5 h-3.5 ml-1 shrink-0 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180 ${
+                            isLinkActive(item.href, item.dropdown)
+                              ? "text-[#475DB1]"
+                              : "text-white/80"
+                          }`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </Link>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 z-50 w-56">
+                        <div className="py-2 bg-[#475DB1]/95 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+                          {item.dropdown.map((subItem) => {
+                            const isSubActive = pathname === subItem.href;
+                            return (
+                              <Link
+                                key={subItem.name}
+                                href={subItem.href || "#"}
+                                className={`px-5 py-2.5 text-sm font-medium transition-colors whitespace-nowrap ${
+                                  isSubActive
+                                    ? "bg-white text-[#475DB1] font-semibold"
+                                    : "text-white/85 hover:text-white hover:bg-white/10"
+                                }`}
+                              >
+                                {subItem.name}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
                     <Link
+                      key={item.name}
                       href={item.href || "#"}
-                      className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 flex items-center ${
-                        isLinkActive(item.href, item.dropdown)
+                      className={`px-4 xl:px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap shrink-0 ${
+                        isLinkActive(item.href)
                           ? "bg-white text-[#475DB1] shadow-md font-semibold"
                           : "text-white/85 hover:text-white hover:bg-white/10"
                       }`}
-                      aria-haspopup="true"
+                    >
+                      {item.name}
+                    </Link>
+                  ),
+                )}
+              </div>
+            </div>
+
+            {/* Right: CTA + Icons */}
+            <div className="nav-icons flex items-center justify-end space-x-3 flex-shrink-0">
+              {/* Book Table — slides in on scroll */}
+              <div
+                className={`transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-center overflow-hidden 
+                max-w-[200px] opacity-100 mr-3 translate-x-0`}
+              >
+                <Link
+                  href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Book Table on OpenTable (opens in a new tab)"
+                  className="hidden sm:flex px-6 py-2.5 text-sm font-medium rounded-full bg-[#475DB1] text-white hover:bg-[#475DB1]/90 shadow-[0_0_15px_rgba(202,158,90,0.2)] hover:shadow-[0_0_20px_rgba(202,158,90,0.4)] whitespace-nowrap transition-all duration-300"
+                >
+                  Book Table
+                </Link>
+              </div>
+
+              {/* Icon buttons */}
+              <div className="flex items-center space-x-2">
+                <Link
+                  href="/contact"
+                  aria-label="Contact Us"
+                  className="relative group w-12 h-12 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 text-white hover:bg-[#475DB1] hover:text-white transition-all duration-300 flex items-center justify-center shadow-lg"
+                >
+                  <Contact size={20} />
+                  <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-white/10 backdrop-blur-sm shadow-lg">
+                    Contact Us
+                  </span>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => setIsMobileMenuOpen((open) => !open)}
+                  aria-expanded={isMobileMenuOpen}
+                  aria-controls="mobile-nav-menu"
+                  aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                  className="w-12 h-12 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 text-white hover:bg-[#475DB1] hover:text-white transition-all duration-300 flex items-center justify-center lg:hidden"
+                >
+                  {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        <div
+          className={`fixed inset-0 z-40 lg:hidden transition-opacity duration-300 ${
+            isMobileMenuOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }`}
+          aria-hidden={!isMobileMenuOpen}
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            aria-label="Close menu"
+            onClick={closeMobileMenu}
+          />
+          <div
+            id="mobile-nav-menu"
+            className={`absolute top-0 right-0 h-full w-full max-w-sm bg-[#0a192f]/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col pt-24 px-6 pb-8 overflow-y-auto transform transition-transform duration-300 ease-out ${
+              isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            <nav className="flex flex-col gap-1">
+              {items.map((item) =>
+                item.dropdown ? (
+                  <div key={item.name} className="border-b border-white/5">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenDropdown((current) =>
+                          current === item.name ? null : item.name,
+                        )
+                      }
+                      className={`w-full flex items-center justify-between py-4 text-base font-medium transition-colors ${
+                        isLinkActive(item.href, item.dropdown)
+                          ? "text-[#475DB1] font-semibold"
+                          : "text-gray-200 hover:text-white"
+                      }`}
+                      aria-expanded={openDropdown === item.name}
                     >
                       {getDisplayName(item)}
-                      <svg
-                        className={`w-3.5 h-3.5 ml-1 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180 ${
-                          isLinkActive(item.href, item.dropdown)
-                            ? "text-[#475DB1]"
-                            : "text-white/80"
+                      <ChevronDown
+                        size={18}
+                        className={`transition-transform duration-300 ${
+                          openDropdown === item.name ? "rotate-180" : ""
                         }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible focus-within:opacity-100 focus-within:visible transition-all duration-300 z-50 w-56">
-                      <div className="py-2 bg-[#475DB1]/95 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-                        {item.dropdown.map((subItem) => {
-                          const isSubActive = pathname === subItem.href;
-                          return (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href || "#"}
-                              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
-                                isSubActive
-                                  ? "bg-white text-[#475DB1] font-semibold"
-                                  : "text-white/85 hover:text-white hover:bg-white/10"
-                              }`}
-                            >
-                              {subItem.name}
-                            </Link>
-                          );
-                        })}
-                      </div>
+                      />
+                    </button>
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ${
+                        openDropdown === item.name
+                          ? "max-h-48 opacity-100 pb-2"
+                          : "max-h-0 opacity-0"
+                      }`}
+                    >
+                      {item.dropdown.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          href={subItem.href || "#"}
+                          onClick={closeMobileMenu}
+                          className={`block py-2.5 pl-4 text-sm transition-colors ${
+                            pathname === subItem.href
+                              ? "text-[#475DB1] font-semibold"
+                              : "text-gray-400 hover:text-white"
+                          }`}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 ) : (
                   <Link
                     key={item.name}
                     href={item.href || "#"}
-                    className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                    onClick={closeMobileMenu}
+                    className={`py-4 text-base font-medium border-b border-white/5 transition-colors ${
                       isLinkActive(item.href)
-                        ? "bg-white text-[#475DB1] shadow-md font-semibold"
-                        : "text-white/85 hover:text-white hover:bg-white/10"
+                        ? "text-[#475DB1] font-semibold"
+                        : "text-gray-200 hover:text-white"
                     }`}
                   >
                     {item.name}
                   </Link>
                 ),
               )}
-            </div>
-          </div>
+            </nav>
 
-          {/* Right: CTA + Icons */}
-          <div className="nav-icons flex items-center justify-end space-x-3 w-auto lg:w-1/4">
-            {/* Book Table — slides in on scroll */}
-            <div
-              className={`transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] flex items-center overflow-hidden 
-                max-w-[200px] opacity-100 mr-3 translate-x-0`}
+            <Link
+              href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Book Table on OpenTable (opens in a new tab)"
+              onClick={closeMobileMenu}
+              className="mt-8 px-6 py-3 text-center text-sm font-medium rounded-full bg-[#475DB1] text-white hover:bg-[#475DB1]/90 transition-colors"
             >
-              <Link
-                href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Book Table on OpenTable (opens in a new tab)"
-                className="hidden sm:flex px-6 py-2.5 text-sm font-medium rounded-full bg-[#475DB1] text-white hover:bg-[#475DB1]/90 shadow-[0_0_15px_rgba(202,158,90,0.2)] hover:shadow-[0_0_20px_rgba(202,158,90,0.4)] whitespace-nowrap transition-all duration-300"
-              >
-                Book Table
-              </Link>
-            </div>
-
-            {/* Icon buttons */}
-            <div className="flex items-center space-x-2">
-              <Link
-                href="/contact"
-                aria-label="Contact Us"
-                className="relative group w-12 h-12 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 text-white hover:bg-[#475DB1] hover:text-white transition-all duration-300 flex items-center justify-center shadow-lg"
-              >
-                <Contact size={20} />
-                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-white/10 backdrop-blur-sm shadow-lg">
-                  Contact Us
-                </span>
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => setIsMobileMenuOpen((open) => !open)}
-                aria-expanded={isMobileMenuOpen}
-                aria-controls="mobile-nav-menu"
-                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-                className="w-12 h-12 rounded-full bg-[#475DB1]/80 backdrop-blur-md border border-white/10 text-white hover:bg-[#475DB1] hover:text-white transition-all duration-300 flex items-center justify-center lg:hidden"
-              >
-                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-            </div>
+              Book Table
+            </Link>
           </div>
         </div>
-      </div>
-
-      {/* Mobile menu */}
-      <div
-        className={`fixed inset-0 z-40 lg:hidden transition-opacity duration-300 ${
-          isMobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-        aria-hidden={!isMobileMenuOpen}
-      >
-        <button
-          type="button"
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          aria-label="Close menu"
-          onClick={closeMobileMenu}
-        />
-        <div
-          id="mobile-nav-menu"
-          className={`absolute top-0 right-0 h-full w-full max-w-sm bg-[#0a192f]/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col pt-24 px-6 pb-8 overflow-y-auto transform transition-transform duration-300 ease-out ${
-            isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          <nav className="flex flex-col gap-1">
-            {items.map((item) =>
-              item.dropdown ? (
-                <div key={item.name} className="border-b border-white/5">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setOpenDropdown((current) =>
-                        current === item.name ? null : item.name,
-                      )
-                    }
-                    className={`w-full flex items-center justify-between py-4 text-base font-medium transition-colors ${
-                      isLinkActive(item.href, item.dropdown)
-                        ? "text-[#475DB1] font-semibold"
-                        : "text-gray-200 hover:text-white"
-                    }`}
-                    aria-expanded={openDropdown === item.name}
-                  >
-                    {getDisplayName(item)}
-                    <ChevronDown
-                      size={18}
-                      className={`transition-transform duration-300 ${
-                        openDropdown === item.name ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ${
-                      openDropdown === item.name
-                        ? "max-h-48 opacity-100 pb-2"
-                        : "max-h-0 opacity-0"
-                    }`}
-                  >
-                    {item.dropdown.map((subItem) => (
-                      <Link
-                        key={subItem.name}
-                        href={subItem.href || "#"}
-                        onClick={closeMobileMenu}
-                        className={`block py-2.5 pl-4 text-sm transition-colors ${
-                          pathname === subItem.href
-                            ? "text-[#475DB1] font-semibold"
-                            : "text-gray-400 hover:text-white"
-                        }`}
-                      >
-                        {subItem.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <Link
-                  key={item.name}
-                  href={item.href || "#"}
-                  onClick={closeMobileMenu}
-                  className={`py-4 text-base font-medium border-b border-white/5 transition-colors ${
-                    isLinkActive(item.href)
-                      ? "text-[#475DB1] font-semibold"
-                      : "text-gray-200 hover:text-white"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ),
-            )}
-          </nav>
-
-          <Link
-            href="https://www.opentable.co.uk/r/the-seven-stars-at-marsh-baldon-reservations-oxford?restref=459243&lang=en-GB&ot_source=Restaurant%20website"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Book Table on OpenTable (opens in a new tab)"
-            onClick={closeMobileMenu}
-            className="mt-8 px-6 py-3 text-center text-sm font-medium rounded-full bg-[#475DB1] text-white hover:bg-[#475DB1]/90 transition-colors"
-          >
-            Book Table
-          </Link>
-        </div>
-      </div>
-    </nav>
+      </nav>
     </header>
   );
 }
