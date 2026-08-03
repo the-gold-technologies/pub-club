@@ -80,13 +80,30 @@ export default function TermsOfServicePage() {
         .legal-content h4,
         .legal-content h5,
         .legal-content h6 {
-          white-space: normal !important;
-          word-break: normal !important;
-          overflow-wrap: break-word !important;
-          margin-left: 0 !important;
-          text-indent: 0 !important;
-          background-color: transparent !important;
-          background: transparent !important;
+          word-break: normal;
+          overflow-wrap: break-word;
+          margin-left: 0;
+          text-indent: 0;
+        }
+
+        .legal-content h1 {
+          font-size: 2rem;
+          font-weight: 750;
+          font-family: var(--font-playfair), serif;
+          color: #111827;
+          margin-top: 2.25rem;
+          margin-bottom: 1rem;
+          letter-spacing: -0.015em;
+        }
+
+        .legal-content h2 {
+          font-size: 1.65rem;
+          font-weight: 750;
+          font-family: var(--font-playfair), serif;
+          color: #111827;
+          margin-top: 2rem;
+          margin-bottom: 0.95rem;
+          letter-spacing: -0.015em;
         }
 
         .legal-content h3 {
@@ -97,6 +114,33 @@ export default function TermsOfServicePage() {
           margin-top: 2rem;
           margin-bottom: 0.95rem;
           letter-spacing: -0.015em;
+        }
+
+        .legal-content h4 {
+          font-size: 1.25rem;
+          font-weight: 750;
+          font-family: var(--font-playfair), serif;
+          color: #111827;
+          margin-top: 1.75rem;
+          margin-bottom: 0.75rem;
+        }
+
+        .legal-content h5 {
+          font-size: 1.1rem;
+          font-weight: 750;
+          font-family: var(--font-playfair), serif;
+          color: #111827;
+          margin-top: 1.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .legal-content h6 {
+          font-size: 1rem;
+          font-weight: 750;
+          font-family: var(--font-playfair), serif;
+          color: #111827;
+          margin-top: 1.25rem;
+          margin-bottom: 0.5rem;
         }
         
         .legal-content p {
@@ -200,7 +244,11 @@ export default function TermsOfServicePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 relative z-20">
           <div
             className="legal-content max-w-5xl mx-auto"
-            dangerouslySetInnerHTML={{ __html: contentData.content }}
+            dangerouslySetInnerHTML={{
+              __html: (contentData.content || "")
+                .replace(/&nbsp;/g, " ")
+                .replace(/\u00a0/g, " "),
+            }}
           />
         </div>
       </main>
