@@ -69,7 +69,7 @@ export default function ContactHero({ data = {} }: { data?: any }) {
       <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16 pt-32">
         <div className="hero-reveal overflow-hidden mb-6 flex items-center gap-4">
           <div className="w-12 h-px bg-[#475DB1]" />
-          <span className="block text-[#475DB1] uppercase tracking-[0.4em] text-[10px] font-bold">
+          <span className="block text-[#475DB1] uppercase tracking-[0.4em] text-[12px] font-bold">
             {data.tagline}
           </span>
         </div>

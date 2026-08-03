@@ -174,7 +174,7 @@ export default function TermsOfServicePage() {
             <div className="md:col-span-7 lg:col-span-8">
               <div className="hero-reveal overflow-hidden mb-6 flex items-center gap-4">
                 <div className="w-12 h-px bg-[#475DB1]" />
-                <span className="block text-[#475DB1] uppercase tracking-[0.4em] text-[10px] font-bold">
+                <span className="block text-[#475DB1] uppercase tracking-[0.4em] text-[12px] font-bold">
                   Legal Information
                 </span>
               </div>

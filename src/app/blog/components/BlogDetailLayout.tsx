@@ -265,7 +265,7 @@ export default function BlogDetailLayout({
                   <span>←</span> Back to Blog
                 </Link>
                 <div className="w-px h-4 bg-white/20" />
-                <span className="block text-[#475DB1] uppercase tracking-[0.25em] text-[11px] font-semibold">
+                <span className="block text-[#475DB1] uppercase tracking-[0.25em] text-[12px] font-semibold">
                   {tagline}
                 </span>
               </div>
