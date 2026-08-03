@@ -121,7 +121,7 @@ export default function Navbar() {
       blogItem = { name: "News & Blogs", href: "/blog", dropdown: undefined };
     }
 
-    // 3. Put Christmas inside Events dropdown
+    // 3. Handle Christmas inside Events dropdown based on published status
     const eventsItemIdx = filteredForBlog.findIndex(
       (item) =>
         item.href === "/events" ||
@@ -131,27 +131,47 @@ export default function Navbar() {
 
     const isChristmasPublished = pages["christmas"]?.visibility === "published";
 
-    if (eventsItemIdx !== -1 && isChristmasPublished) {
+    if (eventsItemIdx !== -1) {
       const eventsItem = filteredForBlog[eventsItemIdx];
-      const existingDropdown = eventsItem.dropdown || [];
-      const hasChristmas = existingDropdown.some(
-        (sub) =>
-          sub.href === "/christmas" ||
-          sub.name.toLowerCase().includes("christmas"),
-      );
+      if (isChristmasPublished) {
+        const existingDropdown = eventsItem.dropdown || [];
+        const hasChristmas = existingDropdown.some(
+          (sub) =>
+            sub.href === "/christmas" ||
+            sub.name.toLowerCase().includes("christmas"),
+        );
 
-      if (!hasChristmas) {
-        const dropdownItems = [];
-        if (existingDropdown.length === 0) {
-          dropdownItems.push({ name: "Events", href: "/events" });
-        } else {
-          dropdownItems.push(...existingDropdown);
+        if (!hasChristmas) {
+          const dropdownItems = [];
+          if (existingDropdown.length === 0) {
+            dropdownItems.push({ name: "Events", href: "/events" });
+          } else {
+            dropdownItems.push(...existingDropdown);
+          }
+          dropdownItems.push(christmasItem);
+          filteredForBlog[eventsItemIdx] = {
+            ...eventsItem,
+            dropdown: dropdownItems,
+          };
         }
-        dropdownItems.push(christmasItem);
-        filteredForBlog[eventsItemIdx] = {
-          ...eventsItem,
-          dropdown: dropdownItems,
-        };
+      } else if (eventsItem.dropdown) {
+        const cleanedDropdown = eventsItem.dropdown.filter(
+          (sub) =>
+            sub.href !== "/christmas" &&
+            !sub.name.toLowerCase().includes("christmas"),
+        );
+        if (cleanedDropdown.length <= 1) {
+          filteredForBlog[eventsItemIdx] = {
+            name: eventsItem.name,
+            href: eventsItem.href || "/events",
+            dropdown: undefined,
+          };
+        } else {
+          filteredForBlog[eventsItemIdx] = {
+            ...eventsItem,
+            dropdown: cleanedDropdown,
+          };
+        }
       }
     }
 
