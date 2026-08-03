@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import PageLoader from "@/components/layout/PageLoader";
 import { useCMSStore } from "@/store/useCMSStore";
-import { ArrowLeft, Award } from "lucide-react";
+import { ArrowLeft, Award, ExternalLink } from "lucide-react";
 import BlogDetailLayout from "../components/BlogDetailLayout";
 
 interface Blog {
@@ -16,6 +16,8 @@ interface Blog {
   featuredImage: string | null;
   excerpt: string;
   content: string;
+  postType?: "blog" | "news";
+  link?: string;
   area: string;
   readTime: string;
   tag: string;
@@ -37,6 +39,10 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
       fetchBlogBySlug(slug)
         .then((data) => {
           if (data) {
+            if (data.postType === "news" && data.link && data.link.trim()) {
+              window.location.href = data.link;
+              return;
+            }
             setBlog(data);
           }
         })
@@ -87,7 +93,7 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
       <BlogDetailLayout
         title={displayTitle}
         italicHighlight={displayHighlight}
-        tagline={blog.tag || "South Oxfordshire Pub Guide"}
+        tagline={blog.tag || (blog.postType === "news" ? "News & Media" : "South Oxfordshire Pub Guide")}
         description={blog.excerpt}
         backgroundImage={blog.featuredImage || "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/christmas-celebration-2.webp"}
         area={blog.area || "South Oxfordshire"}
@@ -99,10 +105,30 @@ export default function BlogDetailPage({ params }: { params: Promise<{ slug: str
         currentSlug={blog.slug}
       >
         <div className="space-y-6">
-          <div 
-            dangerouslySetInnerHTML={{ __html: blog.content }} 
-            className="rich-text-content"
-          />
+          {blog.postType === "news" && blog.link && (
+            <div className="bg-purple-50 border border-purple-200 rounded-3xl p-8 mb-8 text-center flex flex-col items-center gap-4">
+              <ExternalLink className="w-10 h-10 text-purple-600" />
+              <h3 className="text-xl font-bold text-slate-900 font-serif">External News Article</h3>
+              <p className="text-gray-600 text-sm max-w-md">
+                This item points to an external article. Click below if you were not automatically redirected.
+              </p>
+              <a
+                href={blog.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full text-sm font-bold transition-all shadow-md hover:shadow-lg"
+              >
+                <ExternalLink className="w-4 h-4" /> Open Full Article
+              </a>
+            </div>
+          )}
+
+          {blog.content && (
+            <div 
+              dangerouslySetInnerHTML={{ __html: blog.content }} 
+              className="rich-text-content"
+            />
+          )}
         </div>
 
         {/* Global style overrides to style dynamic blog HTML elements to look premium */}

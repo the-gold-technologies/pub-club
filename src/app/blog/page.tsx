@@ -7,7 +7,7 @@ import Link from "next/link";
 import PageLoader from "@/components/layout/PageLoader";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Clock, Eye, BookOpen } from "lucide-react";
+import { Clock, Eye, BookOpen, ExternalLink } from "lucide-react";
 import { useCMSStore } from "@/store/useCMSStore";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -140,85 +140,114 @@ export default function BlogIndexPage() {
         {/* Blog Cards Grid */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {blogPosts.map((post, i) => (
-              <Link
-                key={i}
-                href={`/blog/${post.slug}`}
-                className="blog-card relative aspect-[3/4] rounded-[2.5rem] overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-500 block"
-              >
-                {/* Background Image */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src={post.featuredImage || "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp"}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    unoptimized
-                  />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10" />
-                </div>
+            {blogPosts.map((post, i) => {
+              const isNews = post.postType === "news";
+              const hasExternalLink = isNews && Boolean(post.link && post.link.trim());
+              const cardHref = hasExternalLink ? post.link : `/blog/${post.slug}`;
 
-                {/* Top Left Tag */}
-                {post.tag && post.tag.trim() !== "" && (
-                  <div className="absolute top-6 left-6 z-20 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
-                    <span className="text-[11px] text-amber-500 font-bold">★</span>
-                    <span className="text-neutral-800 text-[10px] font-bold uppercase tracking-wider">
-                      {post.tag}
-                    </span>
+              const CardContainer = hasExternalLink ? "a" : Link;
+              const cardProps = hasExternalLink
+                ? { href: cardHref, target: "_blank", rel: "noopener noreferrer" }
+                : { href: cardHref };
+
+              return (
+                <CardContainer
+                  key={i}
+                  {...cardProps}
+                  className="blog-card relative aspect-[3/4] rounded-[2.5rem] overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-500 block"
+                >
+                  {/* Background Image */}
+                  <div className="absolute inset-0 z-0">
+                    <Image
+                      src={post.featuredImage || "https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2025/09/dish1.webp"}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      unoptimized
+                    />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10" />
                   </div>
-                )}
 
-                {/* Bottom Content Area */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white flex flex-col gap-5">
-                  {/* Title */}
-                  <h2 className="text-xl sm:text-2xl font-serif font-bold leading-snug group-hover:text-[#8fa2f4] transition-colors duration-300 line-clamp-2">
-                    {post.title}
-                  </h2>
-
-                  {/* Info Columns */}
-                  <div className="grid grid-cols-12 items-center gap-4 border-t border-white/10 pt-4">
-                    {/* Excerpt */}
-                    <div className="col-span-6 pr-2">
-                      <p className="text-[11px] text-slate-300 font-light leading-relaxed line-clamp-2">
-                        {post.excerpt}
-                      </p>
-                    </div>
-
-                    {/* Read Time */}
-                    <div className="col-span-3 border-l border-white/20 pl-4 flex flex-col">
-                      <div className="flex items-center gap-1 text-white">
-                        <Clock className="w-3.5 h-3.5" />
-                        <span className="text-[12px] font-bold whitespace-nowrap">{post.readTime.split(" ")[0]} min</span>
+                  {/* Top Badges */}
+                  <div className="absolute top-6 left-6 right-6 z-20 flex items-center justify-between pointer-events-none">
+                    {post.tag && post.tag.trim() !== "" ? (
+                      <div className="bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
+                        <span className="text-[11px] text-amber-500 font-bold">★</span>
+                        <span className="text-neutral-800 text-[10px] font-bold uppercase tracking-wider">
+                          {post.tag}
+                        </span>
                       </div>
-                      <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold mt-0.5">
-                        READ
-                      </span>
-                    </div>
+                    ) : (
+                      <div />
+                    )}
 
-                    {/* Views */}
-                    <div className="col-span-3 border-l border-white/20 pl-4 flex flex-col">
-                      <div className="flex items-center gap-1 text-white">
-                        <Eye className="w-3.5 h-3.5" />
-                        <span className="text-[12px] font-bold">{post.views}</span>
+                    <div className={`px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-md backdrop-blur-md text-[10px] font-bold uppercase tracking-wider ${
+                      isNews 
+                        ? "bg-purple-900/90 text-purple-200 border border-purple-400/30" 
+                        : "bg-blue-900/90 text-blue-200 border border-blue-400/30"
+                    }`}>
+                      {isNews && <ExternalLink className="w-3 h-3" />}
+                      <span>{isNews ? "News" : "Blog"}</span>
+                    </div>
+                  </div>
+
+                  {/* Bottom Content Area */}
+                  <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white flex flex-col gap-5">
+                    {/* Title */}
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold leading-snug group-hover:text-[#8fa2f4] transition-colors duration-300 line-clamp-2">
+                      {post.title}
+                    </h2>
+
+                    {/* Info Columns */}
+                    <div className="grid grid-cols-12 items-center gap-4 border-t border-white/10 pt-4">
+                      {/* Excerpt */}
+                      <div className="col-span-6 pr-2">
+                        <p className="text-[11px] text-slate-300 font-light leading-relaxed line-clamp-2">
+                          {post.excerpt}
+                        </p>
                       </div>
-                      <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold mt-0.5">
-                        VIEWS
-                      </span>
+
+                      {/* Read Time */}
+                      <div className="col-span-3 border-l border-white/20 pl-4 flex flex-col">
+                        <div className="flex items-center gap-1 text-white">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span className="text-[12px] font-bold whitespace-nowrap">{post.readTime ? post.readTime.split(" ")[0] : "3"} min</span>
+                        </div>
+                        <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold mt-0.5">
+                          READ
+                        </span>
+                      </div>
+
+                      {/* Views */}
+                      <div className="col-span-3 border-l border-white/20 pl-4 flex flex-col">
+                        <div className="flex items-center gap-1 text-white">
+                          <Eye className="w-3.5 h-3.5" />
+                          <span className="text-[12px] font-bold">{post.views || 0}</span>
+                        </div>
+                        <span className="text-[9px] uppercase tracking-wider text-slate-400 font-semibold mt-0.5">
+                          VIEWS
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Divider Line */}
+                    <div className="w-full h-px bg-white/10" />
+
+                    {/* Author & Date Footer */}
+                    <div className="flex items-center justify-between text-[11px] text-slate-400">
+                      {isNews && (
+                        <span className="flex items-center gap-1 text-purple-300 font-medium">
+                          <ExternalLink className="w-3 h-3" /> External Link
+                        </span>
+                      )}
+                      <span className="ml-auto">{post.date}</span>
                     </div>
                   </div>
-
-                  {/* Divider Line */}
-                  <div className="w-full h-px bg-white/10" />
-
-                  {/* Author & Date Footer */}
-                  <div className="flex items-center justify-end text-[11px] text-slate-400">
-                    <span>{post.date}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </CardContainer>
+              );
+            })}
           </div>
         </section>
       </main>

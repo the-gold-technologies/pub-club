@@ -33,6 +33,26 @@ export interface ApiNavLink {
   isStatic: boolean;
 }
 
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  visibility: string;
+  featuredImage: string | null;
+  excerpt: string;
+  content: string;
+  postType?: "blog" | "news";
+  link?: string;
+  area: string;
+  readTime: string;
+  tag: string;
+  views: number;
+  date: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  headingTag?: string;
+}
+
 interface CMSStoreState {
   pages: Record<string, any>;
   isLoading: Record<string, boolean>;
