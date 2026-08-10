@@ -36,7 +36,7 @@ export default function EventsPage() {
         {/* <EventsArchive data={sections["EventsArchive"] || {}} /> */}
         <WhatWeHost data={sections["WhatWeHost"] || {}} />
         <EventsCapabilities data={sections["EventsCapabilities"] || {}} />
-        <InstagramRibbon data={sections["EventsArchive"] || {}} />
+        <InstagramRibbon data={sections["InstagramRibbon"] || {}} />
       </main>
       <Footer />
     </div>

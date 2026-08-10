@@ -129,7 +129,9 @@ export default function Navbar() {
         item.name.toLowerCase() === "event",
     );
 
-    const isChristmasPublished = pages["christmas"]?.visibility === "published";
+    const isChristmasPublished = pages["christmas"]
+      ? pages["christmas"].visibility === "published"
+      : true;
 
     if (eventsItemIdx !== -1) {
       const eventsItem = filteredForBlog[eventsItemIdx];

@@ -213,7 +213,11 @@ export const useCMSStore = create<CMSStoreState & CMSStoreActions>(
 
               if (mainLink.type === "Dropdown") {
                 dropdown = rawLinks
-                  .filter((child) => child.parent === mainLink.id)
+                  .filter(
+                    (child) =>
+                      child.parent === mainLink.id ||
+                      child.parent === mainLink.label,
+                  )
                   .sort(
                     (a, b) =>
                       a.order - b.order || a.label.localeCompare(b.label),
