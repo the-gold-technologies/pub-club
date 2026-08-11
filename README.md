@@ -5,7 +5,7 @@
 
   <p>
     <b>A beautiful, high-performance, immersive customer web experience for Seven Stars Pub Club</b><br>
-    <i>Next.js 14 • GSAP (ScrollTrigger) • Tailwind CSS • CMS Data Sync • Dynamic SEO</i>
+    <i>Next.js 15 • GSAP (ScrollTrigger) • Tailwind CSS • CMS Data Sync • Dynamic SEO</i>
   </p>
 
   <p>
@@ -17,7 +17,7 @@
 
 [![Status: Active](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-blue.svg)]()
-[![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)]()
+[![Next.js](https://img.shields.io/badge/Next.js-15-black.svg)]()
 [![GSAP](https://img.shields.io/badge/Animations-GSAP--3-green.svg)]()
 
 </div>
@@ -58,7 +58,7 @@ The customer portal balances aesthetic excellence with robust data hydration:
 
 Built for fast page speeds, high visual polish, and modularity.
 
-- **Frontend Core**: `Next.js 14` with the `App Router` using `React 18`.
+- **Frontend Core**: `Next.js 15` with the `App Router` using `React 19`.
 - **Styling**: `Tailwind CSS` for utility styling combined with custom CSS reset blocks for rich editor typography (`.legal-content`).
 - **Animation Framework**: `GSAP (GreenSock Animation Platform)` with `ScrollTrigger` and context-specific garbage collection.
 - **Client State**: `Zustand` lightweight store for localized user data tracking.
@@ -71,7 +71,7 @@ Built for fast page speeds, high visual polish, and modularity.
 pub-club/
 ├── public/                    # Static assets, local icons, and images
 ├── src/
-│   ├── app/                   # Next.js 14 App Router
+│   ├── app/                   # Next.js 15 App Router
 │   │   ├── (home)/            # Entry homepage route
 │   │   ├── about/             # About Page
 │   │   ├── blog/              # Dynamic Blog and Guides list
