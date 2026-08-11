@@ -127,28 +127,6 @@ export default function ContactPopupModal({
 
       const json = await res.json();
       if (res.ok && json.success) {
-        // Submit to FormSubmit.co for email notification
-        try {
-          const contactEmail =
-            process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
-            "info@sevenstarsatmb.co.uk";
-          await fetch(`https://formsubmit.co/ajax/${contactEmail}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              name,
-              email,
-              subject: subject || "New Popup Enquiry",
-              message,
-            }),
-          });
-        } catch (emailErr) {
-          console.error("Failed to send email notification:", emailErr);
-        }
-
         setSubmitStatus("success");
         setName("");
         setEmail("");

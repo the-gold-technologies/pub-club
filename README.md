@@ -50,7 +50,7 @@ The customer portal balances aesthetic excellence with robust data hydration:
 | **Dynamic CMS Ingestion**| Feeds from PostgreSQL database APIs in real-time, falling back gracefully to static templates. |
 | **Bespoke Legal Pages**  | Fully CMS-managed `/privacy-policy` and `/terms-of-service` layouts with custom style overrides for copy/pasted markup. |
 | **Global Cookie Consent**| Compliant, brand-integrated cookie manager with Accept/Reject preferences and persistent close triggers. |
-| **Responsive Form Delivery** | Table reservations via OpenTable widget and event enquiry capture directly tied to the CMS lead tracker. |
+| **Responsive Form Delivery** | Table reservations via OpenTable widget and event/contact enquiry capture routed directly to the CMS API gateway with automated SMTP email alerts via Nodemailer. |
 
 ---
 
@@ -139,17 +139,17 @@ Copy the template `.env.example` file to create your `.env.local` file in the ro
 cp .env.example .env.local
 ```
 ```env
-# The base URL of the running CMS server (Local or Production)
-NEXT_PUBLIC_CMS_API_URL=http://localhost:3001
+# Base URL of the CMS server (Local development or Production deployment)
+NEXT_PUBLIC_CMS_API_URL="<your-cms-backend-api-url>"
 
-# The default contact email referenced across the application and components
-NEXT_PUBLIC_CONTACT_EMAIL=info@sevenstarsatmb.co.uk
+# Primary contact email address used across frontend components
+NEXT_PUBLIC_CONTACT_EMAIL="<your-contact-email-address>"
 ```
 
-| Variable Name | Description | Default Value (Local) |
+| Variable Name | Description | What value should be added |
 | :--- | :--- | :--- |
-| `NEXT_PUBLIC_CMS_API_URL` | Base URL of the API gateway providing dynamic page config and menu hydration. | `http://localhost:3001` |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Unified email address for notifications and display references. | `info@sevenstarsatmb.co.uk` |
+| `NEXT_PUBLIC_CMS_API_URL` | API Base URL connecting the website to the CMS backend server. | Provide the backend URL (e.g. `http://localhost:3001` locally or your deployed CMS URL). |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Display and notification contact email address. | Provide your business contact email address (e.g., `info@yourdomain.com`). |
 
 ### 3. Install Dependencies
 ```bash
