@@ -259,6 +259,7 @@ export default function MenuFeatured({ data = {} }: MenuFeaturedProps) {
               <Link
                 href={data.btnUrl || "/menu"}
                 className="inline-flex items-center gap-5 group"
+                aria-label={data.btnLabel || "View Menu"}
               >
                 <div className="w-14 h-14 rounded-full bg-[#475DB1] flex items-center justify-center text-white transition-transform duration-500 group-hover:scale-110 group-hover:rotate-45">
                   <ArrowRight size={20} />
