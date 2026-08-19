@@ -13,8 +13,15 @@ gsap.registerPlugin(ScrollTrigger);
 export default function MenuHero({ data = {} }: { data?: any }) {
   const pages = useCMSStore((state) => state.pages);
   const pageData = pages["menu"] || {};
-  const headingTag = data.headingTag || pageData.seo?.headingOptions?.heroHeadingTag || "h1";
-  const HeadingTag = (headingTag || "h1") as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  const headingTag =
+    data.headingTag || pageData.seo?.headingOptions?.heroHeadingTag || "h1";
+  const HeadingTag = (headingTag || "h1") as
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6";
 
   const bgRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -78,7 +85,7 @@ export default function MenuHero({ data = {} }: { data?: any }) {
             </div>
 
             <HeadingTag className="hero-reveal text-6xl md:text-8xl font-serif text-white tracking-tighter leading-[0.9]">
-              {data.headingPart1} <br />
+              {data.headingPart1}
               <span className="italic font-light text-[#475DB1]">
                 {data.headingHighlight}
               </span>

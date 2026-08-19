@@ -8,28 +8,13 @@ import { parseMarkdownLinks } from "@/utils/text";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface MenuItem {
-  name: string;
-  price: string;
-  desc?: string;
-}
-
-interface MenuCategory {
-  name: string;
-  subtitle?: string;
-  items: MenuItem[];
-}
-
-interface MenuPage {
-  categories: MenuCategory[];
-}
-
 interface MenuSection {
   id: string;
   title: string;
   subtitle?: string;
-  pdf: string;
-  pages: MenuPage[];
+  pdf?: string;
+  image?: string;
+  pages?: Array<{ image?: string }>;
 }
 
 export default function Menu({ data = {} }: { data?: any }) {
@@ -42,8 +27,8 @@ export default function Menu({ data = {} }: { data?: any }) {
   const [sectionIdx, setSectionIdx] = useState(0);
   const [pageIdx, setPageIdx] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
   const [downloadToast, setDownloadToast] = useState<string | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
   const flipPageRef = useRef<HTMLDivElement>(null);
   const shadowRef = useRef<HTMLDivElement>(null);
 
@@ -148,7 +133,8 @@ export default function Menu({ data = {} }: { data?: any }) {
 
   const next = () => {
     const currentSection = menuSections[sectionIdx];
-    if (pageIdx < currentSection.pages.length - 1) {
+    const totalPages = currentSection?.pages?.length || 1;
+    if (pageIdx < totalPages - 1) {
       changePage(sectionIdx, pageIdx + 1);
     } else if (sectionIdx < menuSections.length - 1) {
       changePage(sectionIdx + 1, 0);
@@ -160,13 +146,14 @@ export default function Menu({ data = {} }: { data?: any }) {
       changePage(sectionIdx, pageIdx - 1);
     } else if (sectionIdx > 0) {
       const prevSection = menuSections[sectionIdx - 1];
-      changePage(sectionIdx - 1, prevSection.pages.length - 1);
+      const prevPages = prevSection?.pages?.length || 1;
+      changePage(sectionIdx - 1, prevPages - 1);
     }
   };
 
   const activeSection = menuSections[sectionIdx] || menuSections[0];
   const activePage =
-    activeSection?.pages?.[pageIdx] || activeSection?.pages?.[0];
+    activeSection?.pages?.[pageIdx] || activeSection?.pages?.[0] || null;
 
   // Resolve active section's specific PDF URL
   const getActiveSectionPdf = () => {
@@ -220,7 +207,7 @@ export default function Menu({ data = {} }: { data?: any }) {
 
 
 
-  if (!activeSection || !activePage) return null;
+  if (!activeSection) return null;
 
   return (
     <section
@@ -378,12 +365,7 @@ export default function Menu({ data = {} }: { data?: any }) {
                         (Array.isArray(data.menuPdfs) && data.menuPdfs[sectionIdx]) ||
                         null;
 
-                      const pageImage =
-                        (activePage as any)?.image ||
-                        (activePage as any)?.pdfImage ||
-                        (activeSection as any)?.image ||
-                        (activeSection as any)?.menuImage ||
-                        (activeSection as any)?.pdfImage;
+                      const pageImage = activePage?.image || activeSection?.image;
 
                       if (pageImage) {
                         return (
@@ -470,9 +452,9 @@ export default function Menu({ data = {} }: { data?: any }) {
                     disabled={
                       isFlipping ||
                       (sectionIdx === menuSections.length - 1 &&
-                        pageIdx === activeSection.pages.length - 1)
+                        pageIdx === (activeSection?.pages?.length || 1) - 1)
                     }
-                    className={`flex items-center gap-4 text-[12px] uppercase tracking-widest font-bold transition-all ${sectionIdx === menuSections.length - 1 && pageIdx === activeSection.pages.length - 1 ? "opacity-0 cursor-default" : "text-black hover:text-[#475DB1] cursor-pointer"}`}
+                    className={`flex items-center gap-4 text-[12px] uppercase tracking-widest font-bold transition-all ${sectionIdx === menuSections.length - 1 && pageIdx === (activeSection?.pages?.length || 1) - 1 ? "opacity-0 cursor-default" : "text-black hover:text-[#475DB1] cursor-pointer"}`}
                   >
                     Turn Page <ChevronRight size={20} />
                   </button>
