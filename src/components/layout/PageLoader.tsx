@@ -29,7 +29,7 @@ export default function PageLoader({ isLoading }: PageLoaderProps) {
           duration: 0.6,
           ease: "power3.inOut",
         },
-        "-=0.2"
+        "-=0.2",
       );
     }
   }, [isLoading]);
@@ -39,8 +39,9 @@ export default function PageLoader({ isLoading }: PageLoaderProps) {
   return (
     <div className="loader-container fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-950 text-white">
       {/* Self-contained styling for infinite rotation spin states */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           @keyframes spin-clockwise {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -55,8 +56,9 @@ export default function PageLoader({ isLoading }: PageLoaderProps) {
           .spin-ccw {
             animation: spin-counterclockwise 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
           }
-        `
-      }} />
+        `,
+        }}
+      />
 
       {/* Background radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(71,93,177,0.12)_0%,transparent_70%)] pointer-events-none" />
@@ -77,7 +79,7 @@ export default function PageLoader({ isLoading }: PageLoaderProps) {
           <div className="flex items-center justify-center gap-3">
             <div className="w-6 h-[1px] bg-[#475DB1] opacity-50" />
             <p className="text-[9px] tracking-[0.4em] text-[#475DB1] uppercase font-black">
-              Club & Gastropub
+              Countryside Gastro Pub
             </p>
             <div className="w-6 h-[1px] bg-[#475DB1] opacity-50" />
           </div>
