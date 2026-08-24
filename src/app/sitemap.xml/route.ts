@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const cmsApiUrl = process.env.NEXT_PUBLIC_CMS_API_URL || "https://cms-seven-star.vercel.app";
+  const cmsApiUrl = process.env.NEXT_PUBLIC_CMS_API_URL || "";
   try {
     const res = await fetch(`${cmsApiUrl}/api/seo/sitemap`, {
       cache: "no-store",

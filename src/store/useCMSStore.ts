@@ -78,10 +78,7 @@ interface CMSStoreActions {
 }
 
 const getApiBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_CMS_API_URL) {
-    return process.env.NEXT_PUBLIC_CMS_API_URL;
-  }
-  return "https://cms-seven-star.vercel.app";
+  return process.env.NEXT_PUBLIC_CMS_API_URL || "";
 };
 
 export const useCMSStore = create<CMSStoreState & CMSStoreActions>(

@@ -111,9 +111,7 @@ export default function ContactPopupModal({
     setErrorMsg("");
 
     try {
-      const apiBaseUrl =
-        process.env.NEXT_PUBLIC_CMS_API_URL ||
-        "https://cms-seven-star.vercel.app";
+      const apiBaseUrl = process.env.NEXT_PUBLIC_CMS_API_URL || "";
       const res = await fetch(`${apiBaseUrl}/api/enquiries`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
