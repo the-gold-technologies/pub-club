@@ -275,7 +275,7 @@ export default function Navbar() {
             <div className="nav-logo flex-shrink-0 flex items-center">
               <Link href="/" className="w-36" aria-label="Seven Stars Pub Home">
                 <img
-                  src="https://sevenstarsatmarshbaldon.co.uk/wp-content/uploads/2023/06/FINAL-SEVEN-STARS-GREY-BACKGROUND-2023-trimmed.png"
+                  src="/FINAL-SEVEN-STARS-GREY-BACKGROUND-2023-trimmed.png"
                   alt="Seven Stars Pub Logo"
                   className="w-full h-full object-contain"
                 />
