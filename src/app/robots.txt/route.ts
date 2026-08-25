@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const cmsApiUrl = process.env.NEXT_PUBLIC_CMS_API_URL || "";
   try {
     const res = await fetch(`${cmsApiUrl}/api/seo/robots`, {
-      cache: "no-store",
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -16,6 +18,7 @@ export async function GET() {
     return new Response(text, {
       headers: {
         "Content-Type": "text/plain",
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
       },
     });
   } catch (error) {

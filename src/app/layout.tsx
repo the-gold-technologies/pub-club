@@ -27,7 +27,7 @@ async function getGlobalSEO() {
   try {
     const baseUrl = getApiBaseUrl();
     const response = await fetch(`${baseUrl}/api/seo/global`, {
-      cache: "no-store", // Always fetch fresh to prevent caching stale settings
+      next: { revalidate: 60 }, // Revalidate with ISR every 60 seconds
     });
     if (!response.ok) return null;
     const json = await response.json();

@@ -135,7 +135,7 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
             </div>
 
             <div className="lg:col-span-5 flex flex-col justify-between h-full min-h-[420px]">
-              <div 
+              <div
                 className="space-y-8 overflow-y-auto max-h-[350px] no-scrollbar pr-2"
                 data-lenis-prevent
               >
@@ -178,10 +178,11 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
 
               <div className="reveal-section pt-6 mt-6 border-t border-slate-100/80">
                 {(() => {
-                  const ctaText = data.ctaText || "Request Table";
-                  const ctaSubtitle = data.ctaSubtitle || "Inquire about our upcoming occasions";
+                  const ctaText = data.ctaText || "";
+                  const ctaSubtitle = data.ctaSubtitle || "";
                   const ctaLink = data.ctaLink || "";
-                  const hasNavigateUrl = ctaLink.trim() !== "" && ctaLink !== "#";
+                  const hasNavigateUrl =
+                    ctaLink.trim() !== "" && ctaLink !== "#";
 
                   return hasNavigateUrl ? (
                     <Link
@@ -235,7 +236,10 @@ export default function UpcomingEvents({ data = {} }: { data?: any }) {
           </div>
         </div>
       </div>
-      <ContactPopupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <ContactPopupModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 }
