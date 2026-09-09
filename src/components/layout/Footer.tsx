@@ -391,13 +391,13 @@ export default function Footer() {
         <div className="flex items-center gap-1 text-[8px] text-[#3F6EA9] text-end -mt-6 mb-4 justify-end">
           Made with <span className="text-red-500 ">♥</span> by{" "}
           <a
-            href="https://thegoldtechnologies.com/"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="TGT (opens in a new tab)"
+            aria-label="Ebrand (opens in a new tab)"
             className="font-bold underline decoration-white/20 transition-colors"
           >
-            TGT
+            Ebrand
           </a>
         </div>
       </div>
